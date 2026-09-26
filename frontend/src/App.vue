@@ -19,8 +19,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <main style="font-family: Arial, sans-serif; max-width: 800px; margin: 2rem auto; padding: 1.5rem; border: 1px solid #e2e8f0; border-radius: 8px;">
-    <h1>🎮 GameStore — Panel de Control (Sprint 0)</h1>
+  <main style="font-family: Arial, sans-serif; max-width: 1200px; margin: 2rem auto; padding: 1.5rem; border: 1px solid #e2e8f0; border-radius: 8px;">
+    <h1>Gamestore — Panel Control (Sprint 0)</h1>
     <p>Verificación de infraestructura multi-contenedor:</p>
 
     <div v-if="loading" style="color: #64748b;">
