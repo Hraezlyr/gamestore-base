@@ -1,0 +1,6 @@
+# Por defecto auto-detectar texto y normalizar a LF
+* text=auto eol=lf
+
+# Forzar scripts de shell y archivos bash a LF estricto
+*.sh text eol=lf
+Dockerfile* text eol=lf

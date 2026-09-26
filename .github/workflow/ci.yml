@@ -1,0 +1,23 @@
+name: CI Baseline Pipeline
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  docker-validation:
+    name: Validate Docker Build & Compose Config
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar código fuente
+        uses: actions/checkout@v4
+
+      - name: Crear archivo .env temporal para build
+        run: cp .env.example .env
+
+      - name: Validar sintaxis de docker-compose.yml
+        run: docker compose config
+
+      - name: Compilar imágenes en Docker
+        run: docker compose build
