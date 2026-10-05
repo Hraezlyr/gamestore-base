@@ -54,7 +54,7 @@ function App() {
           </div>
         )}
       </div>
-      <h1>Leandro jose Robelo </h1>
+      <h1>Leandro jose Robelo mora </h1>
     </div>
   );
 }
