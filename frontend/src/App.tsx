@@ -54,7 +54,9 @@ function App() {
           </div>
         )}
       </div>
+      <h1>Freddy Prueba</h1>
     </div>
+    
   );
 }
 
