@@ -31,9 +31,10 @@ function App() {
 
   return (
     <div style={{ maxWidth: '600px', margin: '3rem auto', padding: '1.5rem', fontFamily: 'system-ui, sans-serif' }}>
-      <h1 style={{ textAlign: 'center', marginBottom: '0.5rem' }}>GameStore</h1>
+      <h1 style={{ textAlign: 'center', marginBottom: '1rem' }}>GameStore</h1>
+      <h2 style={{ textAlign: 'center', marginTop: 0, color: '#999' }}>Presentado por: Fernanda Jovel</h2>
       <h3 style={{ textAlign: 'center', color: '#666', marginTop: 0 }}>React + TypeScript + Docker</h3>
-      
+
       <div style={{ marginTop: '2rem', border: '1px solid #e0e0e0', borderRadius: '8px', padding: '1.5rem' }}>
         <h4 style={{ margin: '0 0 1rem 0' }}>Estado del Backend (/api/v1/health/):</h4>
 
