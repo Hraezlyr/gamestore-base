@@ -54,7 +54,7 @@ function App() {
           </div>
         )}
       </div>
-    </div>
+      <h1>Stiven Palma</h1>
   );
 }
 
