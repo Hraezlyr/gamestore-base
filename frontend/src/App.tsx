@@ -54,9 +54,10 @@ function App() {
           </div>
         )}
       </div>
-      <h1>Carlos Prueba</h1>
     </div>
   );
 }
 
 export default App;
+
+<h1>Carlos Prueba</h1>
