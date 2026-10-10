@@ -5,7 +5,7 @@ import { ModuleCatalog } from './ModuleCatalog';
 registerModule({
   id: 'juegos_indie',
   name: 'Juegos Indie',
-  category: 'indie',
+  category: 'traditional', 
   component: () =>
     React.createElement(ModuleCatalog, {
       endpoint: '/api/v1/juegos_indie/',
