@@ -24,7 +24,7 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./backend:/app
-      - ./tests:/app/tests
+      - ./tests:/workspace/tests
     ports:
       - "8000:8000"
     environment:
@@ -35,6 +35,8 @@ services:
       - DB_PASSWORD=${DB_PASSWORD:-gamestore_password}
       - DB_HOST=db
       - DB_PORT=5432
+      - RAWG_API_KEY=${RAWG_API_KEY}
+      - PYTHONPATH=/app:/workspace
     depends_on:
       db:
         condition: service_healthy
