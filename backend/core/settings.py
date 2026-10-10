@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     # Librerías de terceros
     'rest_framework',
     'corsheaders',
+
+    # Aplicaciones locales
+    'shooter.apps.ShooterConfig',
 ]
 
 MIDDLEWARE = [
