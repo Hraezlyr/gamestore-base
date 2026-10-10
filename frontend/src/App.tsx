@@ -15,6 +15,24 @@ export const App: React.FC = () => {
   const activeModule = getModuleById(activeId);
   const ActiveComponent = activeModule?.component;
 
+feature/Leandro-prueba
+        {error && (
+          <div style={{ background: '#ffebee', color: '#c62828', padding: '1rem', borderRadius: '6px' }}>
+            <strong>Error de conexión:</strong> {error}
+          </div>
+        )}
+
+        {healthData && (
+          <div style={{ background: '#e8f5e9', color: '#2e7d32', padding: '1rem', borderRadius: '6px' }}>
+            <strong>Respuesta exitosa:</strong>
+            <pre style={{ margin: '0.5rem 0 0 0', background: 'rgba(0,0,0,0.05)', padding: '0.5rem', borderRadius: '4px' }}>
+              {JSON.stringify(healthData, null, 2)}
+            </pre>
+          </div>
+        )}
+      </div>
+      <h1>Leandro Mora </h1>
+
   return (
     <div className="layout-container">
       <Sidebar modules={modules} activeId={activeId} onSelect={setActiveId} />
@@ -32,6 +50,7 @@ export const App: React.FC = () => {
           )}
         </section>
       </main>
+ develop
     </div>
   );
 };

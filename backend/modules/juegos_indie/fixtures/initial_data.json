@@ -1,0 +1,28 @@
+[
+  {
+    "model": "juegos_indie.juegosindiegame",
+    "pk": 1,
+    "fields": {
+      "title": "Hollow Knight",
+      "description": "Una aventura de acción clásica en 2D en un vasto mundo interconectado.",
+      "price": "14.99",
+      "stock": 15,
+      "image_url": "https://placehold.co/300x180?text=Hollow+Knight",
+      "subgenre": "Metroidvania",
+      "created_at": "2026-10-07T12:00:00Z"
+    }
+  },
+  {
+    "model": "juegos_indie.juegosindiegame",
+    "pk": 2,
+    "fields": {
+      "title": "Celeste",
+      "description": "Ayuda a Madeline a sobrevivir a sus demonios internos en su viaje a la cumbre.",
+      "price": "19.99",
+      "stock": 10,
+      "image_url": "https://placehold.co/300x180?text=Celeste",
+      "subgenre": "Plataformas",
+      "created_at": "2026-10-07T12:00:00Z"
+    }
+  }
+]
