@@ -2,6 +2,7 @@ import React from 'react';
 import { registerModule } from '../../core/modulesRegistry';
 import { ModuleCatalog } from './ModuleCatalog';
 
+
 registerModule({
   id: 'template',
   name: 'Módulo Plantilla',
