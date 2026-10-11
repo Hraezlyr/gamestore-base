@@ -1,6 +1,7 @@
 import { formatPrice } from "../utils/formatters";
 import { useShooterGame } from "../hooks/useShooterGame";
 import { QueryError } from "../components/QueryError";
+import { GameArtwork } from "../components/GameArtwork";
 
 interface GameDetailProps {
     id: number;
@@ -22,21 +23,16 @@ export function GameDetail({ id, onBack }: GameDetailProps) {
 
             {game && (
                 <>
-                    <h1>{game.title}</h1>
-
-                    {game.image_url && (
-                        <img
-                            src={game.image_url}
-                            alt=""
-                            className="shooter-game-detail__image"
-                        />
-                    )}
-
-                    {game.description && <p>{game.description}</p>}
-
-                    <p>
-                        Desde {formatPrice(game.lowest_price, game.currency)}
-                    </p>
+                    <div className="shooter-game-detail__hero">
+                        <GameArtwork src={game.image_url} eager />
+                        <div className="shooter-game-detail__intro">
+                            <p className="shooter-eyebrow">Shooter / PC</p>
+                            <h1>{game.title}</h1>
+                            <p className="shooter-game-detail__description">{game.description || "Compara las ofertas disponibles y elige dónde empezar tu próxima partida."}</p>
+                            <div className="shooter-price"><span>Mejor precio disponible</span><strong>{formatPrice(game.lowest_price, game.currency)}</strong></div>
+                            <p className="shooter-muted">{game.offers.length} {game.offers.length === 1 ? "oferta disponible" : "ofertas disponibles"} · Precios en USD</p>
+                        </div>
+                    </div>
 
                     <div className="shooter-game-detail__offers">
                         <table>
@@ -54,8 +50,8 @@ export function GameDetail({ id, onBack }: GameDetailProps) {
 
                             <tbody>
                                 {game.offers.map((offer) => (
-                                    <tr key={offer.id}>
-                                        <th scope="row">{offer.store_name}</th>
+                                    <tr key={offer.id} className={Number(offer.price) === Number(game.lowest_price) ? "shooter-offer--best" : undefined}>
+                                        <th scope="row">{offer.store_name}{Number(offer.price) === Number(game.lowest_price) && <span className="shooter-best-price">Mejor precio</span>}</th>
                                         <td>
                                             {formatPrice(offer.price, offer.currency)}
                                         </td>
@@ -67,12 +63,13 @@ export function GameDetail({ id, onBack }: GameDetailProps) {
                                                 "es-NI",
                                             )}
                                         </td>
-                                        <td><a href={offer.purchase_url} target="_blank" rel="noopener noreferrer">Ver oferta en {offer.store_name}</a></td>
+                                        <td><a className="shooter-purchase-link" href={offer.purchase_url} target="_blank" rel="noopener noreferrer" aria-label={`Ver oferta en ${offer.store_name}`}>Ver oferta <span aria-hidden="true">↗</span></a></td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                     </div>
+                    <p className="shooter-muted">La compra se realiza en la tienda seleccionada. Comprueba el precio y la disponibilidad antes de comprar.</p>
                 </>
             )}
         </section>

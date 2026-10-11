@@ -1,136 +1,795 @@
+/* Keep the storefront theme inside this genre module. */
+:root:has(.shooter-page) {
+  color-scheme: dark;
+  background: #0d0e14;
+}
+
+#root:has(.shooter-page) {
+  width: 100%;
+  border: 0;
+}
+
 .shooter-page {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 1.5rem;
-    text-align: left;
+  --bg: #0d0e14;
+  --surface: #171820;
+  --surface-hover: #20212c;
+  --text: #a5a6ba;
+  --text-h: #f5f5fa;
+  --border: #2c2d3b;
+  --accent: #b4a0ff;
+  --primary: #7856e8;
+  --danger: #ff9fae;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  width: 100%;
+  color: var(--text);
+  background: var(--bg);
+  text-align: left;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.shooter-page *, .shooter-page *::before, .shooter-page *::after {
+  box-sizing: border-box;
+}
+
+.shooter-page [hidden] {
+  display: none;
+}
+
+.shooter-page h1, .shooter-page h2, .shooter-page h3 {
+  color: var(--text-h);
+  font-weight: 650;
+  letter-spacing: -0.035em;
 }
 
 .shooter-page h1 {
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    line-height: 1.15;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  line-height: 1.15;
+  margin: 0 0 1rem;
+}
+
+.shooter-page h2 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.shooter-page h3 {
+  font-size: 1.15rem;
 }
 
 .shooter-page p {
-    margin: 0.75rem 0;
+  margin: 0.75rem 0;
 }
 
-.shooter-page button {
-    padding: 0.65rem 1rem;
-    border: 1px solid var(--border);
-    border-radius: 0.5rem;
-    background: var(--bg);
-    color: var(--text-h);
-    font: inherit;
-    cursor: pointer;
+.shooter-page a {
+  color: var(--accent);
+  text-underline-offset: 4px;
+}
+
+.shooter-page button, .shooter-purchase-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text-h);
+  font: inherit;
+  font-weight: 550;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 150ms, border-color 150ms;
+}
+
+.shooter-page button:hover, .shooter-purchase-link:hover {
+  background: var(--surface-hover);
+  border-color: #686078;
 }
 
 .shooter-page button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
-.shooter-page button:focus-visible {
-    outline: 3px solid var(--accent);
-    outline-offset: 3px;
+.shooter-page :is(button, a, input, textarea):focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.shooter-page .shooter-button--primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.shooter-page .shooter-button--primary:hover {
+  background: #8967f1;
+}
+
+.shooter-page .shooter-button--danger {
+  color: var(--danger);
+  border-color: #613443;
+  background: #2b1b25;
+}
+
+.shooter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1.1rem max(1.25rem, calc((100% - 1240px) / 2));
+  border-bottom: 1px solid var(--border);
+}
+
+.shooter-page .shooter-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--text-h);
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 750;
+  letter-spacing: -0.5px;
+}
+
+.shooter-brand > span {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  background: var(--primary);
+  border-radius: 12px;
+  font-size: 18px;
+  letter-spacing: -1px;
+}
+
+.shooter-brand small {
+  display: block;
+  color: var(--text);
+  font-size: 9px;
+  letter-spacing: 2px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.shooter-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.shooter-nav button {
+  background: transparent;
+  border-color: transparent;
+  font-size: 13px;
+}
+
+.shooter-nav button[aria-current="page"] {
+  color: var(--accent);
+  background: #231c38;
+}
+
+.shooter-content {
+  width: 100%;
+  flex: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 3rem;
+  min-height: 65vh;
+}
+
+.shooter-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 250px;
+  align-items: center;
+  gap: 2rem;
+  overflow: hidden;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border: 1px solid #393049;
+  border-radius: 18px;
+  background: radial-gradient(ellipse at 90% 20%, #392a63 0, transparent 65%), #17151f;
+}
+
+.shooter-page .shooter-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 1rem;
+}
+
+.shooter-hero h1 {
+  font-size: 15px;
+  letter-spacing: 0;
+  color: #c7bfdc;
+  margin: 0 0 0.75rem;
+}
+
+.shooter-page .shooter-hero__headline {
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-weight: 750;
+  line-height: 1.08;
+  letter-spacing: -0.05em;
+  color: var(--text-h);
+  margin: 0 0 1rem;
+}
+
+.shooter-hero__description {
+  max-width: 30rem;
+}
+
+.shooter-hero__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.shooter-hero__tags span {
+  border: 1px solid #4b405f;
+  border-radius: 6px;
+  padding: 0.2rem 0.6rem;
+  font-size: 11px;
+  color: #c6bfd8;
+}
+
+.shooter-hero__mark {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 230px;
+  height: 230px;
+  border: 1px solid #6b548b;
+  border-radius: 50%;
+  background: repeating-linear-gradient(135deg, transparent 0 12px, #b4a0ff08 12px 13px);
+  box-shadow: 0 0 0 20px #b4a0ff06, 0 0 0 40px #b4a0ff04;
+  transform: rotate(-8deg);
+}
+
+.shooter-hero__mark > span {
+  color: #c9b8ff;
+  font-size: 84px;
+  font-weight: 850;
+  line-height: 1.1;
+  letter-spacing: -8px;
+}
+
+.shooter-hero__mark small {
+  color: #c9b8ff;
+  font-size: 9px;
+  letter-spacing: 4px;
+}
+
+.shooter-section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 2rem 0 1.25rem;
+}
+
+.shooter-section-heading > span {
+  font-size: 12px;
 }
 
 .shooter-catalog__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,
-            minmax(min(100%, 16rem), 1fr));
-    gap: 1rem;
-    margin: 1.5rem 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.1rem;
+  margin-bottom: 2rem;
 }
 
 .shooter-game-card {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    padding: 1rem;
-    border: 1px solid var(--border);
-    border-radius: 0.75rem;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  transition: border-color 150ms, transform 150ms;
 }
 
-.shooter-game-card__image {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-    border-radius: 0.5rem;
+.shooter-game-card:hover {
+  border-color: #6a568c;
+  transform: translateY(-3px);
 }
 
-.shooter-game-card button {
-    margin-top: auto;
+.shooter-game-card__cover {
+  position: relative;
+}
+
+.shooter-artwork {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #22202d;
+}
+
+.shooter-artwork img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.shooter-artwork__placeholder {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+  background: repeating-linear-gradient(135deg, transparent 0 24px, #b4a0ff08 24px 25px), linear-gradient(135deg, #302347, #1b2031);
+  color: #b7a3e3;
+}
+
+.shooter-artwork__placeholder span:first-child {
+  font-size: 48px;
+  letter-spacing: -5px;
+  font-weight: 800;
+}
+
+.shooter-artwork__placeholder span:last-child {
+  font-size: 9px;
+  letter-spacing: 3px;
+}
+
+.shooter-platform {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: white;
+  background: #0d0e14d9;
+  border: 1px solid #ffffff2e;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.shooter-game-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 1rem;
+}
+
+.shooter-game-card__body .shooter-eyebrow {
+  margin: 0 0 0.4rem;
+  font-size: 9px;
+}
+
+.shooter-game-card h2 {
+  font-size: 16px;
+  line-height: 1.4;
+  margin-bottom: 1.25rem;
+  overflow-wrap: anywhere;
+}
+
+.shooter-game-card__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: auto;
+}
+
+.shooter-price {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.shooter-price > span {
+  font-size: 11px;
+  color: var(--text);
+}
+
+.shooter-price strong {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-h);
+  letter-spacing: -0.5px;
+}
+
+.shooter-page .shooter-card-link {
+  min-height: 44px;
+  padding: 0.4rem 0;
+  font-size: 11px;
+  border: 0;
+  background: transparent;
+  color: var(--accent);
 }
 
 .shooter-pagination {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
 }
 
-.shooter-game-detail__image {
-    display: block;
-    width: 100%;
-    max-width: 50rem;
-    border-radius: 0.75rem;
+.shooter-game-detail__hero {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  align-items: start;
+  gap: 2rem;
+  margin-top: 2rem;
 }
 
-.shooter-game-detail__offers {
-    overflow-x: auto;
-    margin-top: 1.5rem;
+.shooter-game-detail__hero .shooter-artwork {
+  border-radius: 14px;
+  border: 1px solid var(--border);
 }
 
-.shooter-game-detail table {
-    width: 100%;
-    min-width: 38rem;
-    border-collapse: collapse;
+.shooter-game-detail__intro {
+  padding: 0.5rem 0;
+  min-width: 0;
 }
 
-.shooter-game-detail caption {
-    margin-bottom: 1rem;
-    text-align: left;
-    font-weight: 600;
+.shooter-game-detail__intro h1 {
+  overflow-wrap: anywhere;
 }
 
-.shooter-game-detail th,
-.shooter-game-detail td {
-    padding: 0.85rem;
-    border-bottom: 1px solid var(--border);
-    text-align: left;
+.shooter-game-detail__description {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.shooter-game-detail__intro .shooter-price {
+  margin-top: 1.5rem;
+}
+
+.shooter-game-detail__intro .shooter-price strong {
+  font-size: 32px;
+  color: #c1afff;
+}
+
+.shooter-muted {
+  color: var(--text);
+  font-size: 12px;
+}
+
+.shooter-game-detail__offers, .shooter-table-wrapper {
+  overflow-x: auto;
+  margin: 2rem 0 1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.shooter-page table {
+  width: 100%;
+  min-width: 650px;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.shooter-page caption {
+  padding: 1.1rem 1.25rem;
+  text-align: left;
+  color: var(--text-h);
+  font-weight: 650;
+  border-bottom: 1px solid var(--border);
+}
+
+.shooter-page th, .shooter-page td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.shooter-page thead th {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text);
+  background: #111218;
+}
+
+.shooter-page tbody th {
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+.shooter-page tbody tr:last-child :is(td, th) {
+  border-bottom: 0;
+}
+
+.shooter-offer--best {
+  background: #241e34;
+}
+
+.shooter-best-price {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 10px;
+  color: #c2b0ff;
+  font-weight: 500;
+}
+
+.shooter-page .shooter-purchase-link {
+  color: var(--accent);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.shooter-login, .shooter-editor {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 1rem 0 2rem;
+}
+
+.shooter-login > .shooter-eyebrow {
+  margin-top: 2.5rem;
 }
 
 .shooter-form {
-    max-width: 28rem;
-    margin: 1.5rem 0;
+  margin: 1.5rem 0;
 }
 
 .shooter-form fieldset {
-    display: grid;
-    gap: 0.75rem;
-    padding: 1rem;
-    border: 1px solid var(--border);
-    border-radius: 0.5rem;
+  display: grid;
+  gap: 0.6rem;
+  min-width: 0;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
 }
 
-.shooter-form input,
+.shooter-form legend {
+  color: var(--text);
+  font-size: 12px;
+  padding: 0 0.5rem;
+}
+
+.shooter-form label {
+  color: var(--text-h);
+  font-size: 13px;
+  margin-top: 0.5rem;
+}
+
+.shooter-form input, .shooter-form textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 0.75rem;
+  border: 1px solid #404153;
+  border-radius: 7px;
+  background: #111218;
+  color: var(--text-h);
+  font: inherit;
+}
+
 .shooter-form textarea {
-    min-width: 0;
-    padding: 0.65rem;
-    border: 1px solid var(--border);
-    border-radius: 0.4rem;
-    background: var(--bg);
-    color: var(--text-h);
-    font: inherit;
+  resize: vertical;
 }
 
-.shooter-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin-bottom: 1rem; }
-.shooter-table-wrapper { overflow-x: auto; margin: 1rem 0; }
-.shooter-admin table { width: 100%; min-width: 35rem; border-collapse: collapse; }
-.shooter-admin caption { text-align: left; margin-bottom: 1rem; }
-.shooter-admin th, .shooter-admin td { padding: 0.75rem; border-bottom: 1px solid var(--border); text-align: left; }
-.shooter-delete-dialog { max-width: 32rem; border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.5rem; color: var(--text-h); background: var(--bg); }
-.shooter-delete-dialog::backdrop { background: rgb(0 0 0 / 60%); }
-.shooter-page footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.85rem; }
-.shooter-page a { color: var(--accent); }
+.shooter-form [aria-invalid="true"] {
+  border-color: var(--danger);
+}
+
+.shooter-form [role="alert"], .shooter-form p[id$="-error"] {
+  color: var(--danger);
+  font-size: 13px;
+}
+
+.shooter-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.shooter-form .shooter-actions {
+  margin-top: 1rem;
+}
+
+.shooter-status {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 5px;
+  background: #332d20;
+  color: #ead49b;
+  font-size: 11px;
+}
+
+.shooter-status--linked {
+  background: #1b332d;
+  color: #9cdbc4;
+}
+
+.shooter-delete-dialog {
+  width: min(32rem, calc(100% - 2rem));
+  max-height: calc(100svh - 2rem);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  color: var(--text);
+  background: var(--surface);
+}
+
+.shooter-delete-dialog::backdrop {
+  background: #05060cd9;
+  backdrop-filter: blur(4px);
+}
+
+.shooter-delete-dialog .shooter-actions {
+  margin-top: 1.5rem;
+}
+
+.shooter-notice, .shooter-empty {
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border: 1px solid #613443;
+  border-radius: 12px;
+  background: #2b1b25;
+}
+
+.shooter-notice--success {
+  border-color: #2d5446;
+  background: #172a23;
+  color: #a4dec5;
+}
+
+.shooter-empty {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  border-color: var(--border);
+  background: var(--surface);
+}
+
+.shooter-skeleton {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  padding-bottom: 1rem;
+}
+
+.shooter-skeleton > div {
+  aspect-ratio: 16 / 9;
+  background: #272634;
+}
+
+.shooter-skeleton > span {
+  display: block;
+  height: 16px;
+  width: 70%;
+  margin: 1rem;
+  border-radius: 4px;
+  background: #272634;
+}
+
+.shooter-skeleton > span:last-child {
+  width: 45%;
+}
+
+.shooter-skeleton {
+  animation: shooter-pulse 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes shooter-pulse {
+  to {
+    opacity: 0.5;
+  }
+}
+
+.shooter-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.shooter-page footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1.5rem max(1.25rem, calc((100% - 1240px) / 2));
+  border-top: 1px solid var(--border);
+  font-size: 11px;
+}
+
+.shooter-page footer p {
+  max-width: 36rem;
+  margin: 0;
+}
+
+.shooter-footer__brand {
+  color: var(--text-h);
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.shooter-footer__brand > span {
+  color: var(--text);
+  font-weight: 400;
+}
+
+@media (max-width: 1100px) {
+  .shooter-catalog__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 800px) {
+  .shooter-catalog__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .shooter-hero {
+    grid-template-columns: 1fr;
+  }
+  .shooter-hero__mark {
+    display: none;
+  }
+  .shooter-game-detail__hero {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .shooter-header {
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+  .shooter-nav {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.25rem;
+  }
+  .shooter-nav button {
+    padding: 0.5rem;
+    font-size: 11px;
+  }
+  .shooter-content {
+    padding: 1rem 1rem 2rem;
+  }
+  .shooter-hero {
+    padding: 1.5rem 1.25rem;
+  }
+  .shooter-catalog__grid {
+    grid-template-columns: 1fr;
+  }
+  .shooter-section-heading {
+    align-items: start;
+  }
+  .shooter-form fieldset {
+    padding: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shooter-page *, .shooter-page *::before, .shooter-page *::after {
+    animation: none;
+    transition: none;
+  }
+  .shooter-game-card:hover {
+    transform: none;
+  }
+}

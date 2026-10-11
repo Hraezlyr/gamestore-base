@@ -86,6 +86,10 @@ test("direct detail links work on a narrow viewport without page overflow", asyn
   await page.goto("/shooter/#game/1");
   await expect(page.getByRole("heading", { name: "Portal 2", exact: true })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  await page.setViewportSize({ width: 320, height: 740 });
+  await page.getByRole("button", { name: "Volver al catálogo" }).click();
+  await expect(page.getByRole("button", { name: "Ver detalles de Portal 2" })).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 });
 
 test("administrator creates, edits, cancels deletion, deletes and logs out", async ({ page }) => {

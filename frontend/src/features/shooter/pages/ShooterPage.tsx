@@ -13,6 +13,11 @@ export function ShooterPage() {
   const session = useShooterSession();
   const activeView = view === "admin" && !session.authenticated ? "login" : view;
 
+  function showCatalog() {
+    if (activeView === "login") session.logout();
+    navigate("catalog");
+  }
+
   function logout() {
     session.logout();
     navigate("catalog");
@@ -20,29 +25,40 @@ export function ShooterPage() {
 
   return (
     <main className="shooter-page">
-      <nav className="shooter-actions" aria-label="Navegación del módulo">
-        <button type="button" onClick={() => {
-          if (activeView === "login") session.logout();
-          navigate("catalog");
-        }}>Catálogo</button>
-        {session.authenticated ? <>
-          <button type="button" onClick={() => navigate("admin")}>Administración</button>
-          <button type="button" onClick={logout}>Cerrar sesión</button>
-        </> : <button type="button" disabled={activeView === "login"} onClick={() => navigate("login")}>Acceso de administración</button>}
-      </nav>
-      <div hidden={activeView !== "catalog" || selectedId !== null}>
-        <ShooterCatalog key={catalogRevision} onSelect={openGame} />
+      <header className="shooter-header">
+        <a className="shooter-brand" href="#catalog" aria-label="GameStore, inicio" onClick={event => {
+          event.preventDefault();
+          showCatalog();
+        }}>
+          <span aria-hidden="true">GS</span>
+          <div>GameStore<small>SHOOTERS / PC</small></div>
+        </a>
+        <nav className="shooter-nav" aria-label="Navegación del módulo">
+          <button type="button" onClick={showCatalog} aria-current={activeView === "catalog" ? "page" : undefined}>Catálogo</button>
+          {session.authenticated ? <>
+            <button type="button" aria-current={activeView === "admin" ? "page" : undefined} onClick={() => navigate("admin")}>Administración</button>
+            <button type="button" onClick={logout}>Cerrar sesión</button>
+          </> : <button type="button" disabled={activeView === "login"} onClick={() => navigate("login")}>Acceso de administración</button>}
+        </nav>
+      </header>
+      <div className="shooter-content">
+        <div hidden={activeView !== "catalog" || selectedId !== null}>
+          <ShooterCatalog key={catalogRevision} onSelect={openGame} />
+        </div>
+        {activeView === "catalog" && selectedId !== null && <GameDetail key={selectedId} id={selectedId} onBack={showCatalog} />}
+        {activeView === "login" && <LoginForm onLogin={async credentials => {
+          await session.login(credentials);
+          navigate("admin");
+        }} onCancel={showCatalog} />}
+        {activeView === "admin" && <AdminGames request={session.request} onChanged={() => setCatalogRevision(current => current + 1)} />}
       </div>
-      {activeView === "catalog" && selectedId !== null && <GameDetail key={selectedId} id={selectedId} onBack={() => navigate("catalog")} />}
-      {activeView === "login" && <LoginForm onLogin={async credentials => {
-        await session.login(credentials);
-        navigate("admin");
-      }} onCancel={() => navigate("catalog")} />}
-      {activeView === "admin" && <AdminGames request={session.request} onChanged={() => setCatalogRevision(current => current + 1)} />}
       <footer>
-        Catálogo e imágenes de <a href="https://rawg.io/">RAWG</a>.
-        {" "}Precios de <a href="https://www.cheapshark.com/">CheapShark</a>.
-        {" "}Los precios pueden cambiar después de la sincronización.
+        <span className="shooter-footer__brand">GameStore <span>/ Shooters PC</span></span>
+        <p>
+          Catálogo e imágenes de <a href="https://rawg.io/">RAWG</a>.
+          {" "}Precios de <a href="https://www.cheapshark.com/">CheapShark</a>.
+          {" "}Los precios pueden cambiar después de la sincronización.
+        </p>
       </footer>
     </main>
   );
