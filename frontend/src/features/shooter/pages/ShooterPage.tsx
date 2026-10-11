@@ -39,6 +39,11 @@ export function ShooterPage() {
         navigate("admin");
       }} onCancel={() => navigate("catalog")} />}
       {activeView === "admin" && <AdminGames request={session.request} onChanged={() => setCatalogRevision(current => current + 1)} />}
+      <footer>
+        Catálogo e imágenes de <a href="https://rawg.io/">RAWG</a>.
+        {" "}Precios de <a href="https://www.cheapshark.com/">CheapShark</a>.
+        {" "}Los precios pueden cambiar después de la sincronización.
+      </footer>
     </main>
   );
 }

@@ -1,5 +1,6 @@
 import { formatPrice } from "../utils/formatters";
 import { useShooterGame } from "../hooks/useShooterGame";
+import { QueryError } from "../components/QueryError";
 
 interface GameDetailProps {
     id: number;
@@ -7,7 +8,7 @@ interface GameDetailProps {
 }
 
 export function GameDetail({ id, onBack }: GameDetailProps) {
-    const { game, error, loading } = useShooterGame(id);
+    const { game, error, loading, retry } = useShooterGame(id);
 
     return (
         <section className="shooter-game-detail">
@@ -17,7 +18,7 @@ export function GameDetail({ id, onBack }: GameDetailProps) {
 
             {loading && <p role="status">Cargando juego…</p>}
 
-            {error && <p role="alert">{error}</p>}
+            {error && <QueryError message={error} onRetry={retry} />}
 
             {game && (
                 <>
@@ -47,6 +48,7 @@ export function GameDetail({ id, onBack }: GameDetailProps) {
                                     <th scope="col">Precio actual</th>
                                     <th scope="col">Precio regular</th>
                                     <th scope="col">Última sincronización</th>
+                                    <th scope="col">Oferta</th>
                                 </tr>
                             </thead>
 
@@ -65,6 +67,7 @@ export function GameDetail({ id, onBack }: GameDetailProps) {
                                                 "es-NI",
                                             )}
                                         </td>
+                                        <td><a href={offer.purchase_url} target="_blank" rel="noopener noreferrer">Ver oferta en {offer.store_name}</a></td>
                                     </tr>
                                 ))}
                             </tbody>

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from shooter.models import GameOffer, ShooterGame
+from shooter.links import cheapshark_deal_url
 
 
 class ShooterGameListSerializer(serializers.ModelSerializer):
@@ -26,6 +27,7 @@ class ShooterGameListSerializer(serializers.ModelSerializer):
         return "USD"
 
 class GameOfferSerializer(serializers.ModelSerializer):
+    purchase_url = serializers.SerializerMethodField()
     store_id = serializers.IntegerField(read_only=True)
     store_name = serializers.CharField(
         source="store.name",
@@ -42,8 +44,12 @@ class GameOfferSerializer(serializers.ModelSerializer):
             "retail_price",
             "currency",
             "last_synced_at",
+            "purchase_url",
         )
         read_only_fields = fields
+
+    def get_purchase_url(self, obj):
+        return cheapshark_deal_url(obj.cheapshark_deal_id)
 
 
 class ShooterGameDetailSerializer(ShooterGameListSerializer):

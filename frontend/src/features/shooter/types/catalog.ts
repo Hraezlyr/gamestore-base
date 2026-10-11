@@ -14,6 +14,7 @@ export interface GameOffer {
     retail_price: string;
     currency: string;
     last_synced_at: string;
+    purchase_url: string;
 }
 
 export interface ShooterGameDetail extends ShooterGameSummary {

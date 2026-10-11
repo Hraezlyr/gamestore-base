@@ -161,6 +161,10 @@ class CatalogApiTests(APITestCase):
         self.assertEqual(offers[0]["retail_price"], "19.99")
         self.assertEqual(offers[0]["currency"], "USD")
         self.assertIsNotNone(offers[0]["last_synced_at"])
+        self.assertEqual(
+            offers[0]["purchase_url"],
+            "https://www.cheapshark.com/redirect?dealID=cheaper",
+        )
 
     def test_detail_returns_404_for_unavailable_game(self):
         game = self.create_available_game(
