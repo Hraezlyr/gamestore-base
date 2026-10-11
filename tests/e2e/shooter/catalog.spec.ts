@@ -2,6 +2,10 @@ import { expect, test } from "@playwright/test";
 import type { Page } from "@playwright/test";
 
 async function api(page: Page, expired = false) {
+  await page.route("**/test-*.svg", route => route.fulfill({
+    contentType: "image/svg+xml",
+    body: '<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360"><rect width="640" height="360" fill="#7856e8"/></svg>',
+  }));
   const summary = { id: 1, title: "Portal 2", image_url: "", lowest_price: "7.99", currency: "USD" };
   const games = [
     { ...summary, description: "Descripción", rawg_id: 4200, cheapshark_id: "36", steam_app_id: "620", created_at: "2026-01-01", updated_at: "2026-01-01" },
@@ -49,9 +53,10 @@ async function api(page: Page, expired = false) {
     }
     if (path.endsWith("/games/1/")) return respond({
       ...summary, description: "Descripción",
+      screenshots: [{ id: 10, image_url: "/test-shot-1.svg" }, { id: 20, image_url: "/test-shot-2.svg" }],
       offers: [
-        { id: 1, store_id: 3, store_name: "Otra tienda", price: "7.99", retail_price: "19.99", currency: "USD", last_synced_at: "2026-01-01T12:00:00Z", purchase_url: "https://www.cheapshark.com/redirect?dealID=one%2B%3D" },
-        { id: 2, store_id: 1, store_name: "Steam", price: "9.99", retail_price: "19.99", currency: "USD", last_synced_at: "2026-01-01T12:00:00Z", purchase_url: "https://www.cheapshark.com/redirect?dealID=two" },
+        { id: 1, store_id: 3, store_name: "Otra tienda", store_icon_url: "", price: "7.99", retail_price: "19.99", currency: "USD", last_synced_at: "2026-01-01T12:00:00Z", purchase_url: "https://www.cheapshark.com/redirect?dealID=one%2B%3D" },
+        { id: 2, store_id: 1, store_name: "Steam", store_icon_url: "/test-store.svg", price: "9.99", retail_price: "19.99", currency: "USD", last_synced_at: "2026-01-01T12:00:00Z", purchase_url: "https://www.cheapshark.com/redirect?dealID=two" },
       ],
     });
     return respond({ count: 1, next: null, previous: null, results: [summary] });
@@ -76,8 +81,25 @@ test("public catalog shows each store price and a safe purchase link", async ({ 
   await expect(page.getByRole("row", { name: /Otra tienda/ })).toContainText("7.99");
   await expect(page.getByRole("link", { name: "Ver oferta en Steam" })).toHaveAttribute("href", "https://www.cheapshark.com/redirect?dealID=two");
   await expect(page.getByRole("link", { name: "RAWG", exact: true })).toBeVisible();
+  await expect(steam.locator(".shooter-store-icon img")).toHaveAttribute("src", "/test-store.svg");
   await page.goBack();
   await expect(page.getByRole("heading", { name: "Shooters para PC" })).toBeVisible();
+});
+
+test("gallery selects screenshots, opens full screen and closes with keyboard", async ({ page }) => {
+  await api(page);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/shooter/#game/1");
+  await page.getByRole("button", { name: "Mostrar Portal 2 — captura 2", exact: true }).click();
+  await expect(page.locator(".shooter-gallery__preview img")).toHaveAttribute("src", "/test-shot-2.svg");
+  await page.getByRole("button", { name: "Ampliar imagen de Portal 2" }).click();
+  await expect(page.getByRole("button", { name: "Cerrar galería", exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Imagen anterior", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Imagen anterior", exact: true })).toBeDisabled();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("button", { name: "Cerrar galería", exact: true })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Ampliar imagen de Portal 2" })).toBeFocused();
 });
 
 test("direct detail links work on a narrow viewport without page overflow", async ({ page }) => {

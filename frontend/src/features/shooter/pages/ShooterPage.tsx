@@ -6,6 +6,8 @@ import { AdminGames } from "./AdminGames";
 import { GameDetail } from "./GameDetail";
 import { ShooterCatalog } from "./ShooterCatalog";
 import "../styles/shooter.css";
+import "../styles/media.css";
+import { LayoutGrid, LogIn, LogOut, Settings2 } from "lucide-react";
 
 export function ShooterPage() {
   const { selectedId, view, navigate, openGame } = useShooterNavigation();
@@ -34,11 +36,11 @@ export function ShooterPage() {
           <div>GameStore<small>SHOOTERS / PC</small></div>
         </a>
         <nav className="shooter-nav" aria-label="Navegación del módulo">
-          <button type="button" onClick={showCatalog} aria-current={activeView === "catalog" ? "page" : undefined}>Catálogo</button>
+          <button type="button" onClick={showCatalog} aria-current={activeView === "catalog" ? "page" : undefined}><LayoutGrid size={15} aria-hidden="true" /> Catálogo</button>
           {session.authenticated ? <>
-            <button type="button" aria-current={activeView === "admin" ? "page" : undefined} onClick={() => navigate("admin")}>Administración</button>
-            <button type="button" onClick={logout}>Cerrar sesión</button>
-          </> : <button type="button" disabled={activeView === "login"} onClick={() => navigate("login")}>Acceso de administración</button>}
+            <button type="button" aria-current={activeView === "admin" ? "page" : undefined} onClick={() => navigate("admin")}><Settings2 size={15} aria-hidden="true" /> Administración</button>
+            <button type="button" onClick={logout}><LogOut size={15} aria-hidden="true" /> Cerrar sesión</button>
+          </> : <button type="button" disabled={activeView === "login"} onClick={() => navigate("login")}><LogIn size={15} aria-hidden="true" /> Acceso de administración</button>}
         </nav>
       </header>
       <div className="shooter-content">

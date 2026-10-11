@@ -12,8 +12,11 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
+    "lucide-react": "^1.55.0",
+    "motion": "^14.1.0",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "yet-another-react-lightbox": "^3.32.2"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

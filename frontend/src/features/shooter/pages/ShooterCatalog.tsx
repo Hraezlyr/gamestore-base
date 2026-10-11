@@ -4,12 +4,13 @@ import { Pagination } from "../components/Pagination";
 import { QueryError } from "../components/QueryError";
 import { useShooterCatalog } from "../hooks/useShooterCatalog";
 import { CatalogLoading } from "../components/CatalogLoading";
+import { AnimatedSection } from "../components/AnimatedSection";
 
 export function ShooterCatalog({ onSelect }: { onSelect: (id: number) => void }) {
   const [page, setPage] = useState(1);
   const { data, error, loading, retry } = useShooterCatalog(page);
   return (
-    <section className="shooter-catalog">
+    <AnimatedSection className="shooter-catalog">
       <header className="shooter-hero">
         <div>
           <p className="shooter-eyebrow">GameStore / Colección PC</p>
@@ -30,6 +31,6 @@ export function ShooterCatalog({ onSelect }: { onSelect: (id: number) => void })
           </div>}
       </>}
       <Pagination page={page} loading={loading} hasNext={Boolean(data?.next)} onChange={setPage} />
-    </section>
+    </AnimatedSection>
   );
 }

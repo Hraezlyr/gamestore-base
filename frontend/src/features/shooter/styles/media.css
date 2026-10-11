@@ -1,0 +1,63 @@
+.shooter-gallery { min-width: 0; }
+.shooter-page .shooter-gallery__preview {
+  display: block;
+  position: relative;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 14px;
+  background: var(--surface);
+}
+.shooter-gallery__expand {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.65rem;
+  border: 1px solid #ffffff30;
+  border-radius: 7px;
+  background: #0d0e14de;
+  color: white;
+  font-size: 11px;
+}
+.shooter-gallery__thumbnails {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.75rem 3px;
+  scrollbar-width: thin;
+}
+.shooter-page .shooter-gallery__thumbnails button {
+  flex: 0 0 90px;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 7px;
+  overflow: hidden;
+  opacity: 0.6;
+}
+.shooter-page .shooter-gallery__thumbnails button[aria-pressed="true"] {
+  border-color: var(--accent);
+  opacity: 1;
+}
+.shooter-page .shooter-gallery__thumbnails button:hover { opacity: 1; }
+.shooter-gallery__thumbnails .shooter-artwork { border: 0; border-radius: 0; }
+.shooter-store-name { display: flex; align-items: center; gap: 0.75rem; }
+.shooter-store-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 38px;
+  width: 38px;
+  height: 38px;
+  padding: 7px;
+  border: 1px solid #ffffff26;
+  border-radius: 8px;
+  background: #ffffff0a;
+  color: var(--text);
+}
+.shooter-store-icon img { width: 100%; height: 100%; object-fit: contain; }
+.shooter-page svg { flex-shrink: 0; }

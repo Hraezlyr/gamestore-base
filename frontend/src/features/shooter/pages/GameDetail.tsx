@@ -1,7 +1,10 @@
 import { formatPrice } from "../utils/formatters";
 import { useShooterGame } from "../hooks/useShooterGame";
 import { QueryError } from "../components/QueryError";
-import { GameArtwork } from "../components/GameArtwork";
+import { ArrowLeft } from "lucide-react";
+import { AnimatedSection } from "../components/AnimatedSection";
+import { GameGallery } from "../components/GameGallery";
+import { GameOffers } from "../components/GameOffers";
 
 interface GameDetailProps {
     id: number;
@@ -12,9 +15,9 @@ export function GameDetail({ id, onBack }: GameDetailProps) {
     const { game, error, loading, retry } = useShooterGame(id);
 
     return (
-        <section className="shooter-game-detail">
+        <AnimatedSection className="shooter-game-detail">
             <button type="button" onClick={onBack}>
-                Volver al catálogo
+                <ArrowLeft size={16} aria-hidden="true" /> Volver al catálogo
             </button>
 
             {loading && <p role="status">Cargando juego…</p>}
@@ -24,7 +27,7 @@ export function GameDetail({ id, onBack }: GameDetailProps) {
             {game && (
                 <>
                     <div className="shooter-game-detail__hero">
-                        <GameArtwork src={game.image_url} eager />
+                        <GameGallery title={game.title} cover={game.image_url} screenshots={game.screenshots ?? []} />
                         <div className="shooter-game-detail__intro">
                             <p className="shooter-eyebrow">Shooter / PC</p>
                             <h1>{game.title}</h1>
@@ -34,44 +37,10 @@ export function GameDetail({ id, onBack }: GameDetailProps) {
                         </div>
                     </div>
 
-                    <div className="shooter-game-detail__offers">
-                        <table>
-                            <caption>Precios por tienda</caption>
-
-                            <thead>
-                                <tr>
-                                    <th scope="col">Tienda</th>
-                                    <th scope="col">Precio actual</th>
-                                    <th scope="col">Precio regular</th>
-                                    <th scope="col">Última sincronización</th>
-                                    <th scope="col">Oferta</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                {game.offers.map((offer) => (
-                                    <tr key={offer.id} className={Number(offer.price) === Number(game.lowest_price) ? "shooter-offer--best" : undefined}>
-                                        <th scope="row">{offer.store_name}{Number(offer.price) === Number(game.lowest_price) && <span className="shooter-best-price">Mejor precio</span>}</th>
-                                        <td>
-                                            {formatPrice(offer.price, offer.currency)}
-                                        </td>
-                                        <td>
-                                            {formatPrice(offer.retail_price, offer.currency)}
-                                        </td>
-                                        <td>
-                                            {new Date(offer.last_synced_at).toLocaleString(
-                                                "es-NI",
-                                            )}
-                                        </td>
-                                        <td><a className="shooter-purchase-link" href={offer.purchase_url} target="_blank" rel="noopener noreferrer" aria-label={`Ver oferta en ${offer.store_name}`}>Ver oferta <span aria-hidden="true">↗</span></a></td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                    <GameOffers offers={game.offers} lowestPrice={game.lowest_price} />
                     <p className="shooter-muted">La compra se realiza en la tienda seleccionada. Comprueba el precio y la disponibilidad antes de comprar.</p>
                 </>
             )}
-        </section>
+        </AnimatedSection>
     );
 }

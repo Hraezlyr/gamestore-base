@@ -1,4 +1,6 @@
 import { useId, useState } from "react";
+import { Save, X } from "lucide-react";
+import { AnimatedSection } from "./AnimatedSection";
 import type { FormEvent } from "react";
 import { useFormSubmission } from "../hooks/useFormSubmission";
 import type { AdminGame, GameInput } from "../types/admin";
@@ -28,7 +30,7 @@ export function GameForm({ game, onSave, onCancel }: GameFormProps) {
   }
 
   return (
-    <section className="shooter-editor">
+    <AnimatedSection className="shooter-editor">
       <p className="shooter-eyebrow">Gestión del catálogo</p>
       <h1>{game ? "Editar juego" : "Nuevo juego"}</h1>
       {game?.rawg_id && <p>La sincronización puede actualizar el título y la imagen con los datos de origen.</p>}
@@ -45,12 +47,12 @@ export function GameForm({ game, onSave, onCancel }: GameFormProps) {
           <input id={`${id}-image_url`} name="image_url" type="url" maxLength={1000} value={input.image_url} onChange={e => change("image_url", e.target.value)} aria-invalid={Boolean(fields.image_url)} aria-describedby={fields.image_url ? `${id}-image_url-error` : undefined} />
           {fieldErrors("image_url")}
           <div className="shooter-actions">
-            <button className="shooter-button--primary" type="submit">{submitting ? "Guardando…" : "Guardar juego"}</button>
-            <button type="button" onClick={onCancel}>Cancelar</button>
+            <button className="shooter-button--primary" type="submit"><Save size={16} aria-hidden="true" />{submitting ? "Guardando…" : "Guardar juego"}</button>
+            <button type="button" onClick={onCancel}><X size={16} aria-hidden="true" /> Cancelar</button>
           </div>
         </fieldset>
         {error && <p role="alert">{error}</p>}
       </form>
-    </section>
+    </AnimatedSection>
   );
 }

@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Pencil, Plus, Trash2 } from "lucide-react";
+import { AnimatedSection } from "../components/AnimatedSection";
 import { DeleteGameDialog } from "../components/DeleteGameDialog";
 import { GameForm } from "../components/GameForm";
 import { Pagination } from "../components/Pagination";
@@ -43,9 +45,9 @@ export function AdminGames({ request, onChanged }: AdminGamesProps) {
   if (editor) return <GameForm key={editor.kind === "edit" ? editor.game.id : "new"} game={editor.kind === "edit" ? editor.game : null} onSave={save} onCancel={() => setEditor(null)} />;
 
   return (
-    <section className="shooter-admin">
+    <AnimatedSection className="shooter-admin">
       <div className="shooter-section-heading"><div><p className="shooter-eyebrow">Gestión del catálogo</p><h1>Administración de juegos</h1></div>
-      <button className="shooter-button--primary" type="button" onClick={() => setEditor({ kind: "create" })}>Nuevo juego</button></div>
+      <button className="shooter-button--primary" type="button" onClick={() => setEditor({ kind: "create" })}><Plus size={16} aria-hidden="true" /> Nuevo juego</button></div>
       {message && <p className="shooter-notice shooter-notice--success" role="status">{message}</p>}
       {loading && <p role="status">Cargando juegos…</p>}
       {error && <QueryError message={error} onRetry={retry} />}
@@ -59,14 +61,14 @@ export function AdminGames({ request, onChanged }: AdminGamesProps) {
               <th scope="row">{game.title}</th>
               <td><span className={`shooter-status ${game.cheapshark_id ? "shooter-status--linked" : ""}`}>{game.cheapshark_id ? "Vinculado" : "Pendiente de vinculación"}</span></td>
               <td><div className="shooter-actions">
-                <button type="button" aria-label={`Editar ${game.title}`} onClick={() => setEditor({ kind: "edit", game })}>Editar</button>
-                <button className="shooter-button--danger" type="button" aria-label={`Eliminar ${game.title}`} onClick={() => setDeleting(game)}>Eliminar</button>
+                <button type="button" aria-label={`Editar ${game.title}`} onClick={() => setEditor({ kind: "edit", game })}><Pencil size={14} aria-hidden="true" /> Editar</button>
+                <button className="shooter-button--danger" type="button" aria-label={`Eliminar ${game.title}`} onClick={() => setDeleting(game)}><Trash2 size={14} aria-hidden="true" /> Eliminar</button>
               </div></td>
             </tr>)}</tbody>
           </table></div>}
       </>}
       <Pagination page={page} loading={loading} hasNext={Boolean(data?.next)} onChange={setPage} />
       {deleting && <DeleteGameDialog game={deleting} onDelete={remove} onCancel={() => setDeleting(null)} />}
-    </section>
+    </AnimatedSection>
   );
 }

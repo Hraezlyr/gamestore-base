@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { ArrowLeft, LogIn } from "lucide-react";
+import { AnimatedSection } from "./AnimatedSection";
 import type { FormEvent } from "react";
 import { useFormSubmission } from "../hooks/useFormSubmission";
 import type { LoginCredentials } from "../types/auth";
@@ -18,8 +20,8 @@ export function LoginForm({ onLogin, onCancel }: LoginFormProps) {
     if (await submit({ username: username.trim(), password })) setPassword("");
   }
   return (
-    <section className="shooter-login">
-      <button type="button" onClick={onCancel} disabled={submitting}>Volver al catálogo</button>
+    <AnimatedSection className="shooter-login">
+      <button type="button" onClick={onCancel} disabled={submitting}><ArrowLeft size={16} aria-hidden="true" /> Volver al catálogo</button>
       <p className="shooter-eyebrow">GameStore / Administración</p>
       <h1>Acceso de administración</h1>
       <p className="shooter-muted">Inicia sesión con tu cuenta de administrador para gestionar el catálogo.</p>
@@ -30,10 +32,10 @@ export function LoginForm({ onLogin, onCancel }: LoginFormProps) {
           <input id="shooter-username" name="username" autoComplete="username" value={username} onChange={event => setUsername(event.target.value)} required />
           <label htmlFor="shooter-password">Contraseña</label>
           <input id="shooter-password" name="password" type="password" autoComplete="current-password" value={password} onChange={event => setPassword(event.target.value)} required />
-          <button className="shooter-button--primary" type="submit">{submitting ? "Iniciando sesión…" : "Iniciar sesión"}</button>
+          <button className="shooter-button--primary" type="submit"><LogIn size={16} aria-hidden="true" />{submitting ? "Iniciando sesión…" : "Iniciar sesión"}</button>
         </fieldset>
         {error && <p role="alert">{error}</p>}
       </form>
-    </section>
+    </AnimatedSection>
   );
 }

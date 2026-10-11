@@ -10,6 +10,7 @@ export interface GameOffer {
     id: number;
     store_id: number;
     store_name: string;
+    store_icon_url: string;
     price: string;
     retail_price: string;
     currency: string;
@@ -19,5 +20,11 @@ export interface GameOffer {
 
 export interface ShooterGameDetail extends ShooterGameSummary {
     description: string;
+    screenshots: GameScreenshot[];
     offers: GameOffer[];
+}
+
+export interface GameScreenshot {
+    id: number;
+    image_url: string;
 }

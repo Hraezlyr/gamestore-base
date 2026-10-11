@@ -1,6 +1,7 @@
 import { formatPrice } from "../utils/formatters";
 import type { ShooterGameSummary } from "../types/catalog";
 import { GameArtwork } from "./GameArtwork";
+import { ArrowUpRight } from "lucide-react";
 
 interface GameCardProps {
   game: ShooterGameSummary;
@@ -28,7 +29,7 @@ export function GameCard({ game, onSelect }: GameCardProps) {
             onClick={() => onSelect(game.id)}
             aria-label={`Ver detalles de ${game.title}`}
           >
-            Ver detalles <span aria-hidden="true">↗</span>
+            Ver detalles <ArrowUpRight size={14} aria-hidden="true" />
           </button>
         </div>
       </div>
