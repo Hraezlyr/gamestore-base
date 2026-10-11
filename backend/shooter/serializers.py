@@ -59,3 +59,26 @@ class ShooterGameDetailSerializer(ShooterGameListSerializer):
             "offers",
         )
         read_only_fields = fields
+
+class ShooterGameAdminSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShooterGame
+        fields = (
+            "id",
+            "title",
+            "description",
+            "image_url",
+            "rawg_id",
+            "cheapshark_id",
+            "steam_app_id",
+            "created_at",
+            "updated_at",
+        )
+        read_only_fields = (
+            "id",
+            "rawg_id",
+            "cheapshark_id",
+            "steam_app_id",
+            "created_at",
+            "updated_at",
+        )

@@ -1,9 +1,16 @@
-from rest_framework.generics import ListAPIView, RetrieveAPIView
-from rest_framework.permissions import AllowAny
+from rest_framework.generics import (
+    ListAPIView,
+    ListCreateAPIView,
+    RetrieveAPIView,
+    RetrieveUpdateDestroyAPIView,
+)
+from rest_framework.permissions import AllowAny, IsAdminUser
 
 from shooter.pagination import ShooterCatalogPagination
 from shooter.selectors import public_catalog, public_game_details
+from shooter.models import ShooterGame
 from shooter.serializers import (
+    ShooterGameAdminSerializer,
     ShooterGameDetailSerializer,
     ShooterGameListSerializer,
 )
@@ -23,3 +30,15 @@ class ShooterGameDetailView(RetrieveAPIView):
 
     def get_queryset(self):
         return public_game_details()
+
+class ShooterGameAdminListView(ListCreateAPIView):
+    queryset = ShooterGame.objects.all()
+    serializer_class = ShooterGameAdminSerializer
+    pagination_class = ShooterCatalogPagination
+    permission_classes = [IsAdminUser]
+
+
+class ShooterGameAdminDetailView(RetrieveUpdateDestroyAPIView):
+    queryset = ShooterGame.objects.all()
+    serializer_class = ShooterGameAdminSerializer
+    permission_classes = [IsAdminUser]
