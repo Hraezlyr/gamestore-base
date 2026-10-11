@@ -10,7 +10,7 @@ staticfiles/
 venv/
 ENV/
 
-# Node & Vue (Vite)
+# Node & React (Vite)
 node_modules/
 dist/
 dist-ssr/
@@ -31,6 +31,23 @@ postgres_data/
 .DS_Store
 Thumbs.db
 
+historia-tecnica.md
+
+# Artefactos locales y pruebas exploratorias de proveedores
+/output/
+/tmp/
+/scripts/*_probe.py
+
+# Cachés y cobertura de pruebas
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage/
+.nyc_output/
+*.tsbuildinfo
 
 # Browser test artifacts
 playwright-report/
