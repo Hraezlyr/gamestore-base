@@ -25,7 +25,7 @@ class AdminGameApiTests(APITestCase):
             kwargs={"pk": self.game.pk},
         )
 
-    def assert_access_denied(self):
+    def assert_access_denied(self, expected_status):
         requests = (
             ("get", self.list_url, None),
             ("post", self.list_url, {"title": "Nuevo"}),
@@ -42,19 +42,19 @@ class AdminGameApiTests(APITestCase):
                     data=data,
                     format="json",
                 )
-                self.assertEqual(response.status_code, 403)
+                self.assertEqual(response.status_code, expected_status)
 
         self.game.refresh_from_db()
         self.assertEqual(self.game.title, "Portal 2")
         self.assertEqual(ShooterGame.objects.count(), 1)
+        self.assertEqual(response.status_code, expected_status)
 
     def test_rejects_anonymous_user(self):
-        self.assert_access_denied()
+        self.assert_access_denied(401)
 
     def test_rejects_authenticated_non_admin(self):
         self.client.force_authenticate(user=self.user)
-
-        self.assert_access_denied()
+        self.assert_access_denied(403)
 
     def test_admin_lists_and_reads_game_without_offers(self):
         self.client.force_authenticate(user=self.admin)
