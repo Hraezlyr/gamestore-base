@@ -10,6 +10,8 @@
 }
 
 .shooter-page, .shooter-offer-popover {
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: var(--sans);
   --bg: #0d0e14;
   --surface: #171820;
   --surface-hover: #20212c;
@@ -31,6 +33,7 @@
   background: var(--bg);
   text-align: left;
   font-size: 15px;
+  font-family: var(--sans);
   line-height: 1.6;
 }
 

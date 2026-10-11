@@ -1,62 +1,29 @@
-import { useEffect, useState } from "react";
+import { getModuleById, getRegisteredModules } from "./core/modulesRegistry";
+import { useModuleNavigation } from "./core/useModuleNavigation";
+import { Sidebar } from "./shared/components/Sidebar";
 
-import { ShooterPage } from "./features/shooter/pages/ShooterPage";
-
-interface HealthResponse {
-  status?: string;
-  detail?: string;
-  [key: string]: unknown;
-}
-
-function HealthPage() {
-  const [data, setData] = useState<HealthResponse | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    fetch("/api/v1/health/", { signal: controller.signal })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
-        }
-
-        return response.json();
-      })
-      .then((result: HealthResponse) => {
-        if (!controller.signal.aborted) setData(result);
-      })
-      .catch((cause: unknown) => {
-        if (controller.signal.aborted) return;
-
-        setError(
-          cause instanceof Error ? cause.message : "Error de conexión",
-        );
-      });
-
-    return () => controller.abort();
-  }, []);
+export default function App() {
+  const modules = getRegisteredModules();
+  const { activeId, selectModule } = useModuleNavigation(modules);
+  const activeModule = getModuleById(activeId);
+  const ActiveComponent = activeModule?.component;
+  const fullWidth = activeModule?.layout === "full-width";
 
   return (
-    <main>
-      <h1>GameStore</h1>
-      <h2>Estado del backend</h2>
-
-      {!data && !error && <p role="status">Consultando…</p>}
-      {error && <p role="alert">{error}</p>}
-      {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
-    </main>
+    <div className="layout-container">
+      <Sidebar modules={modules} activeId={activeId} onSelect={selectModule} />
+      <main className="main-content" id="module-content">
+        {!fullWidth && <header className="content-header">
+          <h1>{activeModule?.name ?? "Catálogo GameStore"}</h1>
+        </header>}
+        <div className={fullWidth ? "content-body content-body--full-width" : "content-body"}>
+          {ActiveComponent ? <ActiveComponent key={activeId} /> : (
+            <div className="module-placeholder">
+              <p>No hay módulos seleccionados o registrados en el sistema.</p>
+            </div>
+          )}
+        </div>
+      </main>
+    </div>
   );
 }
-
-function App() {
-  const path = window.location.pathname;
-
-  if (path === "/shooter" || path === "/shooter/") {
-    return <ShooterPage />;
-  }
-
-  return <HealthPage />;
-}
-
-export default App;

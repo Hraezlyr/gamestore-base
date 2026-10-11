@@ -71,6 +71,29 @@ async function login(page: Page, username = "admin") {
   await page.getByRole("button", { name: "Iniciar sesión", exact: true }).click();
 }
 
+test("shared sidebar switches modules and restores shooter detail with browser history", async ({ page }) => {
+  await api(page);
+  await page.route("**/api/v1/template/**", route => route.fulfill({
+    contentType: "application/json", body: "[]",
+  }));
+  await page.goto("/");
+  const navigation = page.getByRole("navigation", { name: "Catálogos de GameStore" });
+  await expect(navigation.getByRole("button", { name: "Shooters / PC", exact: true })).toHaveAttribute("aria-current", "page");
+  await expect(page.getByRole("main")).toHaveCount(1);
+  await page.getByRole("button", { name: "Ver detalles de Portal 2" }).click();
+  await expect(page).toHaveURL(/#game\/1$/);
+  await navigation.getByRole("button", { name: "Módulo Plantilla", exact: true }).click();
+  await expect(page).toHaveURL(/\/template\/$/);
+  await expect(page.getByRole("heading", { name: "Módulo Plantilla", exact: true })).toBeVisible();
+  await expect(page.getByText("No hay títulos registrados aún", { exact: false })).toBeVisible();
+  await page.goBack();
+  await expect(page.getByRole("heading", { name: "Portal 2", exact: true })).toBeVisible();
+  await expect(page).toHaveURL(/#game\/1$/);
+  await navigation.getByRole("button", { name: "Shooters / PC", exact: true }).click();
+  await expect(page).toHaveURL(/\/shooter\/$/);
+  await expect(page.getByRole("heading", { name: "Shooters para PC", exact: true })).toBeVisible();
+});
+
 test("public catalog shows each store price and a safe purchase link", async ({ page }) => {
   await api(page);
   await page.goto("/shooter/");

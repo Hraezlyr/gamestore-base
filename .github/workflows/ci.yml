@@ -48,6 +48,9 @@ jobs:
       - name: Iniciar base de datos
         run: docker compose up -d --wait db
 
+      - name: Validar migraciones pendientes en Django
+        run: docker compose run --rm backend python manage.py makemigrations --check --dry-run
+
       - name: Pruebas unitarias e integración del backend
         run: docker compose run --rm backend python manage.py test tests.unit.shooter tests.integration.shooter
 

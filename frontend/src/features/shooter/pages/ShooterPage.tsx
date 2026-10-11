@@ -26,7 +26,7 @@ export function ShooterPage() {
   }
 
   return (
-    <main className="shooter-page">
+    <div className="shooter-page">
       <header className="shooter-header">
         <a className="shooter-brand" href="#catalog" aria-label="GameStore, inicio" onClick={event => {
           event.preventDefault();
@@ -62,6 +62,6 @@ export function ShooterPage() {
           {" "}Los precios pueden cambiar.
         </p>
       </footer>
-    </main>
+    </div>
   );
 }

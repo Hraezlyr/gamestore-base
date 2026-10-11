@@ -5,6 +5,12 @@ La interfaz está disponible en `http://localhost:5173/shooter/`.
 Los detalles pueden compartirse como `/shooter/#game/<id>`; los botones del navegador
 permiten regresar al catálogo.
 
+Shooter aparece en el sidebar compartido de GameStore. Su registro está en
+`frontend/src/modules/shooter/index.ts` y se importa desde `main.tsx`, junto con
+los demás módulos. El primer segmento de la URL selecciona el módulo y conserva
+la navegación con Atrás y Adelante. Cambiar de módulo desmonta su vista; al volver
+a Shooter será necesario iniciar sesión de nuevo si estabas administrando juegos.
+
 ## Puesta en marcha
 
 Desde la raíz del repositorio:
@@ -115,6 +121,10 @@ formularios. `SessionManager` recibe un contrato de autenticación inyectado y
 gestiona tokens y renovación. Las páginas coordinan la presentación y los hooks
 de acciones realizan el CRUD.
 
+`App` y `useModuleNavigation` coordinan los módulos registrados sin conocer sus
+endpoints. La opción `layout: "full-width"` permite a Shooter presentar su propio
+encabezado; los módulos sin esa opción usan el encabezado y espaciado compartidos.
+
 Lucide React proporciona iconos de acciones; las marcas de tiendas provienen
 de CheapShark. Motion anima la entrada de vistas y los cambios de imagen y respeta
 el movimiento reducido. `GameGallery` administra miniaturas y selección;
@@ -144,7 +154,7 @@ npm.cmd run test:e2e
 ```
 
 En Linux utiliza `npm` y `npx`. Vitest prueba HTTP y sesión sin navegador.
-Playwright verifica navegación, precios, logos, galería, CRUD, permisos, validación, renovación
+Playwright verifica navegación entre módulos y enlaces a juegos, precios, logos, galería, CRUD, permisos, validación, renovación
 y una pantalla estrecha con respuestas de API controladas.
 
 El flujo real completo se activa explícitamente con Docker funcionando:
