@@ -100,3 +100,26 @@
     border-bottom: 1px solid var(--border);
     text-align: left;
 }
+
+.shooter-form {
+    max-width: 28rem;
+    margin: 1.5rem 0;
+}
+
+.shooter-form fieldset {
+    display: grid;
+    gap: 0.75rem;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+}
+
+.shooter-form input {
+    min-width: 0;
+    padding: 0.65rem;
+    border: 1px solid var(--border);
+    border-radius: 0.4rem;
+    background: var(--bg);
+    color: var(--text-h);
+    font: inherit;
+}

@@ -1,5 +1,5 @@
-import { formatPrice } from "./formatters";
-import type { ShooterGameSummary } from "./types";
+import { formatPrice } from "../utils/formatters";
+import type { ShooterGameSummary } from "../types/catalog";
 
 interface GameCardProps {
     game: ShooterGameSummary;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { ShooterPage } from "./features/shooter/ShooterPage";
+import { ShooterPage } from "./features/shooter/pages/ShooterPage";
 
 interface HealthResponse {
   status?: string;

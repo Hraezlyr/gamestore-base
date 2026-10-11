@@ -1,5 +1,5 @@
-import { formatPrice } from "./formatters";
-import { useShooterGame } from "./useShooterGame";
+import { formatPrice } from "../utils/formatters";
+import { useShooterGame } from "../hooks/useShooterGame";
 
 interface GameDetailProps {
     id: number;
