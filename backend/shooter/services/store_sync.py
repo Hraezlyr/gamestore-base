@@ -12,12 +12,12 @@ def sync_stores(stores: Iterable[StoreData]) -> StoreSyncResult:
     updated_count = 0
 
     for store in stores:
+        defaults = {"name": store.name, "is_active": store.is_active}
+        if store.icon_url is not None:
+            defaults["icon_url"] = store.icon_url
         _, created = Store.objects.update_or_create(
             cheapshark_id=store.external_id,
-            defaults={
-                "name": store.name,
-                "is_active": store.is_active,
-            },
+            defaults=defaults,
         )
 
         if created:

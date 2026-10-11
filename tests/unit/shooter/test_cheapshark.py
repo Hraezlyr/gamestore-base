@@ -13,6 +13,19 @@ from shooter.integrations.cheapshark import (
 
 
 class CheapSharkClientTests(TestCase):
+    def test_resolves_store_icon_against_the_provider_host(self):
+        store = CheapSharkClient._parse_store({
+            "storeID": "1", "storeName": "Steam", "isActive": 1,
+            "images": {"icon": "/img/stores/icons/0.png"},
+        })
+        self.assertEqual(store.icon_url, "https://www.cheapshark.com/img/stores/icons/0.png")
+
+    def test_rejects_unexpected_store_icon_paths(self):
+        for images in ([], {"icon": None}, {"icon": "https://example.com/icon.png"},
+                       {"icon": "//example.com/icon.png"}):
+            with self.subTest(images=images), self.assertRaises(CheapSharkError):
+                CheapSharkClient._parse_store_icon(images)
+
     @patch("shooter.integrations.cheapshark.urlopen")
     def test_returns_stores_with_boolean_status(self, mock_urlopen):
         payload = [

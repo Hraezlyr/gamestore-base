@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from shooter.models import GameOffer, ShooterGame
+from shooter.models import GameOffer, GameScreenshot, ShooterGame
 from shooter.links import cheapshark_deal_url
 
 
@@ -27,6 +27,7 @@ class ShooterGameListSerializer(serializers.ModelSerializer):
         return "USD"
 
 class GameOfferSerializer(serializers.ModelSerializer):
+    store_icon_url = serializers.URLField(source="store.icon_url", read_only=True)
     purchase_url = serializers.SerializerMethodField()
     store_id = serializers.IntegerField(read_only=True)
     store_name = serializers.CharField(
@@ -40,6 +41,7 @@ class GameOfferSerializer(serializers.ModelSerializer):
             "id",
             "store_id",
             "store_name",
+            "store_icon_url",
             "price",
             "retail_price",
             "currency",
@@ -52,7 +54,15 @@ class GameOfferSerializer(serializers.ModelSerializer):
         return cheapshark_deal_url(obj.cheapshark_deal_id)
 
 
+class GameScreenshotSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GameScreenshot
+        fields = ("id", "image_url")
+        read_only_fields = fields
+
+
 class ShooterGameDetailSerializer(ShooterGameListSerializer):
+    screenshots = GameScreenshotSerializer(many=True, read_only=True)
     offers = GameOfferSerializer(
         source="available_offers",
         many=True,
@@ -62,6 +72,7 @@ class ShooterGameDetailSerializer(ShooterGameListSerializer):
     class Meta(ShooterGameListSerializer.Meta):
         fields = ShooterGameListSerializer.Meta.fields + (
             "description",
+            "screenshots",
             "offers",
         )
         read_only_fields = fields

@@ -7,6 +7,7 @@ from django.db import models
 class Store(models.Model):
     cheapshark_id = models.CharField(max_length=20, unique=True)
     name = models.CharField(max_length=120)
+    icon_url = models.URLField(max_length=1000, blank=True)
     is_active = models.BooleanField(default=True)
 
     class Meta:
@@ -41,6 +42,26 @@ class ShooterGame(models.Model):
 
     def __str__(self):
         return self.title
+
+class GameScreenshot(models.Model):
+    game = models.ForeignKey(
+        ShooterGame,
+        on_delete=models.CASCADE,
+        related_name="screenshots",
+    )
+    rawg_id = models.PositiveIntegerField()
+    image_url = models.URLField(max_length=1000)
+    position = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["position", "id"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["game", "rawg_id"],
+                name="shooter_game_screenshot_unique",
+            ),
+        ]
+
 
 class GameOffer(models.Model):
     game = models.ForeignKey(

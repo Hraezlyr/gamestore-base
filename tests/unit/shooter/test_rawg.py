@@ -4,11 +4,36 @@ from unittest import TestCase
 from unittest.mock import patch
 from urllib.error import HTTPError
 
-from shooter.dtos import GameData
+from shooter.dtos import GameData, ScreenshotData
 from shooter.integrations.rawg import RawgClient, RawgError
 
 
 class RawgClientTests(TestCase):
+    def test_imports_screenshots_in_order_without_the_cover_sentinel(self):
+        game = RawgClient._parse_game({
+            "id": 4200, "name": "Portal 2", "background_image": "https://media.rawg.io/cover.jpg",
+            "short_screenshots": [
+                {"id": -1, "image": "https://media.rawg.io/cover.jpg"},
+                {"id": 10, "image": "https://media.rawg.io/first.jpg"},
+                {"id": 20, "image": "https://media.rawg.io/second.jpg"},
+            ],
+        })
+        self.assertEqual(game.screenshots, (
+            ScreenshotData(10, "https://media.rawg.io/first.jpg"),
+            ScreenshotData(20, "https://media.rawg.io/second.jpg"),
+        ))
+
+    def test_distinguishes_missing_screenshots_from_an_empty_snapshot(self):
+        self.assertIsNone(RawgClient._parse_screenshots(None))
+        self.assertEqual(RawgClient._parse_screenshots([]), ())
+
+    def test_rejects_malformed_screenshots(self):
+        valid = {"id": 10, "image": "https://media.rawg.io/first.jpg"}
+        for items in ({}, [None], [{"id": True, "image": valid["image"]}],
+                      [{"id": 1, "image": "javascript:alert(1)"}], [valid, valid]):
+            with self.subTest(items=items), self.assertRaises(RawgError):
+                RawgClient._parse_screenshots(items)
+
     @patch("shooter.integrations.rawg.urlopen")
     def test_converts_games_and_reports_next_page(self, mock_urlopen):
         for next_url in (None, "https://api.rawg.io/api/games?page=2"):

@@ -5,7 +5,7 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-from shooter.dtos import GameData, GamePage
+from shooter.dtos import GameData, GamePage, ScreenshotData
 
 
 class RawgError(Exception):
@@ -86,7 +86,42 @@ class RawgClient:
             external_id=game_id,
             title=title,
             image_url=image_url,
+            screenshots=RawgClient._parse_screenshots(item.get("short_screenshots")),
         )
+
+    @staticmethod
+    def _parse_screenshots(items):
+        # An omitted field must not erase a previously imported gallery.
+        if items is None:
+            return None
+        if not isinstance(items, list):
+            raise RawgError("Lista de capturas inválida.")
+
+        screenshots = []
+        seen = set()
+        for item in items:
+            if not isinstance(item, dict):
+                raise RawgError("La captura no es un objeto.")
+            screenshot_id = item.get("id")
+            image = item.get("image")
+            if type(screenshot_id) is not int or screenshot_id == 0 or screenshot_id < -1:
+                raise RawgError("Identificador de captura inválido.")
+            if not isinstance(image, str) or not image or len(image) > 1000:
+                raise RawgError("URL de captura inválida.")
+            try:
+                parsed = urlsplit(image)
+            except ValueError:
+                raise RawgError("URL de captura inválida.") from None
+            if parsed.scheme not in {"http", "https"} or not parsed.hostname:
+                raise RawgError("URL de captura inválida.")
+            # RAWG uses -1 for the cover, which is already image_url.
+            if screenshot_id == -1:
+                continue
+            if screenshot_id in seen:
+                raise RawgError("La respuesta contiene capturas duplicadas.")
+            seen.add(screenshot_id)
+            screenshots.append(ScreenshotData(screenshot_id, image))
+        return tuple(screenshots)
 
     def fetch_steam_app_id(self, game_id: int) -> str | None:
         if type(game_id) is not int or game_id <= 0:

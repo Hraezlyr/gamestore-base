@@ -6,6 +6,14 @@ from shooter.services.store_sync import sync_stores
 
 
 class StoreSyncTests(TestCase):
+    def test_imports_icon_and_preserves_it_when_the_field_is_omitted(self):
+        icon = "https://www.cheapshark.com/img/stores/icons/0.png"
+        sync_stores([StoreData("1", "Steam", True, icon)])
+        sync_stores([StoreData("1", "Steam", True)])
+        self.assertEqual(Store.objects.get(cheapshark_id="1").icon_url, icon)
+        sync_stores([StoreData("1", "Steam", True, "")])
+        self.assertEqual(Store.objects.get(cheapshark_id="1").icon_url, "")
+
     def test_creates_stores(self):
         stores = [
             StoreData(

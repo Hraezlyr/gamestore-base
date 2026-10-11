@@ -61,7 +61,23 @@ class CheapSharkClient:
             external_id=store_id,
             name=name,
             is_active=str(active) == "1",
+            icon_url=CheapSharkClient._parse_store_icon(item.get("images")),
         )
+
+    @staticmethod
+    def _parse_store_icon(images):
+        if images is None:
+            return None
+        if not isinstance(images, dict):
+            raise CheapSharkError("Imágenes de tienda inválidas.")
+        icon = images.get("icon", "")
+        if not isinstance(icon, str):
+            raise CheapSharkError("Icono de tienda inválido.")
+        if not icon:
+            return ""
+        if not icon.startswith("/img/stores/icons/") or len(icon) > 950:
+            raise CheapSharkError("Ruta de icono de tienda inválida.")
+        return f"https://www.cheapshark.com{icon}"
 
     def fetch_games_by_steam_app_id(
         self,

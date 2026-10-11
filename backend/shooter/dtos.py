@@ -9,6 +9,7 @@ class StoreData:
     external_id: str
     name: str
     is_active: bool
+    icon_url: str | None = None
 
 
 @dataclass(frozen=True)
@@ -17,10 +18,17 @@ class StoreSyncResult:
     updated: int
 
 @dataclass(frozen=True)
+class ScreenshotData:
+    external_id: int
+    image_url: str
+
+
+@dataclass(frozen=True)
 class GameData:
     external_id: int
     title: str
     image_url: str
+    screenshots: tuple[ScreenshotData, ...] | None = None
 
 
 @dataclass(frozen=True)

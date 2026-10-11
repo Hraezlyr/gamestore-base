@@ -4,10 +4,25 @@ from django.urls import reverse
 from django.utils import timezone
 from rest_framework.test import APITestCase
 
-from shooter.models import GameOffer, ShooterGame, Store
+from shooter.models import GameOffer, GameScreenshot, ShooterGame, Store
 
 
 class CatalogApiTests(APITestCase):
+    def test_detail_exposes_ordered_gallery_and_store_icons_without_extra_row_queries(self):
+        game = self.create_available_game("Portal 2")
+        self.store.icon_url = "https://www.cheapshark.com/img/stores/icons/0.png"
+        self.store.save(update_fields=["icon_url"])
+        second = GameScreenshot.objects.create(game=game, rawg_id=20, image_url="https://example.com/second.jpg", position=1)
+        first = GameScreenshot.objects.create(game=game, rawg_id=10, image_url="https://example.com/first.jpg", position=0)
+        with self.assertNumQueries(3):
+            response = self.client.get(reverse("shooter:game-detail", kwargs={"pk": game.pk}))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data["screenshots"], [
+            {"id": first.pk, "image_url": first.image_url},
+            {"id": second.pk, "image_url": second.image_url},
+        ])
+        self.assertEqual(response.data["offers"][0]["store_icon_url"], self.store.icon_url)
+
     def setUp(self):
         self.url = reverse("shooter:game-list")
         self.store = Store.objects.create(

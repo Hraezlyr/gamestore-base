@@ -29,6 +29,7 @@ def public_catalog() -> QuerySet[ShooterGame]:
 
 def public_game_details() -> QuerySet[ShooterGame]:
     return public_catalog().prefetch_related(
+        "screenshots",
         Prefetch(
             "offers",
             queryset=(
