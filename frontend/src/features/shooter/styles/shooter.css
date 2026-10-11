@@ -62,7 +62,7 @@
     margin-top: auto;
 }
 
-.shooter-catalog nav {
+.shooter-pagination {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -114,7 +114,8 @@
     border-radius: 0.5rem;
 }
 
-.shooter-form input {
+.shooter-form input,
+.shooter-form textarea {
     min-width: 0;
     padding: 0.65rem;
     border: 1px solid var(--border);
@@ -123,3 +124,13 @@
     color: var(--text-h);
     font: inherit;
 }
+
+.shooter-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin-bottom: 1rem; }
+.shooter-table-wrapper { overflow-x: auto; margin: 1rem 0; }
+.shooter-admin table { width: 100%; min-width: 35rem; border-collapse: collapse; }
+.shooter-admin caption { text-align: left; margin-bottom: 1rem; }
+.shooter-admin th, .shooter-admin td { padding: 0.75rem; border-bottom: 1px solid var(--border); text-align: left; }
+.shooter-delete-dialog { max-width: 32rem; border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.5rem; color: var(--text-h); background: var(--bg); }
+.shooter-delete-dialog::backdrop { background: rgb(0 0 0 / 60%); }
+.shooter-page footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.85rem; }
+.shooter-page a { color: var(--accent); }
