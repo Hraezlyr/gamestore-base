@@ -44,23 +44,23 @@ export function AdminGames({ request, onChanged }: AdminGamesProps) {
 
   return (
     <section className="shooter-admin">
-      <h1>Administración de juegos</h1>
-      <button type="button" onClick={() => setEditor({ kind: "create" })}>Nuevo juego</button>
-      {message && <p role="status">{message}</p>}
+      <div className="shooter-section-heading"><div><p className="shooter-eyebrow">Gestión del catálogo</p><h1>Administración de juegos</h1></div>
+      <button className="shooter-button--primary" type="button" onClick={() => setEditor({ kind: "create" })}>Nuevo juego</button></div>
+      {message && <p className="shooter-notice shooter-notice--success" role="status">{message}</p>}
       {loading && <p role="status">Cargando juegos…</p>}
       {error && <QueryError message={error} onRetry={retry} />}
       {data && <>
-        <p>{data.count} juegos registrados</p>
+        <p>{data.count} {data.count === 1 ? "juego registrado" : "juegos registrados"}</p>
         {data.results.length === 0 ? <p>No hay juegos registrados.</p> :
           <div className="shooter-table-wrapper"><table>
             <caption>Juegos registrados, incluidos los que no tienen ofertas</caption>
             <thead><tr><th scope="col">Título</th><th scope="col">Proveedor de precios</th><th scope="col">Acciones</th></tr></thead>
             <tbody>{data.results.map(game => <tr key={game.id}>
               <th scope="row">{game.title}</th>
-              <td>{game.cheapshark_id ? "Vinculado" : "Pendiente de vinculación"}</td>
+              <td><span className={`shooter-status ${game.cheapshark_id ? "shooter-status--linked" : ""}`}>{game.cheapshark_id ? "Vinculado" : "Pendiente de vinculación"}</span></td>
               <td><div className="shooter-actions">
                 <button type="button" aria-label={`Editar ${game.title}`} onClick={() => setEditor({ kind: "edit", game })}>Editar</button>
-                <button type="button" aria-label={`Eliminar ${game.title}`} onClick={() => setDeleting(game)}>Eliminar</button>
+                <button className="shooter-button--danger" type="button" aria-label={`Eliminar ${game.title}`} onClick={() => setDeleting(game)}>Eliminar</button>
               </div></td>
             </tr>)}</tbody>
           </table></div>}

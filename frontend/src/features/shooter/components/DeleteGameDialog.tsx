@@ -25,7 +25,7 @@ export function DeleteGameDialog({ game, onDelete, onCancel }: {
       {game.rawg_id && <p>Una futura importación puede volver a añadir este juego.</p>}
       {error && <p role="alert">{error}</p>}
       <div className="shooter-actions">
-        <button type="button" disabled={submitting} onClick={() => { void submit(undefined); }}>{submitting ? "Eliminando…" : "Confirmar eliminación"}</button>
+        <button className="shooter-button--danger" type="button" disabled={submitting} onClick={() => { void submit(undefined); }}>{submitting ? "Eliminando…" : "Confirmar eliminación"}</button>
         <button type="button" disabled={submitting} onClick={onCancel} autoFocus>Cancelar</button>
       </div>
     </dialog>
