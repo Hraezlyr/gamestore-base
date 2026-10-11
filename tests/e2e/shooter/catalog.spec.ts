@@ -78,7 +78,7 @@ test("shared sidebar switches modules and restores shooter detail with browser h
   }));
   await page.goto("/");
   const navigation = page.getByRole("navigation", { name: "Catálogos de GameStore" });
-  await expect(navigation.getByRole("button", { name: "Shooters / PC", exact: true })).toHaveAttribute("aria-current", "page");
+  await expect(navigation.getByRole("button", { name: "Shooters", exact: true })).toHaveAttribute("aria-current", "page");
   await expect(page.getByRole("main")).toHaveCount(1);
   await page.getByRole("button", { name: "Ver detalles de Portal 2" }).click();
   await expect(page).toHaveURL(/#game\/1$/);
@@ -89,7 +89,7 @@ test("shared sidebar switches modules and restores shooter detail with browser h
   await page.goBack();
   await expect(page.getByRole("heading", { name: "Portal 2", exact: true })).toBeVisible();
   await expect(page).toHaveURL(/#game\/1$/);
-  await navigation.getByRole("button", { name: "Shooters / PC", exact: true }).click();
+  await navigation.getByRole("button", { name: "Shooters", exact: true }).click();
   await expect(page).toHaveURL(/\/shooter\/$/);
   await expect(page.getByRole("heading", { name: "Shooters para PC", exact: true })).toBeVisible();
 });

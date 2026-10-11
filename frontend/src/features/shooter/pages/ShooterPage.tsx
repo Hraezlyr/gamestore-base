@@ -33,7 +33,7 @@ export function ShooterPage() {
           showCatalog();
         }}>
           <span aria-hidden="true">GS</span>
-          <div>GameStore<small>SHOOTERS / PC</small></div>
+          <div>GameStore<small>Shooters</small></div>
         </a>
         <nav className="shooter-nav" aria-label="Navegación del módulo">
           <button type="button" onClick={showCatalog} aria-current={activeView === "catalog" ? "page" : undefined}><LayoutGrid size={15} aria-hidden="true" /> Catálogo</button>
@@ -55,7 +55,7 @@ export function ShooterPage() {
         {activeView === "admin" && <AdminGames request={session.request} onChanged={() => setCatalogRevision(current => current + 1)} />}
       </div>
       <footer>
-        <span className="shooter-footer__brand">GameStore <span>/ Shooters PC</span></span>
+        <span className="shooter-footer__brand">GameStore <span>/ Shooters</span></span>
         <p>
           Catálogo e imágenes de <a href="https://rawg.io/">RAWG</a>.
           {" "}Precios de <a href="https://www.cheapshark.com/">CheapShark</a>.

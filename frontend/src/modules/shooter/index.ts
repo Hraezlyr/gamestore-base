@@ -3,7 +3,7 @@ import { ShooterPage } from "../../features/shooter/pages/ShooterPage";
 
 registerModule({
   id: "shooter",
-  name: "Shooters / PC",
+  name: "Shooters",
   category: "traditional",
   component: ShooterPage,
   layout: "full-width",

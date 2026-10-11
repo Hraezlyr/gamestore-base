@@ -29,7 +29,7 @@ export function GameDetail({ id, onBack }: GameDetailProps) {
                     <div className="shooter-game-detail__hero">
                         <GameGallery title={game.title} cover={game.image_url} screenshots={game.screenshots ?? []} />
                         <div className="shooter-game-detail__intro">
-                            <p className="shooter-eyebrow">Shooter / PC</p>
+                            <p className="shooter-eyebrow">Shooters</p>
                             <h1>{game.title}</h1>
                             <p className="shooter-game-detail__description">{game.description || "Compara las ofertas disponibles y elige dónde empezar tu próxima partida."}</p>
                             <div className="shooter-price"><span>Mejor precio disponible</span><strong>{formatPrice(game.lowest_price, game.currency)}</strong></div>

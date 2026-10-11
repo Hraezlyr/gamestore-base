@@ -7,7 +7,7 @@ function ArtworkImage({ src, eager }: { src: string; eager: boolean }) {
 }
 
 function ArtworkPlaceholder() {
-  return <div className="shooter-artwork__placeholder" aria-hidden="true"><span>GS</span><span>SHOOTERS / PC</span></div>;
+  return <div className="shooter-artwork__placeholder" aria-hidden="true"><span>GS</span><span>Shooters</span></div>;
 }
 
 export function GameArtwork({ src, eager = false }: { src: string; eager?: boolean }) {
