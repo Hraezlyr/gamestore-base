@@ -81,3 +81,68 @@ class RawgClientTests(TestCase):
     def test_requires_api_key(self):
         with self.assertRaises(RawgError):
             RawgClient(api_key="")
+
+    @patch("shooter.integrations.rawg.RawgClient._get_json")
+    def test_identifies_only_steam_app_links(self, mock_get_json):
+        cases = [
+            ("http://store.steampowered.com/app/620/", "620"),
+            ("https://store.steampowered.com/app/620/Portal_2/", "620"),
+            ("https://store.steampowered.com/app/620?example=1", "620"),
+            ("https://store.steampowered.com/sub/620/", None),
+            ("https://store.steampowered.com/bundle/620/", None),
+            ("https://example.com/app/620/", None),
+            ("https://store.steampowered.com.example.com/app/620/", None),
+        ]
+
+        for url, expected in cases:
+            with self.subTest(url=url):
+                mock_get_json.return_value = {
+                    "results": [{"url": url}],
+                    "next": None,
+                }
+
+                result = RawgClient(
+                    api_key="test-key"
+                ).fetch_steam_app_id(4200)
+
+                self.assertEqual(result, expected)
+
+    @patch("shooter.integrations.rawg.RawgClient._get_json")
+    def test_checks_all_pages_and_deduplicates_steam_ids(
+        self, mock_get_json
+    ):
+        mock_get_json.side_effect = [
+            {
+                "results": [
+                    {"url": "http://store.steampowered.com/app/620/"},
+                ],
+                "next": "https://api.rawg.io/api/games/4200/stores?page=2",
+            },
+            {
+                "results": [
+                    {"url": "https://store.steampowered.com/app/620/"},
+                ],
+                "next": None,
+            },
+        ]
+
+        result = RawgClient(api_key="test-key").fetch_steam_app_id(4200)
+
+        self.assertEqual(result, "620")
+        self.assertEqual(mock_get_json.call_count, 2)
+
+    @patch("shooter.integrations.rawg.RawgClient._get_json")
+    def test_does_not_choose_between_different_steam_ids(
+        self, mock_get_json
+    ):
+        mock_get_json.return_value = {
+            "results": [
+                {"url": "https://store.steampowered.com/app/620/"},
+                {"url": "https://store.steampowered.com/app/999/"},
+            ],
+            "next": None,
+        }
+
+        result = RawgClient(api_key="test-key").fetch_steam_app_id(4200)
+
+        self.assertIsNone(result)

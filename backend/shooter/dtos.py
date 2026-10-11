@@ -1,3 +1,5 @@
+from enum import Enum
+
 from dataclasses import dataclass
 
 
@@ -29,3 +31,49 @@ class GamePage:
 class GameSyncResult:
     created: int
     updated: int
+
+@dataclass(frozen=True)
+class GameMatchData:
+    external_id: str
+    steam_app_id: str
+    title: str
+
+@dataclass(frozen=True)
+class GameToLink:
+    local_id: int
+    rawg_id: int
+    steam_app_id: str
+
+class LinkStatus(Enum):
+    LINKED = "linked"
+    NO_STEAM_ID = "no_steam_id"
+    NO_MATCH = "no_match"
+    AMBIGUOUS = "ambiguous"
+    STEAM_ID_MISMATCH = "steam_id_mismatch"
+    CONFLICT = "conflict"
+
+
+@dataclass(frozen=True)
+class GameLinkOutcome:
+    local_id: int
+    status: LinkStatus
+
+
+@dataclass(frozen=True)
+class CatalogLinkResult:
+    outcomes: tuple[GameLinkOutcome, ...]
+
+    @property
+    def linked(self) -> int:
+        return sum(
+            outcome.status is LinkStatus.LINKED
+            for outcome in self.outcomes
+        )
+
+    @property
+    def skipped(self) -> int:
+        return len(self.outcomes) - self.linked
+
+    @property
+    def last_id(self) -> int | None:
+        return self.outcomes[-1].local_id if self.outcomes else None

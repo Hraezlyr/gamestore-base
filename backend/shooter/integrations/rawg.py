@@ -1,4 +1,6 @@
 import json
+import re
+from urllib.parse import urlsplit
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
@@ -23,37 +25,15 @@ class RawgClient:
         self.timeout = timeout
 
     def fetch_shooter_games(self, page=1, page_size=20):
-        params = urlencode({
-            "key": self.api_key,
-            "genres": self.SHOOTER_GENRE_ID,
-            "platforms": self.PC_PLATFORM_ID,
-            "page": page,
-            "page_size": page_size,
-        })
-
-        request = Request(
-            f"{self.BASE_URL}/games?{params}",
-            headers={
-                "User-Agent": "GameStoreUniversityProject/0.1",
-                "Accept": "application/json",
+        payload = self._get_json(
+            "games",
+            params={
+                "genres": self.SHOOTER_GENRE_ID,
+                "platforms": self.PC_PLATFORM_ID,
+                "page": page,
+                "page_size": page_size,
             },
         )
-
-        try:
-            with urlopen(request, timeout=self.timeout) as response:
-                payload = json.load(response)
-        except HTTPError as error:
-            raise RawgError(
-                f"RAWG respondió HTTP {error.code}."
-            ) from None
-        except (URLError, TimeoutError):
-            raise RawgError(
-                "No se pudo establecer conexión con RAWG."
-            ) from None
-        except (json.JSONDecodeError, UnicodeDecodeError):
-            raise RawgError(
-                "RAWG devolvió una respuesta ilegible."
-            ) from None
 
         if not isinstance(payload, dict):
             raise RawgError("RAWG no devolvió un objeto.")
@@ -107,3 +87,102 @@ class RawgClient:
             title=title,
             image_url=image_url,
         )
+
+    def fetch_steam_app_id(self, game_id: int) -> str | None:
+        if type(game_id) is not int or game_id <= 0:
+            raise RawgError("Identificador de RAWG inválido.")
+
+        steam_ids = set()
+        page_number = 1
+
+        while True:
+            payload = self._get_json(
+                f"games/{game_id}/stores",
+                params={"page": page_number, "page_size": 40},
+            )
+
+            if not isinstance(payload, dict):
+                raise RawgError("Respuesta de tiendas inválida.")
+
+            results = payload.get("results")
+
+            if not isinstance(results, list):
+                raise RawgError("La respuesta no contiene enlaces de tiendas.")
+
+            if (
+                "next" not in payload
+                or (
+                    payload["next"] is not None
+                    and not isinstance(payload["next"], str)
+                )
+            ):
+                raise RawgError("Información de paginación inválida.")
+
+            for item in results:
+                if not isinstance(item, dict):
+                    raise RawgError("El enlace de tienda no es un objeto.")
+
+                url = item.get("url")
+
+                if not isinstance(url, str):
+                    raise RawgError("URL de tienda inválida.")
+
+                steam_id = self._extract_steam_app_id(url)
+
+                if steam_id is not None:
+                    steam_ids.add(steam_id)
+
+            if not payload["next"]:
+                break
+
+            page_number += 1
+
+        if len(steam_ids) == 1:
+            return steam_ids.pop()
+
+        return None
+
+    @staticmethod
+    def _extract_steam_app_id(url):
+        try:
+            parsed = urlsplit(url)
+        except ValueError:
+            raise RawgError("URL de tienda mal formada.") from None
+
+        if (
+            parsed.scheme not in {"http", "https"}
+            or parsed.hostname != "store.steampowered.com"
+        ):
+            return None
+
+        match = re.match(r"^/app/([1-9]\d*)(?:/|$)", parsed.path)
+
+        return match.group(1) if match else None
+
+    def _get_json(self, path, params=None):
+        query = {"key": self.api_key}
+        query.update(params or {})
+
+        request = Request(
+            f"{self.BASE_URL}/{path}?{urlencode(query)}",
+            headers={
+                "User-Agent": "GameStoreUniversityProject/0.1",
+                "Accept": "application/json",
+            },
+        )
+
+        try:
+            with urlopen(request, timeout=self.timeout) as response:
+                return json.load(response)
+        except HTTPError as error:
+            raise RawgError(
+                f"RAWG respondió HTTP {error.code}."
+            ) from None
+        except (URLError, TimeoutError):
+            raise RawgError(
+                "No se pudo establecer conexión con RAWG."
+            ) from None
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            raise RawgError(
+                "RAWG devolvió una respuesta ilegible."
+            ) from None

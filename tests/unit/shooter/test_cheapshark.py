@@ -4,7 +4,7 @@ from unittest import TestCase
 from unittest.mock import patch
 from urllib.error import URLError
 
-from shooter.dtos import StoreData
+from shooter.dtos import StoreData, GameMatchData
 from shooter.integrations.cheapshark import (
     CheapSharkClient,
     CheapSharkError,
@@ -53,3 +53,58 @@ class CheapSharkClientTests(TestCase):
 
         with self.assertRaises(CheapSharkError):
             CheapSharkClient().fetch_stores()
+
+    @patch("shooter.integrations.cheapshark.CheapSharkClient._get_json")
+    def test_returns_game_candidates_for_steam_id(self, mock_get_json):
+        mock_get_json.return_value = [
+            {
+                "gameID": "36",
+                "external": "Portal 2",
+                "steamAppID": "620",
+            },
+            {
+                "gameID": "99",
+                "external": "Otro candidato",
+                "steamAppID": "620",
+            },
+        ]
+
+        matches = CheapSharkClient().fetch_games_by_steam_app_id("620")
+
+        self.assertEqual(matches, (
+            GameMatchData(
+                external_id="36",
+                steam_app_id="620",
+                title="Portal 2",
+            ),
+            GameMatchData(
+                external_id="99",
+                steam_app_id="620",
+                title="Otro candidato",
+            ),
+        ))
+
+    @patch("shooter.integrations.cheapshark.CheapSharkClient._get_json")
+    def test_returns_no_candidates_when_game_is_not_found(
+        self, mock_get_json
+    ):
+        mock_get_json.return_value = []
+
+        matches = CheapSharkClient().fetch_games_by_steam_app_id("620")
+
+        self.assertEqual(matches, ())
+
+    @patch("shooter.integrations.cheapshark.CheapSharkClient._get_json")
+    def test_rejects_candidate_with_different_steam_id(
+        self, mock_get_json
+    ):
+        mock_get_json.return_value = [
+            {
+                "gameID": "36",
+                "external": "Portal 2",
+                "steamAppID": "999",
+            },
+        ]
+
+        with self.assertRaises(CheapSharkError):
+            CheapSharkClient().fetch_games_by_steam_app_id("620")
