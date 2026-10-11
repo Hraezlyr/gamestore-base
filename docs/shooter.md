@@ -21,6 +21,14 @@ clave. Las credenciales de proveedores se utilizan exclusivamente en el backend.
 El usuario de administración debe tener `is_staff=True`; un superusuario cumple
 esa condición.
 
+Después de actualizar una instalación existente:
+
+```powershell
+docker compose exec backend python manage.py migrate
+docker compose exec frontend npm ci
+docker compose restart frontend
+```
+
 ## Sincronización
 
 ```powershell
@@ -44,6 +52,15 @@ ofertas. Un error HTTP, de validación o persistencia conserva el estado previo
 de ese juego; los juegos anteriores del lote ya procesados permanecen guardados.
 Los precios y sus tiendas se conservan asociados mediante el deal ID.
 
+La sincronización de tiendas importa sus iconos de CheapShark. La de juegos
+importa las capturas de `short_screenshots` de RAWG en el orden del proveedor;
+el elemento `id=-1` representa la portada y no se duplica en la galería.
+Estas capturas son la selección del listado, no necesariamente todas las del juego.
+Los campos multimedia omitidos conservan lo importado; una lista de capturas
+explícitamente vacía limpia esa galería. No se consulta al proveedor al abrir
+una página. Repite los dos primeros comandos para llenar estos datos en juegos
+y tiendas existentes.
+
 ## Reglas del catálogo y administración
 
 - El catálogo público incluye juegos con al menos una oferta activa en USD de
@@ -57,7 +74,7 @@ Los precios y sus tiendas se conservan asociados mediante el deal ID.
   Un juego creado manualmente sin ofertas no aparece en el catálogo público.
 - RAWG puede reemplazar título e imagen durante una nueva importación; la
   descripción local se conserva.
-- Eliminar un juego elimina sus ofertas, pero conserva las tiendas. Una futura
+- Eliminar un juego elimina sus ofertas y capturas, pero conserva las tiendas. Una futura
   importación puede volver a crear un juego eliminado que siga en RAWG.
 - Los tokens de sesión se guardan en memoria: recargar requiere otro login.
   Un 401 renueva el acceso y reintenta una vez; las solicitudes simultáneas
@@ -81,6 +98,8 @@ Prefijo: `/api/v1/shooter/`.
 Las peticiones administrativas usan `Authorization: Bearer <access>`.
 Los listados devuelven `count`, `next`, `previous`, `results`. El tamaño por
 defecto es 20; `page_size` permite hasta 100. Los precios JSON son cadenas.
+El detalle añade `screenshots: [{id, image_url}]`; cada oferta incluye
+`store_icon_url`. Estos campos multimedia son de solo lectura.
 
 ## Arquitectura
 
@@ -94,6 +113,13 @@ cancelación y reintentos. `useFormSubmission` comparte envío y errores de
 formularios. `SessionManager` recibe un contrato de autenticación inyectado y
 gestiona tokens y renovación. Las páginas coordinan la presentación y los hooks
 de acciones realizan el CRUD.
+
+Lucide React proporciona iconos de acciones; las marcas de tiendas provienen
+de CheapShark. Motion anima la entrada de vistas y los cambios de imagen y respeta
+el movimiento reducido. `GameGallery` administra miniaturas y selección;
+`GameLightbox` utiliza Yet Another React Lightbox con zoom y se carga solo al
+ampliar una imagen. La galería admite teclado, gestos y cierre con Escape.
+`GameOffers` presenta los precios asociados a cada tienda.
 
 ## Pruebas
 
@@ -115,7 +141,7 @@ npm.cmd run test:e2e
 ```
 
 En Linux utiliza `npm` y `npx`. Vitest prueba HTTP y sesión sin navegador.
-Playwright verifica navegación, precios, CRUD, permisos, validación, renovación
+Playwright verifica navegación, precios, logos, galería, CRUD, permisos, validación, renovación
 y una pantalla estrecha con respuestas de API controladas.
 
 El flujo real completo se activa explícitamente con Docker funcionando:
