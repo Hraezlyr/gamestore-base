@@ -76,14 +76,62 @@ test("public catalog shows each store price and a safe purchase link", async ({ 
   await page.goto("/shooter/");
   await page.getByRole("button", { name: "Ver detalles de Portal 2" }).click();
   await expect(page).toHaveURL(/#game\/1$/);
-  const steam = page.getByRole("row", { name: /Steam/ });
+  const steamIcon = page.getByRole("button", { name: "Ver oferta de Steam", exact: true });
+  await expect(steamIcon.locator("img")).toHaveAttribute("src", "/test-store.svg");
+  await expect(page.getByRole("dialog", { name: "Steam", exact: true })).toHaveCount(0);
+  await expect(page.getByText("Última sincronización", { exact: true })).toHaveCount(0);
+  await steamIcon.hover();
+  const steam = page.getByRole("dialog", { name: "Steam", exact: true });
   await expect(steam).toContainText("9.99");
-  await expect(page.getByRole("row", { name: /Otra tienda/ })).toContainText("7.99");
-  await expect(page.getByRole("link", { name: "Ver oferta en Steam" })).toHaveAttribute("href", "https://www.cheapshark.com/redirect?dealID=two");
+  const purchase = steam.getByRole("link", { name: "Ver oferta en Steam" });
+  await purchase.hover();
+  await expect(purchase).toBeVisible();
+  await expect(purchase).toHaveAttribute("href", "https://www.cheapshark.com/redirect?dealID=two");
+  await page.getByRole("button", { name: "Ver oferta de Otra tienda", exact: true }).hover();
+  const other = page.getByRole("dialog", { name: "Otra tienda", exact: true });
+  await expect(other).toContainText("7.99");
+  await expect(other).toContainText("Mejor precio");
+  await expect(steam).toHaveCount(0);
   await expect(page.getByRole("link", { name: "RAWG", exact: true })).toBeVisible();
-  await expect(steam.locator(".shooter-store-icon img")).toHaveAttribute("src", "/test-store.svg");
   await page.goBack();
   await expect(page.getByRole("heading", { name: "Shooters para PC" })).toBeVisible();
+});
+
+test("store details support keyboard focus, purchase navigation and Escape", async ({ page }) => {
+  await api(page);
+  await page.goto("/shooter/#game/1");
+  const trigger = page.getByRole("button", { name: "Ver oferta de Steam", exact: true });
+  await trigger.focus();
+  const details = page.getByRole("dialog", { name: "Steam", exact: true });
+  await expect(details).toBeVisible();
+  await page.keyboard.press("Tab");
+  await expect(details.getByRole("button", { name: "Cerrar oferta" })).toBeFocused();
+  await page.keyboard.press("Tab");
+  await expect(details.getByRole("link", { name: "Ver oferta en Steam" })).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(details).toHaveCount(0);
+  await expect(trigger).toBeFocused();
+});
+
+test("store details open with touch and stay within a narrow screen", async ({ browser }) => {
+  const context = await browser.newContext({ viewport: { width: 320, height: 740 }, hasTouch: true });
+  try {
+    const page = await context.newPage();
+    await api(page);
+    await page.goto("http://127.0.0.1:5173/shooter/#game/1");
+    await page.getByRole("button", { name: "Ver oferta de Steam", exact: true }).tap();
+    const details = page.getByRole("dialog", { name: "Steam", exact: true });
+    await expect(details).toBeVisible();
+    await expect(details.getByRole("link", { name: "Ver oferta en Steam" })).toBeVisible();
+    const box = await details.boundingBox();
+    expect(box).not.toBeNull();
+    expect(box!.x).toBeGreaterThanOrEqual(0);
+    expect(box!.x + box!.width).toBeLessThanOrEqual(320);
+    await page.getByRole("heading", { name: "Portal 2", exact: true }).tap();
+    await expect(details).toHaveCount(0);
+  } finally {
+    await context.close();
+  }
 });
 
 test("gallery selects screenshots, opens full screen and closes with keyboard", async ({ page }) => {

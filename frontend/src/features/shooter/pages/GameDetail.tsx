@@ -34,11 +34,10 @@ export function GameDetail({ id, onBack }: GameDetailProps) {
                             <p className="shooter-game-detail__description">{game.description || "Compara las ofertas disponibles y elige dónde empezar tu próxima partida."}</p>
                             <div className="shooter-price"><span>Mejor precio disponible</span><strong>{formatPrice(game.lowest_price, game.currency)}</strong></div>
                             <p className="shooter-muted">{game.offers.length} {game.offers.length === 1 ? "oferta disponible" : "ofertas disponibles"} · Precios en USD</p>
+                            <GameOffers offers={game.offers} lowestPrice={game.lowest_price} />
                         </div>
                     </div>
 
-                    <GameOffers offers={game.offers} lowestPrice={game.lowest_price} />
-                    <p className="shooter-muted">La compra se realiza en la tienda seleccionada. Comprueba el precio y la disponibilidad antes de comprar.</p>
                 </>
             )}
         </AnimatedSection>

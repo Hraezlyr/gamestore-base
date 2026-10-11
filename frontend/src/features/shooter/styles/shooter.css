@@ -9,7 +9,7 @@
   border: 0;
 }
 
-.shooter-page {
+.shooter-page, .shooter-offer-popover {
   --bg: #0d0e14;
   --surface: #171820;
   --surface-hover: #20212c;
@@ -19,6 +19,9 @@
   --accent: #b4a0ff;
   --primary: #7856e8;
   --danger: #ff9fae;
+}
+
+.shooter-page {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -69,7 +72,7 @@
   text-underline-offset: 4px;
 }
 
-.shooter-page button, .shooter-purchase-link {
+.shooter-page button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -87,7 +90,7 @@
   transition: background 150ms, border-color 150ms;
 }
 
-.shooter-page button:hover, .shooter-purchase-link:hover {
+.shooter-page button:hover {
   background: var(--surface-hover);
   border-color: #686078;
 }
@@ -467,7 +470,7 @@
   font-size: 12px;
 }
 
-.shooter-game-detail__offers, .shooter-table-wrapper {
+.shooter-table-wrapper {
   overflow-x: auto;
   margin: 2rem 0 1rem;
   border: 1px solid var(--border);
@@ -513,22 +516,12 @@
   border-bottom: 0;
 }
 
-.shooter-offer--best {
-  background: #241e34;
-}
-
 .shooter-best-price {
   display: block;
   margin-top: 0.25rem;
   font-size: 10px;
   color: #c2b0ff;
   font-weight: 500;
-}
-
-.shooter-page .shooter-purchase-link {
-  color: var(--accent);
-  font-size: 12px;
-  white-space: nowrap;
 }
 
 .shooter-login, .shooter-editor {

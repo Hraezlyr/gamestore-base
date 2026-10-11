@@ -59,7 +59,7 @@ export function ShooterPage() {
         <p>
           Catálogo e imágenes de <a href="https://rawg.io/">RAWG</a>.
           {" "}Precios de <a href="https://www.cheapshark.com/">CheapShark</a>.
-          {" "}Los precios pueden cambiar después de la sincronización.
+          {" "}Los precios pueden cambiar.
         </p>
       </footer>
     </main>

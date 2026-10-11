@@ -46,7 +46,6 @@
 }
 .shooter-page .shooter-gallery__thumbnails button:hover { opacity: 1; }
 .shooter-gallery__thumbnails .shooter-artwork { border: 0; border-radius: 0; }
-.shooter-store-name { display: flex; align-items: center; gap: 0.75rem; }
 .shooter-store-icon {
   display: grid;
   place-items: center;

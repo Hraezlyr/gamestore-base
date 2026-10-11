@@ -66,8 +66,9 @@ y tiendas existentes.
 - El catálogo público incluye juegos con al menos una oferta activa en USD de
   una tienda activa. `0.00` es válido y representa un juego gratuito.
 - El precio del listado es el menor de las ofertas disponibles. El detalle
-  muestra precio actual, regular, moneda, fecha de sincronización y enlace
-  de compra de cada oferta.
+  muestra iconos de tiendas. Al pasar el cursor, enfocar con teclado o tocar
+  un icono aparecen la tienda, el precio, el precio regular si hay descuento
+  y el enlace de compra. La fecha de sincronización no se muestra al público.
 - La administración incluye también juegos sin ofertas. Permite crear, editar
   y eliminar juegos; los campos editables son título, descripción e imagen.
 - Los identificadores externos y precios son gestionados por la sincronización.
@@ -119,7 +120,9 @@ de CheapShark. Motion anima la entrada de vistas y los cambios de imagen y respe
 el movimiento reducido. `GameGallery` administra miniaturas y selección;
 `GameLightbox` utiliza Yet Another React Lightbox con zoom y se carga solo al
 ampliar una imagen. La galería admite teclado, gestos y cierre con Escape.
-`GameOffers` presenta los precios asociados a cada tienda.
+`GameOffers` presenta los iconos de tiendas; cada `StoreOffer` usa Floating UI
+para posicionar su tarjeta interactiva sin salir de la pantalla. Admite hover,
+foco, toque, cierre con Escape y clic fuera de la tarjeta.
 
 ## Pruebas
 
