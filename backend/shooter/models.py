@@ -3,6 +3,7 @@ from decimal import Decimal
 from django.core.validators import MinValueValidator
 from django.db import models
 
+
 class Store(models.Model):
     cheapshark_id = models.CharField(max_length=20, unique=True)
     name = models.CharField(max_length=120)
@@ -68,6 +69,7 @@ class GameOffer(models.Model):
     )
     currency = models.CharField(max_length=3, default="USD")
     last_synced_at = models.DateTimeField()
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         ordering = ["price", "id"]

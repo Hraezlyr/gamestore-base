@@ -1,7 +1,13 @@
 from collections.abc import Sequence
 from typing import Protocol
 
-from shooter.dtos import GameMatchData, GameToLink
+from shooter.dtos import (
+    GameMatchData,
+    GameToLink,
+    GameToSyncOffers,
+    OfferData,
+    OfferSyncResult,
+)
 
 
 class SteamIdProvider(Protocol):
@@ -31,4 +37,27 @@ class GameLinkRepository(Protocol):
         steam_app_id: str,
         cheapshark_id: str,
     ) -> bool:
+        ...
+
+class OfferProvider(Protocol):
+    def fetch_game_offers(
+        self,
+        game_id: str,
+    ) -> Sequence[OfferData]:
+        ...
+
+
+class OfferRepository(Protocol):
+    def get_linked_games(
+        self,
+        limit: int,
+        after_id: int,
+    ) -> Sequence[GameToSyncOffers]:
+        ...
+
+    def sync_offers(
+        self,
+        game_pk: int,
+        offers: Sequence[OfferData],
+    ) -> OfferSyncResult:
         ...

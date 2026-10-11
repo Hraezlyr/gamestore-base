@@ -1,4 +1,5 @@
 from enum import Enum
+from decimal import Decimal
 
 from dataclasses import dataclass
 
@@ -73,6 +74,55 @@ class CatalogLinkResult:
     @property
     def skipped(self) -> int:
         return len(self.outcomes) - self.linked
+
+    @property
+    def last_id(self) -> int | None:
+        return self.outcomes[-1].local_id if self.outcomes else None
+
+@dataclass(frozen=True)
+class OfferData:
+    external_id: str
+    store_external_id: str
+    price: Decimal
+    retail_price: Decimal
+    currency: str = "USD"
+
+@dataclass(frozen=True)
+class GameToSyncOffers:
+    local_id: int
+    cheapshark_id: str
+
+
+@dataclass(frozen=True)
+class OfferSyncResult:
+    created: int
+    updated: int
+    deactivated: int
+
+@dataclass(frozen=True)
+class GameOfferSyncOutcome:
+    local_id: int
+    result: OfferSyncResult
+
+
+@dataclass(frozen=True)
+class CatalogOfferSyncResult:
+    outcomes: tuple[GameOfferSyncOutcome, ...]
+
+    @property
+    def created(self) -> int:
+        return sum(outcome.result.created for outcome in self.outcomes)
+
+    @property
+    def updated(self) -> int:
+        return sum(outcome.result.updated for outcome in self.outcomes)
+
+    @property
+    def deactivated(self) -> int:
+        return sum(
+            outcome.result.deactivated
+            for outcome in self.outcomes
+        )
 
     @property
     def last_id(self) -> int | None:

@@ -1,10 +1,11 @@
 import json
+from decimal import Decimal
 from io import BytesIO
 from unittest import TestCase
 from unittest.mock import patch
 from urllib.error import URLError
 
-from shooter.dtos import StoreData, GameMatchData
+from shooter.dtos import StoreData, GameMatchData, OfferData
 from shooter.integrations.cheapshark import (
     CheapSharkClient,
     CheapSharkError,
@@ -108,3 +109,91 @@ class CheapSharkClientTests(TestCase):
 
         with self.assertRaises(CheapSharkError):
             CheapSharkClient().fetch_games_by_steam_app_id("620")
+
+    @patch("shooter.integrations.cheapshark.CheapSharkClient._get_json")
+    def test_converts_offer_prices_including_free_games(self, mock_get_json):
+        mock_get_json.return_value = {
+            "deals": [
+                {
+                    "dealID": "offer-1",
+                    "storeID": "1",
+                    "price": "9.99",
+                    "retailPrice": "19.99",
+                },
+                {
+                    "dealID": "offer-2",
+                    "storeID": "3",
+                    "price": "0.00",
+                    "retailPrice": "9.99",
+                },
+            ],
+        }
+
+        offers = CheapSharkClient().fetch_game_offers("36")
+
+        self.assertEqual(offers, (
+            OfferData(
+                external_id="offer-1",
+                store_external_id="1",
+                price=Decimal("9.99"),
+                retail_price=Decimal("19.99"),
+            ),
+            OfferData(
+                external_id="offer-2",
+                store_external_id="3",
+                price=Decimal("0.00"),
+                retail_price=Decimal("9.99"),
+            ),
+        ))
+
+    @patch("shooter.integrations.cheapshark.CheapSharkClient._get_json")
+    def test_rejects_invalid_offer_prices(self, mock_get_json):
+        invalid_prices = (
+            "-1", "NaN", "Infinity", "9.999",
+            "100000000.00", "not-a-price", 9.99, None,
+        )
+
+        for field in ("price", "retailPrice"):
+            for value in invalid_prices:
+                with self.subTest(field=field, value=value):
+                    deal = {
+                        "dealID": "offer-1",
+                        "storeID": "1",
+                        "price": "9.99",
+                        "retailPrice": "19.99",
+                    }
+                    deal[field] = value
+                    mock_get_json.return_value = {"deals": [deal]}
+
+                    with self.assertRaises(CheapSharkError):
+                        CheapSharkClient().fetch_game_offers("36")
+
+    @patch("shooter.integrations.cheapshark.CheapSharkClient._get_json")
+    def test_accepts_empty_offer_list(self, mock_get_json):
+        mock_get_json.return_value = {"deals": []}
+
+        offers = CheapSharkClient().fetch_game_offers("36")
+
+        self.assertEqual(offers, ())
+
+    @patch("shooter.integrations.cheapshark.CheapSharkClient._get_json")
+    def test_rejects_incomplete_offer_response(self, mock_get_json):
+        for payload in ({}, {"deals": None}, {"deals": [None]}):
+            with self.subTest(payload=payload):
+                mock_get_json.return_value = payload
+
+                with self.assertRaises(CheapSharkError):
+                    CheapSharkClient().fetch_game_offers("36")
+
+    @patch("shooter.integrations.cheapshark.CheapSharkClient._get_json")
+    def test_rejects_duplicate_offer_ids(self, mock_get_json):
+        deal = {
+            "dealID": "offer-1",
+            "storeID": "1",
+            "price": "9.99",
+            "retailPrice": "19.99",
+        }
+        mock_get_json.return_value = {"deals": [deal, deal.copy()]}
+
+        with self.assertRaises(CheapSharkError):
+            CheapSharkClient().fetch_game_offers("36")

@@ -1,9 +1,10 @@
 import json
+from decimal import Decimal, InvalidOperation
 from urllib.error import URLError
 from urllib.request import Request, urlopen
 from urllib.parse import urlencode
 
-from shooter.dtos import StoreData, GameMatchData
+from shooter.dtos import StoreData, GameMatchData, OfferData
 
 
 class CheapSharkError(Exception):
@@ -130,6 +131,99 @@ class CheapSharkClient:
             steam_app_id=steam_app_id,
             title=title,
         )
+
+    def fetch_game_offers(self, game_id: str) -> tuple[OfferData, ...]:
+        if (
+            not isinstance(game_id, str)
+            or not game_id.isascii()
+            or not game_id.isdigit()
+            or len(game_id) > 20
+            or int(game_id) <= 0
+        ):
+            raise CheapSharkError("Identificador de juego inválido.")
+
+        payload = self._get_json("games", params={"id": game_id})
+
+        if not isinstance(payload, dict):
+            raise CheapSharkError("Respuesta de ofertas inválida.")
+
+        deals = payload.get("deals")
+
+        if not isinstance(deals, list):
+            raise CheapSharkError("La respuesta no contiene ofertas.")
+
+        offers = tuple(self._parse_offer(item) for item in deals)
+        offer_ids = {offer.external_id for offer in offers}
+
+        if len(offer_ids) != len(offers):
+            raise CheapSharkError("La respuesta contiene ofertas duplicadas.")
+
+        return offers
+
+    @staticmethod
+    def _parse_offer(item) -> OfferData:
+        if not isinstance(item, dict):
+            raise CheapSharkError("La oferta no es un objeto.")
+
+        deal_id = item.get("dealID")
+        store_id = item.get("storeID")
+
+        if (
+            not isinstance(deal_id, str)
+            or not deal_id.strip()
+            or len(deal_id) > 255
+        ):
+            raise CheapSharkError("Identificador de oferta inválido.")
+
+        if (
+            not isinstance(store_id, str)
+            or not store_id.isascii()
+            or not store_id.isdigit()
+            or len(store_id) > 20
+            or int(store_id) <= 0
+        ):
+            raise CheapSharkError("Identificador de tienda inválido.")
+
+        return OfferData(
+            external_id=deal_id,
+            store_external_id=store_id,
+            price=CheapSharkClient._parse_price(
+                item.get("price"), "price"
+            ),
+            retail_price=CheapSharkClient._parse_price(
+                item.get("retailPrice"), "retailPrice"
+            ),
+        )
+
+    @staticmethod
+    def _parse_price(value, field_name: str) -> Decimal:
+        if not isinstance(value, str):
+            raise CheapSharkError(f"Precio inválido: {field_name}.")
+
+        try:
+            amount = Decimal(value)
+        except InvalidOperation:
+            raise CheapSharkError(
+                f"Precio inválido: {field_name}."
+            ) from None
+
+        if (
+            not amount.is_finite()
+            or amount < 0
+            or amount > Decimal("99999999.99")
+        ):
+            raise CheapSharkError(
+                f"Precio fuera de rango: {field_name}."
+            )
+
+        rounded = amount.quantize(Decimal("0.01"))
+
+        if rounded != amount:
+            raise CheapSharkError(
+                f"El precio tiene más de dos decimales: {field_name}."
+            )
+
+        return rounded
 
     def _get_json(self, path, params=None):
         url = f"{self.BASE_URL}/{path}"
