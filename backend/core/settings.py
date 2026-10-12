@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'modules.juegos_indie',
     # Aplicaciones locales
     'shooter.apps.ShooterConfig',
-    'modules.deportes',
 ]
 
 MIDDLEWARE = [
