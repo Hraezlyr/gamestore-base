@@ -1,8 +1,10 @@
 from django.contrib import admin
 from django.urls import include, path
+from django.urls import path, include
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.db import connection
+from django.urls import path, include
 
 @api_view(['GET'])
 def health_check(request):
@@ -22,4 +24,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/health/', health_check),
     path('api/v1/', include('modules.realidad_virtual.urls')),
+    path('api/v1/juegos_indie/', include('modules.juegos_indie.urls')),
+    path("api/v1/shooter/", include("shooter.urls")),
 ]
