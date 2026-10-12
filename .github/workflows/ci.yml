@@ -32,6 +32,9 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Corregir permisos de node_modules
+        run: sudo chown -R $USER:$USER frontend
+
       - name: Install dependencies
         working-directory: ./frontend
         run: npm ci || npm install
