@@ -41,6 +41,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'modules.perifericos',
+    'modules.realidad_virtual',
+    'modules.juegos_indie',
+    # Aplicaciones locales
+    'shooter.apps.ShooterConfig',
+    'modules.aventura_grafica',
 ]
 
 MIDDLEWARE = [
@@ -131,3 +136,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True  # O CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
+
+RAWG_API_KEY = os.environ.get("RAWG_API_KEY", "")

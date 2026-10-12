@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "paths": {
+      "@shooter/*": ["../frontend/src/features/shooter/*"],
+      "vitest": ["../frontend/node_modules/vitest"],
+      "@playwright/test": ["../frontend/node_modules/@playwright/test"]
+    }
+  }
+}
