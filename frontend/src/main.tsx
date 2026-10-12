@@ -6,6 +6,7 @@ import './index.css';
 // === IMPORTACIONES DE MÓDULOS (AUTO-REGISTRO) ===
 // Cada nuevo módulo importado aquí se registrará de inmediato en el Sidebar
 import './modules/_template';
+import './modules/perifericos';
 // ===============================================
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
