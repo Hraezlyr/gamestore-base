@@ -1,0 +1,28 @@
+[
+  {
+    "model": "retro.retrogame",
+    "pk": 1,
+    "fields": {
+      "title": "Super Mario World",
+      "description": "Clásico juego de plataformas para SNES.",
+      "price": "29.99",
+      "stock": 10,
+      "image_url": "https://example.com/mario.jpg",
+      "subgenre": "Plataformas",
+      "created_at": "2026-10-12T15:00:00Z"
+    }
+  },
+  {
+    "model": "retro.retrogame",
+    "pk": 2,
+    "fields": {
+      "title": "The Legend of Zelda: A Link to the Past",
+      "description": "Aventura épica en 2D para SNES.",
+      "price": "39.99",
+      "stock": 5,
+      "image_url": "https://example.com/zelda.jpg",
+      "subgenre": "Aventura",
+      "created_at": "2026-10-12T15:00:00Z"
+    }
+  }
+]

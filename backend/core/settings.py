@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'corsheaders',
 
     'modules.juegos_indie',
+    'modules.retro',
     # Aplicaciones locales
     'shooter.apps.ShooterConfig',
 ]
