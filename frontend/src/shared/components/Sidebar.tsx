@@ -17,16 +17,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ modules, activeId, onSelect })
         <h2>🎮 GameStore</h2>
       </div>
 
-      <nav className="sidebar-nav">
+      <nav className="sidebar-nav" aria-label="Catálogos de GameStore">
         {traditional.length > 0 && (
           <div className="sidebar-group">
-            <span className="sidebar-category">HU-01: Tradicionales</span>
+            <span className="sidebar-category">Géneros</span>
             <ul>
               {traditional.map((mod) => (
                 <li key={mod.id}>
                   <button
                     type="button"
                     className={`sidebar-link ${activeId === mod.id ? 'active' : ''}`}
+                    aria-current={activeId === mod.id ? 'page' : undefined}
                     onClick={() => onSelect(mod.id)}
                   >
                     {mod.name}
@@ -39,13 +40,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ modules, activeId, onSelect })
 
         {special.length > 0 && (
           <div className="sidebar-group">
-            <span className="sidebar-category">HU-02: Especiales & Servicios</span>
+            <span className="sidebar-category">Especiales y servicios</span>
             <ul>
               {special.map((mod) => (
                 <li key={mod.id}>
                   <button
                     type="button"
                     className={`sidebar-link ${activeId === mod.id ? 'active' : ''}`}
+                    aria-current={activeId === mod.id ? 'page' : undefined}
                     onClick={() => onSelect(mod.id)}
                   >
                     {mod.name}

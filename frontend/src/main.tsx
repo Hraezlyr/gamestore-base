@@ -5,6 +5,7 @@ import './index.css';
 
 // === IMPORTACIONES DE MÓDULOS (AUTO-REGISTRO) ===
 // Cada nuevo módulo importado aquí se registrará de inmediato en el Sidebar
+import './modules/shooter';
 import './modules/_template';
 // ===============================================
 

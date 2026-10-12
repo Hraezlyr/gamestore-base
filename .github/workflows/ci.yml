@@ -21,7 +21,57 @@ jobs:
 
       - name: Compilar imágenes en Docker
         run: docker compose build
+        
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
 
+      - name: Install dependencies
+        working-directory: ./frontend
+        run: npm ci
+
+      - name: Build frontend (Typecheck & Vite)
+        working-directory: ./frontend
+        run: npm run build
+
+      - name: Lint frontend
+        working-directory: ./frontend
+        run: npm run lint
+
+      - name: Pruebas unitarias del frontend
+        working-directory: ./frontend
+        run: npm test
+
+      - name: Iniciar base de datos
+        run: docker compose up -d --wait db
+
+      - name: Validar migraciones pendientes en Django
+        run: docker compose run --rm backend python manage.py makemigrations --check --dry-run
+
+      - name: Pruebas unitarias e integración del backend
+        run: docker compose run --rm backend python manage.py test tests.unit.shooter tests.integration.shooter
+
+      - name: Iniciar backend para E2E
+        run: |
+          docker compose up -d backend
+          curl --fail --retry 15 --retry-all-errors --retry-delay 1 http://localhost:8000/api/v1/health/
+
+      - name: Instalar navegador de pruebas
+        working-directory: ./frontend
+        run: npx playwright install --with-deps chromium
+
+      - name: Pruebas E2E del módulo shooter
+        working-directory: ./frontend
+        env:
+          SHOOTER_E2E_LIVE: '1'
+        run: npm run test:e2e
+
+      - name: Detener servicios
+        if: always()
+        run: docker compose down
       - name: Validar migraciones pendientes en Django
         run: |
           docker compose run --rm backend python manage.py makemigrations --check --dry-run
