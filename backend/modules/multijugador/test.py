@@ -5,9 +5,9 @@ from rest_framework.test import APITestCase
 from .models import ModuloAsignadoGame
 class ModuloAsignadoModelTest(TestCase):
     def setUp(self):
-    self.game = ModuloAsignadoGame.objects.create(
-        title="Prueba Unitaria", price=29.99, stock=5
-    )
+        self.game = ModuloAsignadoGame.objects.create(
+            title="Prueba Unitaria", price=29.99, stock=5
+        )
     def test_datos_correctos(self):
         self.assertEqual(self.game.title, "Prueba Unitaria")
         self.assertEqual(self.game.stock, 5)
