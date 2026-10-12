@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     # Librerías de terceros
     'rest_framework',
     'corsheaders',
-    'modules.realidad_virtual'
+    'modules.realidad_virtual',
     'modules.juegos_indie',
     # Aplicaciones locales
     'shooter.apps.ShooterConfig',
