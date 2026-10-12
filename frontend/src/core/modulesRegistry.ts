@@ -5,6 +5,7 @@ export interface ModuleDefinition {
   name: string;                             // Título para el sidebar (ej: 'RPG / Rol')
   category: 'traditional' | 'special';      // Agrupación HU-01 o HU-02
   component: React.ComponentType;           // Componente React que renderiza el catálogo
+  layout?: 'standard' | 'full-width';        // Vista compartida o módulo con su propio encabezado
 }
 
 // Registro global en memoria
