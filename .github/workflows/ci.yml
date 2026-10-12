@@ -21,7 +21,7 @@ jobs:
 
       - name: Compilar imágenes en Docker
         run: docker compose build
-
+        
       - name: Configurar Node
         uses: actions/setup-node@v4
         with:
@@ -72,3 +72,18 @@ jobs:
       - name: Detener servicios
         if: always()
         run: docker compose down
+      - name: Validar migraciones pendientes en Django
+        run: |
+          docker compose run --rm backend python manage.py makemigrations --check --dry-run
+
+      - name: Ejecutar pruebas unitarias de Django
+        run: |
+          docker compose run --rm backend python manage.py test
+
+      - name: Install dependencies
+        working-directory: ./frontend
+        run: npm ci || npm install
+
+      - name: Build frontend (Typecheck & Vite)
+        working-directory: ./frontend
+        run: npm run build
