@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # Librerías de terceros
     'rest_framework',
     'corsheaders',
+    'anuncios.apps.AnunciosConfig',
 ]
 
 MIDDLEWARE = [

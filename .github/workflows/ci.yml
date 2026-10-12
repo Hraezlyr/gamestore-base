@@ -1,31 +1,39 @@
 name: CI Baseline Pipeline
 
 on:
-  pull_request:
-    branches: [ main, develop ]
+pull_request:
+branches: [ main, develop ]
 
 jobs:
-  docker-validation:
-    name: Validate Docker Build & Compose Config
-    runs-on: ubuntu-latest
+docker-validation:
+name: Validate Docker Build & Compose Config
+runs-on: ubuntu-latest
 
-    steps:
-      - name: Descargar código fuente
-        uses: actions/checkout@v4
+steps:
+  - name: Descargar código fuente
+    uses: actions/checkout@v4
 
-      - name: Crear archivo .env temporal para build
-        run: cp .env.example .env
+  - name: Crear archivo .env temporal para build
+    run: cp .env.example .env
 
-      - name: Validar sintaxis de docker-compose.yml
-        run: docker compose config
+  - name: Validar sintaxis de docker-compose.yml
+    run: docker compose config
 
-      - name: Compilar imágenes en Docker
-        run: docker compose build
+  - name: Compilar imágenes en Docker
+    run: docker compose build
 
-      - name: Install dependencies
-        working-directory: ./frontend
-        run: npm ci || npm install
+  - name: Validar migraciones pendientes en Django
+    run: |
+      docker compose run --rm backend python manage.py makemigrations --check --dry-run
 
-      - name: Build frontend (Typecheck & Vite)
-        working-directory: ./frontend
-        run: npm run build
+  - name: Ejecutar pruebas unitarias de Django
+    run: |
+      docker compose run --rm backend python manage.py test
+
+  - name: Install dependencies
+    working-directory: ./frontend
+    run: npm ci || npm install
+
+  - name: Build frontend (Typecheck & Vite)
+    working-directory: ./frontend
+    run: npm run build
