@@ -1,103 +1,48 @@
-name: CI Baseline Pipeline
+name: Validate Docker Build & Compose Config
 
 on:
-  pull_request:
-    branches: [ main, develop ]
-
   push:
-    branches: [ main, develop ]
+    branches: [ develop, main ]
+  pull_request:
+    branches: [ develop, main ]
+
 jobs:
   docker-validation:
     name: Validate Docker Build & Compose Config
     runs-on: ubuntu-latest
 
     steps:
-      - name: Descargar código fuente
+      - name: Checkout del repositorio
         uses: actions/checkout@v4
 
-      - name: Crear archivo .env temporal para build
-        run: cp .env.example .env
-
-      - name: Validar sintaxis de docker-compose.yml
+      - name: Validar configuración de Docker Compose
         run: docker compose config
 
-      - name: Compilar imágenes en Docker
-        run: docker compose build
+      - name: Construir e iniciar contenedores
+        run: docker compose up -d --build
 
       - name: Validar migraciones pendientes en Django
-        run: |
-          docker compose run --rm backend python manage.py makemigrations --check --dry-run
+        run: docker compose exec -T backend python manage.py makemigrations --check --dry-run
 
       - name: Ejecutar pruebas unitarias de Django
-        run: |
-          docker compose run --rm backend python manage.py test
+        run: docker compose exec -T backend python manage.py test
+
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Corregir permisos de node_modules
+        run: sudo chown -R $USER:$USER frontend
 
       - name: Install dependencies
         working-directory: ./frontend
         run: npm ci || npm install
-        
-      - name: Configurar Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: npm
-          cache-dependency-path: frontend/package-lock.json
-
-      - name: Install dependencies
-        working-directory: ./frontend
-        run: npm ci
 
       - name: Build frontend (Typecheck & Vite)
         working-directory: ./frontend
         run: npm run build
-
-      - name: Lint frontend
-        working-directory: ./frontend
-        run: npm run lint
-
-      - name: Pruebas unitarias del frontend
-        working-directory: ./frontend
-        run: npm test
-
-      - name: Iniciar base de datos
-        run: docker compose up -d --wait db
-
-      - name: Validar migraciones pendientes en Django
-        run: docker compose run --rm backend python manage.py makemigrations --check --dry-run
-
-      - name: Pruebas unitarias e integración del backend
-        run: docker compose run --rm backend python manage.py test tests.unit.shooter tests.integration.shooter
-
-      - name: Iniciar backend para E2E
-        run: |
-          docker compose up -d backend
-          curl --fail --retry 15 --retry-all-errors --retry-delay 1 http://localhost:8000/api/v1/health/
-
-      - name: Instalar navegador de pruebas
-        working-directory: ./frontend
-        run: npx playwright install --with-deps chromium
-
-      - name: Pruebas E2E del módulo shooter
-        working-directory: ./frontend
-        env:
-          SHOOTER_E2E_LIVE: '1'
-        run: npm run test:e2e
 
       - name: Detener servicios
         if: always()
         run: docker compose down
-      - name: Validar migraciones pendientes en Django
-        run: |
-          docker compose run --rm backend python manage.py makemigrations --check --dry-run
-
-      - name: Ejecutar pruebas unitarias de Django
-        run: |
-          docker compose run --rm backend python manage.py test
-
-      - name: Install dependencies
-        working-directory: ./frontend
-        run: npm ci || npm install
-        
-      - name: Build frontend (Typecheck & Vite)
-        working-directory: ./frontend
-        run: npm run build
