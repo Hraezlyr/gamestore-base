@@ -1,0 +1,15 @@
+[
+  {
+    "model": "aventura_grafica.aventuragraficagame",
+    "pk": 1,
+    "fields": {
+      "title": "El Misterio de la Mansión Encantada",
+      "description": "Una clásica aventura gráfica point-and-click con resolución de puzles e investigación.",
+      "price": "39.99",
+      "stock": 10,
+      "image_url": "https://placehold.co/300x180?text=AventuraGrafica",
+      "subgenre": "Point & Click",
+      "created_at": "2026-10-07T12:00:00Z"
+    }
+  }
+]
