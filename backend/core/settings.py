@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # Aplicaciones locales
     'shooter.apps.ShooterConfig',
     'modules.aventura_grafica',
+    'modules.simulacion_construccion',
 ]
 
 MIDDLEWARE = [
