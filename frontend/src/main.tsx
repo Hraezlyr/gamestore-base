@@ -6,11 +6,13 @@ import './modules/multijugador'
 
 // Registrar módulos
 //import './modules/_template'
-import './modules/juegos_indie' 
+import './modules/juegos_indie'
+import './modules/realidad_virtual' 
 // === IMPORTACIONES DE MÓDULOS (AUTO-REGISTRO) ===
 // Cada nuevo módulo importado aquí se registrará de inmediato en el Sidebar
 import './modules/shooter';
 import './modules/_template';
+import './modules/aventura_grafica';
 // ===============================================
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -18,3 +20,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <App />
 
   </React.StrictMode>)
+  </React.StrictMode>,
+)
