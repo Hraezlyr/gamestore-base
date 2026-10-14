@@ -13,12 +13,11 @@ import './modules/realidad_virtual'
 import './modules/shooter';
 import './modules/_template';
 import './modules/aventura_grafica';
+import './modules/perifericos';
 // ===============================================
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <App />
-
-  </React.StrictMode>)
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);
