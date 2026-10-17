@@ -1,0 +1,1 @@
+default_app_config = 'modules.modulo_asignado.apps.ModuloAsignadoConfig'

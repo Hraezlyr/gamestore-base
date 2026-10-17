@@ -1,7 +1,5 @@
 from django.db import models
 
-from django.db import models
-
 class ModuloAsignadoGame(models.Model):
     title = models.CharField(max_length=150, verbose_name="Título del Juego")
     description = models.TextField(blank=True, null=True, verbose_name="Descripción")
@@ -10,6 +8,9 @@ class ModuloAsignadoGame(models.Model):
     image_url = models.URLField(blank=True, null=True, verbose_name="URL de Portada")
     subgenre = models.CharField(max_length=50, blank=True, null=True, verbose_name="Subgénero")
     created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        app_label = 'modulo_asignado'
 
     def __str__(self):
         return self.title
