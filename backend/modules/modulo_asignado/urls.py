@@ -1,0 +1,1 @@
+path('api/v1/', include('modules.modulo_asignado.urls')),
