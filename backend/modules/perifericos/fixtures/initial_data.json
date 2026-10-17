@@ -1,0 +1,133 @@
+[
+{
+	"model": "perifericos.PerifericosGame",
+	"pk": 2,
+	"fields": {
+		"title": "Teclado mecanico RGB",
+		"description": "Teclado mecanico con iluminacion RGB para videojuegos",
+		"price": "59.99",
+		"stock": 15,
+		"image_url": "https://placehold.co/300x180?text=Teclado",
+		"subgenre": "Perifericos",
+		"created_at": "2026-10-07T13:00:00Z"
+	}
+},
+	{
+	"model": "perifericos.PerifericosGame",
+	"pk": 3,
+	"fields": {
+		"title": "Mouse gamer optico",
+		"description": "Mouse optico con sensor de alta precision para gaming",
+		"price": "24.99",
+		"stock": 20,
+		"image_url": "https://placehold.co/300x180?text=Mouse",
+		"subgenre": "Perifericos",
+		"created_at": "2026-10-07T14:00:00Z"
+	}
+},
+	{
+	"model": "perifericos.PerifericosGame",
+	"pk": 4,
+	"fields": {
+		"title": "Auriculares gaming",
+		"description": "Auriculares con microfono integrado y sonido envolvente",
+		"price": "39.99",
+		"stock": 12,
+		"image_url": "https://placehold.co/300x180?text=Auriculares",
+		"subgenre": "Audio",
+		"created_at": "2026-10-07T15:00:00Z"
+	}
+},
+	{
+	"model": "perifericos.PerifericosGame",
+	"pk": 5,
+	"fields": {
+		"title": "Control inalambrico",
+		"description": "Control inalambrico compatible con PC para jugar videojuegos",
+		"price": "44.99",
+		"stock": 8,
+		"image_url": "https://placehold.co/300x180?text=Control",
+		"subgenre": "Controles",
+		"created_at": "2026-10-07T16:00:00Z"
+	}
+},
+{
+	"model": "perifericos.PerifericosGame",
+	"pk": 6,
+	"fields": {
+		"title": "Monitor gaming 24 pulgadas",
+		"description": "Monitor Full HD diseñado para una experiencia de juego fluida",
+		"price": "179.99",
+		"stock": 5,
+		"image_url": "https://placehold.co/300x180?text=Monitor",
+		"subgenre": "Monitores",
+		"created_at": "2026-10-07T17:00:00Z"
+	}
+},
+	{
+	"model": "perifericos.PerifericosGame",
+	"pk": 7,
+	"fields": {
+		"title": "Mousepad extendido",
+		"description": "Alfombrilla amplia para teclado y mouse con superficie antideslizante",
+		"price": "19.99",
+		"stock": 25,
+		"image_url": "https://placehold.co/300x180?text=Mousepad",
+		"subgenre": "Accesorios",
+		"created_at": "2026-10-07T18:00:00Z"
+	}
+},
+	{
+	"model": "perifericos.PerifericosGame",
+	"pk": 8,
+	"fields": {
+		"title": "Microfono USB",
+		"description": "Microfono USB para streaming, grabaciones y comunicacion en linea",
+		"price": "54.99",
+		"stock": 7,
+		"image_url": "https://placehold.co/300x180?text=Microfono",
+		"subgenre": "Audio",
+		"created_at": "2026-10-07T19:00:00Z"
+	}
+},
+	{
+	"model": "perifericos.PerifericosGame",
+	"pk": 9,
+	"fields": {
+		"title": "Webcam Full HD",
+		"description": "Camara web Full HD para videollamadas y transmisiones en vivo",
+		"price": "34.99",
+		"stock": 10,
+		"image_url": "https://placehold.co/300x180?text=Webcam",
+		"subgenre": "Streaming",
+		"created_at": "2026-10-07T20:00:00Z"
+	}
+},
+	{
+	"model": "perifericos.PerifericosGame",
+	"pk": 10,
+	"fields": {
+		"title": "Soporte para auriculares",
+		"description": "Soporte de escritorio para organizar y guardar auriculares gaming",
+		"price": "14.99",
+		"stock": 18,
+		"image_url": "https://placehold.co/300x180?text=Soporte",
+		"subgenre": "Accesorios",
+		"created_at": "2026-10-07T21:00:00Z"
+	}
+},
+	{
+	"model": "perifericos.PerifericosGame",
+	"pk": 11,
+	"fields": {
+		"title": "Bocinas para PC",
+		"description": "Sistema de bocinas estereo compacto para juegos y multimedia",
+		"price": "29.99",
+		"stock": 9,
+		"image_url": "https://placehold.co/300x180?text=Bocinas",
+		"subgenre": "Audio",
+		"created_at": "2026-10-07T22:00:00Z"
+	}
+}
+]
+
