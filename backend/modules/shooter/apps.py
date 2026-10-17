@@ -3,4 +3,5 @@ from django.apps import AppConfig
 
 class ShooterConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'shooter'
+    name = 'modules.shooter'
+    label = 'shooter'

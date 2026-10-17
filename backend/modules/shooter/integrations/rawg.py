@@ -5,7 +5,7 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-from shooter.dtos import GameData, GamePage, ScreenshotData
+from modules.shooter.domain.dtos import GameData, GamePage, ScreenshotData
 
 
 class RawgError(Exception):

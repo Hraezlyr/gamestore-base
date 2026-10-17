@@ -1,7 +1,7 @@
 from django.db import transaction
 
-from shooter.dtos import GameToLink
-from shooter.models import ShooterGame
+from modules.shooter.domain.dtos import GameToLink
+from modules.shooter.models import ShooterGame
 
 
 class DjangoGameLinkRepository:

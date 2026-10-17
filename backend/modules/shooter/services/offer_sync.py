@@ -1,10 +1,10 @@
-from shooter.dtos import (
+from modules.shooter.domain.dtos import (
     CatalogOfferSyncResult,
     GameOfferSyncOutcome,
     GameToSyncOffers,
     OfferSyncResult,
 )
-from shooter.ports import OfferProvider, OfferRepository
+from modules.shooter.domain.ports import OfferProvider, OfferRepository
 
 
 def sync_game_offers(

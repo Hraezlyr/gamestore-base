@@ -1,13 +1,13 @@
 from collections.abc import Sequence
 
-from shooter.dtos import (
+from modules.shooter.domain.dtos import (
     CatalogLinkResult,
     GameLinkOutcome,
     GameMatchData,
     GameToLink,
     LinkStatus,
 )
-from shooter.ports import (
+from modules.shooter.domain.ports import (
     GameLinkRepository,
     GameMatchProvider,
     SteamIdProvider,

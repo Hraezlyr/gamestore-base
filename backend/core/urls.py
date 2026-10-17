@@ -25,7 +25,7 @@ urlpatterns = [
     path('api/v1/',include('modules.perifericos.urls')),
     path('api/v1/', include('modules.realidad_virtual.urls')),
     path('api/v1/juegos_indie/', include('modules.juegos_indie.urls')),
-    path("api/v1/shooter/", include("shooter.urls")),
+    path("api/v1/shooter/", include("modules.shooter.urls")),
     path('api/v1/', include('modules.multijugador.urls')),
     path('api/v1/', include('modules.aventura_grafica.urls')),
   path('api/v1/', include('modules.simulacion_construccion.urls')),

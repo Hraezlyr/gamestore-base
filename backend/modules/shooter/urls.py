@@ -4,7 +4,7 @@ from rest_framework_simplejwt.views import (
 )
 from django.urls import path
 
-from shooter.views import (
+from modules.shooter.views import (
     ShooterGameAdminDetailView,
     ShooterGameAdminListView,
     ShooterGameDetailView,

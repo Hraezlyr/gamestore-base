@@ -1,8 +1,8 @@
 from django.test import TestCase
 
-from shooter.dtos import GameToLink
-from shooter.models import ShooterGame
-from shooter.repositories.game_link import DjangoGameLinkRepository
+from modules.shooter.domain.dtos import GameToLink
+from modules.shooter.models import ShooterGame
+from modules.shooter.repositories.game_link import DjangoGameLinkRepository
 
 
 class GameLinkRepositoryTests(TestCase):

@@ -2,8 +2,8 @@ from collections.abc import Iterable
 
 from django.db import transaction
 
-from shooter.dtos import ScreenshotData
-from shooter.models import GameScreenshot, ShooterGame
+from modules.shooter.domain.dtos import ScreenshotData
+from modules.shooter.models import GameScreenshot, ShooterGame
 
 
 @transaction.atomic

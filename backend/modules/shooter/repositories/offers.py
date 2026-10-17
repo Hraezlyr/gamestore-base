@@ -4,8 +4,8 @@ from datetime import datetime
 from django.db import transaction
 from django.utils import timezone
 
-from shooter.dtos import OfferData, OfferSyncResult, GameToSyncOffers
-from shooter.models import GameOffer, Store, ShooterGame
+from modules.shooter.domain.dtos import OfferData, OfferSyncResult, GameToSyncOffers
+from modules.shooter.models import GameOffer, Store, ShooterGame
 
 
 class DjangoOfferRepository:

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-from shooter.models import GameOffer, GameScreenshot, ShooterGame
-from shooter.links import cheapshark_deal_url
+from modules.shooter.models import GameOffer, GameScreenshot, ShooterGame
+from modules.shooter.api.links import cheapshark_deal_url
 
 
 class ShooterGameListSerializer(serializers.ModelSerializer):

@@ -1,6 +1,6 @@
 from django.db.models import Min, Prefetch, Q, QuerySet
 
-from shooter.models import GameOffer, ShooterGame
+from modules.shooter.models import GameOffer, ShooterGame
 
 
 def available_offers() -> QuerySet[GameOffer]:

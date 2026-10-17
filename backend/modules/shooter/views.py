@@ -7,10 +7,10 @@ from rest_framework.generics import (
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from shooter.pagination import ShooterCatalogPagination
-from shooter.selectors import public_catalog, public_game_details
-from shooter.models import ShooterGame
-from shooter.serializers import (
+from modules.shooter.api.pagination import ShooterCatalogPagination
+from modules.shooter.selectors import public_catalog, public_game_details
+from modules.shooter.models import ShooterGame
+from modules.shooter.serializers import (
     ShooterGameAdminSerializer,
     ShooterGameDetailSerializer,
     ShooterGameListSerializer,

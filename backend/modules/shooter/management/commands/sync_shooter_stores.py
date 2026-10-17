@@ -1,10 +1,10 @@
 from django.core.management.base import BaseCommand, CommandError
 
-from shooter.integrations.cheapshark import (
+from modules.shooter.integrations.cheapshark import (
     CheapSharkClient,
     CheapSharkError,
 )
-from shooter.services.store_sync import sync_stores
+from modules.shooter.services.store_sync import sync_stores
 
 
 class Command(BaseCommand):

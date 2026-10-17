@@ -1,8 +1,8 @@
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 
-from shooter.integrations.rawg import RawgClient, RawgError
-from shooter.services.game_sync import sync_games
+from modules.shooter.integrations.rawg import RawgClient, RawgError
+from modules.shooter.services.game_sync import sync_games
 
 
 class Command(BaseCommand):

@@ -2,9 +2,9 @@ from collections.abc import Iterable
 
 from django.db import transaction
 
-from shooter.dtos import GameData, GameSyncResult
-from shooter.models import ShooterGame
-from shooter.services.screenshot_sync import sync_screenshots
+from modules.shooter.domain.dtos import GameData, GameSyncResult
+from modules.shooter.models import ShooterGame
+from modules.shooter.services.screenshot_sync import sync_screenshots
 
 
 @transaction.atomic

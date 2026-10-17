@@ -1,14 +1,14 @@
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 
-from shooter.dtos import LinkStatus
-from shooter.integrations.cheapshark import (
+from modules.shooter.domain.dtos import LinkStatus
+from modules.shooter.integrations.cheapshark import (
     CheapSharkClient,
     CheapSharkError,
 )
-from shooter.integrations.rawg import RawgClient, RawgError
-from shooter.repositories.game_link import DjangoGameLinkRepository
-from shooter.services.catalog_link import link_catalog
+from modules.shooter.integrations.rawg import RawgClient, RawgError
+from modules.shooter.repositories.game_link import DjangoGameLinkRepository
+from modules.shooter.services.catalog_link import link_catalog
 
 
 STATUS_MESSAGES = {

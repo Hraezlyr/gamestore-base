@@ -4,7 +4,7 @@ from urllib.error import URLError
 from urllib.request import Request, urlopen
 from urllib.parse import urlencode
 
-from shooter.dtos import StoreData, GameMatchData, OfferData
+from modules.shooter.domain.dtos import StoreData, GameMatchData, OfferData
 
 
 class CheapSharkError(Exception):

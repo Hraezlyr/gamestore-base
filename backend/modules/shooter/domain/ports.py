@@ -1,7 +1,7 @@
 from collections.abc import Sequence
 from typing import Protocol
 
-from shooter.dtos import (
+from modules.shooter.domain.dtos import (
     GameMatchData,
     GameToLink,
     GameToSyncOffers,

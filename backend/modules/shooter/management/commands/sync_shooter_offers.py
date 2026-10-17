@@ -1,11 +1,11 @@
 from django.core.management.base import BaseCommand, CommandError
 
-from shooter.integrations.cheapshark import (
+from modules.shooter.integrations.cheapshark import (
     CheapSharkClient,
     CheapSharkError,
 )
-from shooter.repositories.offers import DjangoOfferRepository
-from shooter.services.offer_sync import sync_catalog_offers
+from modules.shooter.repositories.offers import DjangoOfferRepository
+from modules.shooter.services.offer_sync import sync_catalog_offers
 
 
 class Command(BaseCommand):

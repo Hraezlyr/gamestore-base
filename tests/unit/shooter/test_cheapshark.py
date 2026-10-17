@@ -5,8 +5,8 @@ from unittest import TestCase
 from unittest.mock import patch
 from urllib.error import URLError
 
-from shooter.dtos import StoreData, GameMatchData, OfferData
-from shooter.integrations.cheapshark import (
+from modules.shooter.domain.dtos import StoreData, GameMatchData, OfferData
+from modules.shooter.integrations.cheapshark import (
     CheapSharkClient,
     CheapSharkError,
 )
@@ -26,7 +26,7 @@ class CheapSharkClientTests(TestCase):
             with self.subTest(images=images), self.assertRaises(CheapSharkError):
                 CheapSharkClient._parse_store_icon(images)
 
-    @patch("shooter.integrations.cheapshark.urlopen")
+    @patch("modules.shooter.integrations.cheapshark.urlopen")
     def test_returns_stores_with_boolean_status(self, mock_urlopen):
         payload = [
             {"storeID": "1", "storeName": "Steam", "isActive": 1},
@@ -43,7 +43,7 @@ class CheapSharkClientTests(TestCase):
             StoreData(external_id="4", name="Amazon", is_active=False),
         ])
 
-    @patch("shooter.integrations.cheapshark.urlopen")
+    @patch("modules.shooter.integrations.cheapshark.urlopen")
     def test_rejects_invalid_responses(self, mock_urlopen):
         invalid_payloads = [
             {"message": "unexpected response"},
@@ -61,14 +61,14 @@ class CheapSharkClientTests(TestCase):
                 with self.assertRaises(CheapSharkError):
                     CheapSharkClient().fetch_stores()
 
-    @patch("shooter.integrations.cheapshark.urlopen")
+    @patch("modules.shooter.integrations.cheapshark.urlopen")
     def test_reports_connection_failure(self, mock_urlopen):
         mock_urlopen.side_effect = URLError("Connection failed")
 
         with self.assertRaises(CheapSharkError):
             CheapSharkClient().fetch_stores()
 
-    @patch("shooter.integrations.cheapshark.CheapSharkClient._get_json")
+    @patch("modules.shooter.integrations.cheapshark.CheapSharkClient._get_json")
     def test_returns_game_candidates_for_steam_id(self, mock_get_json):
         mock_get_json.return_value = [
             {
@@ -98,7 +98,7 @@ class CheapSharkClientTests(TestCase):
             ),
         ))
 
-    @patch("shooter.integrations.cheapshark.CheapSharkClient._get_json")
+    @patch("modules.shooter.integrations.cheapshark.CheapSharkClient._get_json")
     def test_returns_no_candidates_when_game_is_not_found(
         self, mock_get_json
     ):
@@ -108,7 +108,7 @@ class CheapSharkClientTests(TestCase):
 
         self.assertEqual(matches, ())
 
-    @patch("shooter.integrations.cheapshark.CheapSharkClient._get_json")
+    @patch("modules.shooter.integrations.cheapshark.CheapSharkClient._get_json")
     def test_rejects_candidate_with_different_steam_id(
         self, mock_get_json
     ):
@@ -123,7 +123,7 @@ class CheapSharkClientTests(TestCase):
         with self.assertRaises(CheapSharkError):
             CheapSharkClient().fetch_games_by_steam_app_id("620")
 
-    @patch("shooter.integrations.cheapshark.CheapSharkClient._get_json")
+    @patch("modules.shooter.integrations.cheapshark.CheapSharkClient._get_json")
     def test_converts_offer_prices_including_free_games(self, mock_get_json):
         mock_get_json.return_value = {
             "deals": [
@@ -159,7 +159,7 @@ class CheapSharkClientTests(TestCase):
             ),
         ))
 
-    @patch("shooter.integrations.cheapshark.CheapSharkClient._get_json")
+    @patch("modules.shooter.integrations.cheapshark.CheapSharkClient._get_json")
     def test_rejects_invalid_offer_prices(self, mock_get_json):
         invalid_prices = (
             "-1", "NaN", "Infinity", "9.999",
@@ -181,7 +181,7 @@ class CheapSharkClientTests(TestCase):
                     with self.assertRaises(CheapSharkError):
                         CheapSharkClient().fetch_game_offers("36")
 
-    @patch("shooter.integrations.cheapshark.CheapSharkClient._get_json")
+    @patch("modules.shooter.integrations.cheapshark.CheapSharkClient._get_json")
     def test_accepts_empty_offer_list(self, mock_get_json):
         mock_get_json.return_value = {"deals": []}
 
@@ -189,7 +189,7 @@ class CheapSharkClientTests(TestCase):
 
         self.assertEqual(offers, ())
 
-    @patch("shooter.integrations.cheapshark.CheapSharkClient._get_json")
+    @patch("modules.shooter.integrations.cheapshark.CheapSharkClient._get_json")
     def test_rejects_incomplete_offer_response(self, mock_get_json):
         for payload in ({}, {"deals": None}, {"deals": [None]}):
             with self.subTest(payload=payload):
@@ -198,7 +198,7 @@ class CheapSharkClientTests(TestCase):
                 with self.assertRaises(CheapSharkError):
                     CheapSharkClient().fetch_game_offers("36")
 
-    @patch("shooter.integrations.cheapshark.CheapSharkClient._get_json")
+    @patch("modules.shooter.integrations.cheapshark.CheapSharkClient._get_json")
     def test_rejects_duplicate_offer_ids(self, mock_get_json):
         deal = {
             "dealID": "offer-1",

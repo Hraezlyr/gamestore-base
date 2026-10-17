@@ -2,8 +2,8 @@ from collections.abc import Iterable
 
 from django.db import transaction
 
-from shooter.models import Store
-from shooter.dtos import StoreData, StoreSyncResult
+from modules.shooter.models import Store
+from modules.shooter.domain.dtos import StoreData, StoreSyncResult
 
 
 @transaction.atomic
