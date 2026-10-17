@@ -1,6 +1,7 @@
 from decimal import Decimal
 
-from django.core.validators import MinValueValidator
+from django.conf import settings
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 
@@ -107,3 +108,31 @@ class GameOffer(models.Model):
 
     def __str__(self):
         return f"{self.game.title} — {self.store.name}"
+
+
+class GameRating(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
+        null=True, blank=True, related_name="shooter_ratings",
+    )
+    game = models.ForeignKey(
+        "shooter.ShooterGame", on_delete=models.CASCADE, related_name="ratings",
+    )
+    score = models.PositiveSmallIntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
+    )
+    comment = models.TextField(max_length=2000)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = "shooter_sprint2_gamerating"
+        ordering = ["-created_at", "-id"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["game", "user"], name="shooter_sprint2_one_rating_per_user",
+            ),
+            models.CheckConstraint(
+                condition=models.Q(score__gte=1, score__lte=5),
+                name="shooter_sprint2_rating_score_range",
+            ),
+        ]
