@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'modules.perifericos',
     'modules.realidad_virtual',
     'modules.juegos_indie',
+    'modules.retro',
     # Aplicaciones locales
     'shooter.apps.ShooterConfig',
     'modules.multijugador',
