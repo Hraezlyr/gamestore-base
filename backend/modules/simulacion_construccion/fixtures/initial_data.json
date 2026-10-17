@@ -1,0 +1,54 @@
+[
+  {
+    "model": "simulacion_construccion.moduloasignadogame",
+    "pk": 1,
+    "fields": {
+      "title": "Cities: Skylines II",
+      "description": "Construye y gestiona una metrópolis moderna desde cero con simulación profunda.",
+      "price": "49.99",
+      "stock": 15,
+      "image_url": "https://placehold.co/300x180?text=Cities+Skylines+II",
+      "subgenre": "Construcción Urbana",
+      "created_at": "2026-10-07T12:00:00Z"
+    }
+  },
+  {
+    "model": "simulacion_construccion.moduloasignadogame",
+    "pk": 2,
+    "fields": {
+      "title": "Planet Coaster 2",
+      "description": "Diseña, construye y gestiona los mejores parques de atracciones y acuáticos.",
+      "price": "44.99",
+      "stock": 20,
+      "image_url": "https://placehold.co/300x180?text=Planet+Coaster+2",
+      "subgenre": "Gestión de Parques",
+      "created_at": "2026-10-07T12:05:00Z"
+    }
+  },
+  {
+    "model": "simulacion_construccion.moduloasignadogame",
+    "pk": 3,
+    "fields": {
+      "title": "Factorio",
+      "description": "Construye y automatiza complejas cadenas de fábricas en un planeta alienígena.",
+      "price": "35.00",
+      "stock": 12,
+      "image_url": "https://placehold.co/300x180?text=Factorio",
+      "subgenre": "Automatización",
+      "created_at": "2026-10-07T12:10:00Z"
+    }
+  },
+  {
+    "model": "simulacion_construccion.moduloasignadogame",
+    "pk": 4,
+    "fields": {
+      "title": "Frostpunk 2",
+      "description": "Lidera y gestiona la última ciudad de la Tierra frente a un apocalipsis helado.",
+      "price": "39.99",
+      "stock": 8,
+      "image_url": "https://placehold.co/300x180?text=Frostpunk+2",
+      "subgenre": "Supervivencia Urbana",
+      "created_at": "2026-10-07T12:15:00Z"
+    }
+  }
+]
