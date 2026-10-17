@@ -1,0 +1,433 @@
+/* Keep the storefront theme inside this genre module. */
+:root:has(.shooter-page) {
+  color-scheme: dark;
+  background: #0d0e14;
+}
+
+#root:has(.shooter-page) {
+  width: 100%;
+  border: 0;
+}
+
+.shooter-page, .shooter-offer-popover {
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: var(--sans);
+  --bg: #0d0e14;
+  --surface: #171820;
+  --surface-hover: #20212c;
+  --text: #a5a6ba;
+  --text-h: #f5f5fa;
+  --border: #2c2d3b;
+  --accent: #b4a0ff;
+  --primary: #7856e8;
+  --danger: #ff9fae;
+}
+
+.shooter-page {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  width: 100%;
+  color: var(--text);
+  background: var(--bg);
+  text-align: left;
+  font-size: 15px;
+  font-family: var(--sans);
+  line-height: 1.6;
+}
+
+.shooter-page *, .shooter-page *::before, .shooter-page *::after {
+  box-sizing: border-box;
+}
+
+.shooter-page [hidden] {
+  display: none;
+}
+
+.shooter-page h1, .shooter-page h2, .shooter-page h3 {
+  color: var(--text-h);
+  font-weight: 650;
+  letter-spacing: -0.035em;
+}
+
+.shooter-page h1 {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  line-height: 1.15;
+  margin: 0 0 1rem;
+}
+
+.shooter-page h2 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.shooter-page h3 {
+  font-size: 1.15rem;
+}
+
+.shooter-page p {
+  margin: 0.75rem 0;
+}
+
+.shooter-page a {
+  color: var(--accent);
+  text-underline-offset: 4px;
+}
+
+.shooter-page button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text-h);
+  font: inherit;
+  font-weight: 550;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 150ms, border-color 150ms;
+}
+
+.shooter-page button:hover {
+  background: var(--surface-hover);
+  border-color: #686078;
+}
+
+.shooter-page button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.shooter-page :is(button, a, input, textarea):focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.shooter-page .shooter-button--primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.shooter-page .shooter-button--primary:hover {
+  background: #8967f1;
+}
+
+.shooter-page .shooter-button--danger {
+  color: var(--danger);
+  border-color: #613443;
+  background: #2b1b25;
+}
+
+.shooter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1.1rem max(1.25rem, calc((100% - 1240px) / 2));
+  border-bottom: 1px solid var(--border);
+}
+
+.shooter-page .shooter-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--text-h);
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 750;
+  letter-spacing: -0.5px;
+}
+
+.shooter-brand > span {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  background: var(--primary);
+  border-radius: 12px;
+  font-size: 18px;
+  letter-spacing: -1px;
+}
+
+.shooter-brand small {
+  display: block;
+  color: var(--text);
+  font-size: 9px;
+  letter-spacing: 2px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.shooter-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.shooter-nav button {
+  background: transparent;
+  border-color: transparent;
+  font-size: 13px;
+}
+
+.shooter-nav button[aria-current="page"] {
+  color: var(--accent);
+  background: #231c38;
+}
+
+.shooter-content {
+  width: 100%;
+  flex: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 3rem;
+  min-height: 65vh;
+}
+
+.shooter-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 250px;
+  align-items: center;
+  gap: 2rem;
+  overflow: hidden;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border: 1px solid #393049;
+  border-radius: 18px;
+  background: radial-gradient(ellipse at 90% 20%, #392a63 0, transparent 65%), #17151f;
+}
+
+.shooter-page .shooter-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 1rem;
+}
+
+.shooter-hero h1 {
+  font-size: 15px;
+  letter-spacing: 0;
+  color: #c7bfdc;
+  margin: 0 0 0.75rem;
+}
+
+.shooter-page .shooter-hero__headline {
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-weight: 750;
+  line-height: 1.08;
+  letter-spacing: -0.05em;
+  color: var(--text-h);
+  margin: 0 0 1rem;
+}
+
+.shooter-hero__description {
+  max-width: 30rem;
+}
+
+.shooter-hero__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.shooter-hero__tags span {
+  border: 1px solid #4b405f;
+  border-radius: 6px;
+  padding: 0.2rem 0.6rem;
+  font-size: 11px;
+  color: #c6bfd8;
+}
+
+.shooter-hero__mark {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 230px;
+  height: 230px;
+  border: 1px solid #6b548b;
+  border-radius: 50%;
+  background: repeating-linear-gradient(135deg, transparent 0 12px, #b4a0ff08 12px 13px);
+  box-shadow: 0 0 0 20px #b4a0ff06, 0 0 0 40px #b4a0ff04;
+  transform: rotate(-8deg);
+}
+
+.shooter-hero__mark > span {
+  color: #c9b8ff;
+  font-size: 84px;
+  font-weight: 850;
+  line-height: 1.1;
+  letter-spacing: -8px;
+}
+
+.shooter-hero__mark small {
+  color: #c9b8ff;
+  font-size: 9px;
+  letter-spacing: 4px;
+}
+
+.shooter-section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 2rem 0 1.25rem;
+}
+
+.shooter-section-heading > span {
+  font-size: 12px;
+}
+
+.shooter-catalog__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.shooter-game-card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  transition: border-color 150ms, transform 150ms;
+}
+
+.shooter-game-card:hover {
+  border-color: #6a568c;
+  transform: translateY(-3px);
+}
+
+.shooter-game-card__cover {
+  position: relative;
+}
+
+.shooter-artwork {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #22202d;
+}
+
+.shooter-artwork img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.shooter-artwork__placeholder {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+  background: repeating-linear-gradient(135deg, transparent 0 24px, #b4a0ff08 24px 25px), linear-gradient(135deg, #302347, #1b2031);
+  color: #b7a3e3;
+}
+
+.shooter-artwork__placeholder span:first-child {
+  font-size: 48px;
+  letter-spacing: -5px;
+  font-weight: 800;
+}
+
+.shooter-artwork__placeholder span:last-child {
+  font-size: 9px;
+  letter-spacing: 3px;
+}
+
+.shooter-platform {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: white;
+  background: #0d0e14d9;
+  border: 1px solid #ffffff2e;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.shooter-game-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 1rem;
+}
+
+.shooter-game-card__body .shooter-eyebrow {
+  margin: 0 0 0.4rem;
+  font-size: 9px;
+}
+
+.shooter-game-card h2 {
+  font-size: 16px;
+  line-height: 1.4;
+  margin-bottom: 1.25rem;
+  overflow-wrap: anywhere;
+}
+
+.shooter-game-card__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: auto;
+}
+
+.shooter-price {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.shooter-price > span {
+  font-size: 11px;
+  color: var(--text);
+}
+
+.shooter-price strong {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-h);
+  letter-spacing: -0.5px;
+}
+
+.shooter-page .shooter-card-link {
+  min-height: 44px;
+  padding: 0.4rem 0;
+  font-size: 11px;
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+}
+
+.shooter-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+}
