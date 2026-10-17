@@ -1,6 +1,12 @@
+from django.contrib.auth import get_user_model
+from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth.validators import UnicodeUsernameValidator
+from django.core.exceptions import ValidationError
+from django.utils.translation import override
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 
-from modules.shooter.models import GameOffer, GameScreenshot, ShooterGame
+from modules.shooter.models import GameOffer, GameRating, GameScreenshot, ShooterGame
 from modules.shooter.api.links import cheapshark_deal_url
 
 
@@ -98,4 +104,50 @@ class ShooterGameAdminSerializer(serializers.ModelSerializer):
             "steam_app_id",
             "created_at",
             "updated_at",
+        )
+
+
+class GameRatingSerializer(serializers.ModelSerializer):
+    score = serializers.IntegerField(min_value=1, max_value=5)
+    comment = serializers.CharField(max_length=2000, allow_blank=False)
+
+    class Meta:
+        model = GameRating
+        fields = ("id", "score", "comment", "created_at")
+        read_only_fields = ("id", "created_at")
+
+
+class PublicReviewSerializer(GameRatingSerializer):
+    author = serializers.SerializerMethodField()
+
+    def get_author(self, rating):
+        return rating.user.get_username() if rating.user else "Usuario anónimo"
+
+    class Meta(GameRatingSerializer.Meta):
+        fields = (*GameRatingSerializer.Meta.fields, "author")
+        read_only_fields = fields
+
+
+class RegistrationSerializer(serializers.Serializer):
+    username = serializers.CharField(max_length=150, validators=[
+        UnicodeUsernameValidator(message="Usa letras, números o los caracteres @ . + - _."),
+        UniqueValidator(queryset=get_user_model().objects.all(), message="Este usuario ya existe."),
+    ])
+    password = serializers.CharField(write_only=True, trim_whitespace=False, max_length=128)
+    password_confirm = serializers.CharField(write_only=True, trim_whitespace=False, max_length=128)
+
+    def validate(self, attrs):
+        if attrs["password"] != attrs["password_confirm"]:
+            raise serializers.ValidationError({"password_confirm": ["Las contraseñas no coinciden."]})
+        candidate = get_user_model()(username=attrs["username"])
+        try:
+            with override("es"):
+                validate_password(attrs["password"], user=candidate)
+        except ValidationError as error:
+            raise serializers.ValidationError({"password": error.messages}) from error
+        return attrs
+
+    def create(self, validated_data):
+        return get_user_model().objects.create_user(
+            username=validated_data["username"], password=validated_data["password"],
         )
