@@ -1,0 +1,119 @@
+/* Visual theme applies only while the Shooter module is mounted. */
+.shooter-page.shooter-vortex,
+body:has(.shooter-vortex) .shooter-offer-popover {
+  --bg: #191a1c;
+  --surface: #232426;
+  --surface-hover: #2c2d2f;
+  --text: #b6b7b7;
+  --text-h: #f7f6f1;
+  --border: #363637;
+  --accent: #ffca55;
+  --primary: #ffca55;
+  --danger: #ff9fae;
+}
+
+.layout-container:has(.shooter-vortex) .sidebar {
+  width: 210px;
+  min-width: 210px;
+  background: #151618;
+  border-color: #2d2d2e;
+}
+.layout-container:has(.shooter-vortex) .sidebar-brand { border-color: #2d2d2e; }
+.layout-container:has(.shooter-vortex) .sidebar-brand h2 { color: #f7f6f1; }
+.layout-container:has(.shooter-vortex) .sidebar-category { color: #9a9b9c; }
+.layout-container:has(.shooter-vortex) .sidebar-link { color: #b6b7b7; }
+.layout-container:has(.shooter-vortex) .sidebar-link.active { color: #ffca55; background: #ffca5512; }
+.layout-container:has(.shooter-vortex) .sidebar-link:hover { background: #ffffff09; }
+.shooter-vortex .shooter-header { background: #191a1c; border-color: var(--border); }
+.shooter-vortex .shooter-brand > span { color: #171717; background: var(--accent); border-color: var(--accent); }
+.shooter-vortex .shooter-brand small { color: var(--text); }
+.shooter-vortex .shooter-nav button { border-radius: 24px; }
+.shooter-vortex .shooter-nav button[aria-current="page"] { color: #171717; background: #f7f6f1; }
+.shooter-vortex .shooter-content { max-width: 1440px; padding: 0 2.5rem 3rem; }
+.shooter-vortex button:focus-visible,
+.shooter-vortex input:focus-visible,
+.shooter-vortex select:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.vortex-hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: 450px;
+  margin: 0 -2.5rem;
+  padding: 4rem 3rem;
+  overflow: hidden;
+  background: #22221d;
+}
+.vortex-hero__image { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
+.vortex-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, #171818f5 0%, #171818cf 34%, #17181820 100%), linear-gradient(0deg, #191a1c, transparent 65%);
+}
+.vortex-hero__copy { max-width: 520px; }
+.shooter-vortex .vortex-hero h1 { margin-bottom: 1rem; font-size: clamp(2.2rem, 4vw, 3.6rem); letter-spacing: -0.06em; }
+.shooter-vortex .vortex-hero__lead { color: #f4f2ec; font-size: clamp(1.1rem, 1.7vw, 1.45rem); line-height: 1.6; letter-spacing: -0.025em; }
+.vortex-hero__actions { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-top: 1.75rem; }
+.shooter-vortex .vortex-hero__actions button { padding: 0.7rem 1.3rem; border-radius: 28px; color: #171717; background: var(--accent); border-color: transparent; }
+.shooter-vortex .vortex-hero__actions .vortex-hero__secondary { color: #f7f6f1; background: #ffffff10; border-color: #ffffff35; }
+.shooter-vortex .vortex-hero__note { margin-top: 1.5rem; font-size: 11px; color: #cfcdc6; }
+.vortex-hero__caption { position: absolute; right: 3rem; bottom: 2.5rem; max-width: 240px; text-align: right; display: grid; gap: 0.25rem; }
+.vortex-hero__caption span { color: #dad8ce; font-size: 11px; }
+.vortex-hero__caption strong { color: #fff; font-size: 17px; }
+
+.vortex-collection { padding-top: 2.5rem; scroll-margin-top: 1.5rem; }
+.vortex-collection__heading { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.shooter-vortex .vortex-collection__heading .shooter-eyebrow { margin-bottom: 0.4rem; font-size: 9px; }
+.shooter-vortex .vortex-collection__heading h2 { font-size: 1.55rem; }
+.shooter-vortex .vortex-collection__count { margin: 0.4rem 0 0; font-size: 12px; }
+.vortex-filters { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.vortex-search, .vortex-sort { display: flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border); border-radius: 24px; padding: 0.65rem 0.9rem; background: #242527; }
+.vortex-search input, .vortex-sort select { min-width: 0; border: 0; background: transparent; color: var(--text-h); font: inherit; font-size: 12px; }
+.vortex-search input { width: 155px; }
+.vortex-search input::placeholder { color: #b3b3b1; }
+.vortex-sort select { cursor: pointer; }
+.vortex-sort option { background: var(--surface); }
+.shooter-vortex .shooter-catalog__grid { gap: 1rem; }
+.shooter-vortex .shooter-game-card { border: 1px solid #ffffff06; border-radius: 18px; padding: 8px; background: #242527; }
+.shooter-vortex .shooter-game-card:hover { border-color: #ffca5570; }
+.shooter-vortex .shooter-game-card__cover { overflow: hidden; border-radius: 12px; }
+.shooter-vortex .shooter-game-card .shooter-artwork { aspect-ratio: 1 / 1; }
+.shooter-vortex .shooter-artwork__placeholder { background: linear-gradient(135deg, #37382f, #191a1c); color: #d5be83; }
+.shooter-vortex .shooter-game-card__body { padding: 0.8rem 0.1rem 0.15rem; }
+.shooter-vortex .shooter-game-card__body .shooter-eyebrow { color: #c0b9a5; }
+.shooter-vortex .shooter-game-card h2 { margin-bottom: 0.75rem; font-size: 14px; }
+.shooter-vortex .shooter-game-card__bottom { gap: 0.6rem; align-items: stretch; }
+.shooter-vortex .shooter-game-card__bottom .shooter-price { width: 100%; flex-direction: row; align-items: baseline; justify-content: space-between; }
+.shooter-vortex .shooter-game-card__bottom .shooter-price strong { font-size: 16px; }
+.shooter-vortex .shooter-card-link { width: 100%; min-height: 38px; border-radius: 24px; background: var(--accent); color: #1e1b12; }
+.shooter-vortex .shooter-card-link:hover { background: #ffdc83; }
+.shooter-vortex .shooter-platform { background: #171818dc; border-color: #ffffff30; }
+.shooter-vortex .shooter-gallery__expand { background: #171818dc; }
+.shooter-vortex .shooter-rating-stars label { color: var(--accent); }
+.shooter-vortex .shooter-ratings > p:first-child { color: var(--accent); }
+.shooter-vortex footer { background: #171819; }
+
+@media (max-width: 1100px) {
+  .shooter-vortex .shooter-catalog__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .vortex-hero__caption { display: none; }
+}
+@media (max-width: 800px) {
+  .layout-container:has(.shooter-vortex) .sidebar { width: 100%; min-width: 0; }
+  .shooter-vortex .shooter-content { padding: 0 1.25rem 2rem; }
+  .vortex-hero { min-height: 410px; margin: 0 -1.25rem; padding: 3rem 1.5rem; }
+  .vortex-hero::before { background: linear-gradient(90deg, #171818f0, #17181850), linear-gradient(0deg, #191a1c, transparent); }
+  .shooter-vortex .shooter-catalog__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 520px) {
+  .vortex-filters, .vortex-search { width: 100%; }
+  .vortex-search input { width: 100%; }
+  .vortex-collection__heading { gap: 1rem; }
+  .shooter-vortex .shooter-catalog__grid { gap: 0.6rem; }
+  .shooter-vortex .shooter-game-card { padding: 6px; border-radius: 14px; }
+  .shooter-vortex .shooter-game-card h2 { font-size: 12px; }
+  .shooter-vortex .shooter-card-link { font-size: 10px; }
+  .shooter-vortex .vortex-hero__note { max-width: 260px; }
+}
