@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'modules.realidad_virtual',
     'modules.juegos_indie',
     # Aplicaciones locales
-    'shooter.apps.ShooterConfig',
+    'modules.shooter.apps.ShooterConfig',
     'modules.multijugador',
     'modules.aventura_grafica',
     'modules.simulacion_construccion',

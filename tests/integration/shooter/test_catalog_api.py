@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.utils import timezone
 from rest_framework.test import APITestCase
 
-from shooter.models import GameOffer, GameScreenshot, ShooterGame, Store
+from modules.shooter.models import GameOffer, GameScreenshot, ShooterGame, Store
 
 
 class CatalogApiTests(APITestCase):

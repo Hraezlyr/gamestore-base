@@ -18,6 +18,8 @@ async function api(page: Page, expired = false) {
     const path = url.pathname;
     const method = request.method();
     const respond = (body: unknown, status = 200) => route.fulfill({ status, contentType: "application/json", body: JSON.stringify(body) });
+    if (path.endsWith("/rate/")) return respond({ rating_average: null, rating_count: 0, user_rating: null });
+    if (path.endsWith("/reviews/")) return respond({ count: 0, next: null, previous: null, results: [] });
     if (path.endsWith("/auth/token/")) {
       const credentials = request.postDataJSON();
       if (credentials.password !== "test-password") return respond({ detail: "Invalid" }, 401);
@@ -73,18 +75,18 @@ async function login(page: Page, username = "admin") {
 
 test("shared sidebar switches modules and restores shooter detail with browser history", async ({ page }) => {
   await api(page);
-  await page.route("**/api/v1/template/**", route => route.fulfill({
+  await page.route("**/api/v1/realidad_virtual/**", route => route.fulfill({
     contentType: "application/json", body: "[]",
   }));
-  await page.goto("/");
+  await page.goto("/shooter/");
   const navigation = page.getByRole("navigation", { name: "Catálogos de GameStore" });
   await expect(navigation.getByRole("button", { name: "Shooters", exact: true })).toHaveAttribute("aria-current", "page");
   await expect(page.getByRole("main")).toHaveCount(1);
   await page.getByRole("button", { name: "Ver detalles de Portal 2" }).click();
   await expect(page).toHaveURL(/#game\/1$/);
-  await navigation.getByRole("button", { name: "Módulo Plantilla", exact: true }).click();
-  await expect(page).toHaveURL(/\/template\/$/);
-  await expect(page.getByRole("heading", { name: "Módulo Plantilla", exact: true })).toBeVisible();
+  await navigation.getByRole("button", { name: "Realidad Virtual", exact: true }).click();
+  await expect(page).toHaveURL(/\/realidad_virtual\/$/);
+  await expect(page.getByRole("heading", { name: "Realidad Virtual", exact: true, level: 1 })).toBeVisible();
   await expect(page.getByText("No hay títulos registrados aún", { exact: false })).toBeVisible();
   await page.goBack();
   await expect(page.getByRole("heading", { name: "Portal 2", exact: true })).toBeVisible();
