@@ -5,5 +5,6 @@ class JuegoIndie(models.Model):
     descripcion = models.TextField(blank=True, null=True)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
 
+    boosts = models.PositiveIntegerField(default=0)
     def __str__(self):
         return self.nombre

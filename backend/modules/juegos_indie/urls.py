@@ -1,6 +1,10 @@
-from django.urls import path
-from .views import JuegosIndieGameListCreateView
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import JuegoIndieViewSet
+
+router = DefaultRouter()
+router.register(r'', JuegoIndieViewSet, basename='juegos_indie')
 
 urlpatterns = [
-    path('', JuegosIndieGameListCreateView.as_view(), name='juegos_indie_list'),
+    path('', include(router.urls)),
 ]
