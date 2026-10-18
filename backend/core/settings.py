@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'modules.realidad_virtual',
     'modules.juegos_indie',
+    'modules.modulo_RPGs',
     # Aplicaciones locales
     'shooter.apps.ShooterConfig',
     'modules.aventura_grafica',

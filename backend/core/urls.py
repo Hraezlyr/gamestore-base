@@ -27,4 +27,6 @@ urlpatterns = [
     path('api/v1/juegos_indie/', include('modules.juegos_indie.urls')),
     path("api/v1/shooter/", include("shooter.urls")),
     path('api/v1/', include('modules.aventura_grafica.urls')),
+    path('api/v1/rpg/', include('modules.modulo_RPGs.urls')),
+
 ]
