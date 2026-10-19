@@ -11,9 +11,11 @@ import './modules/aventura_grafica';
 import './modules/multijugador';
 import './modules/perifericos';
 import './modules/simulacion_construccion';
+import './modules/fighting';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <App />
-</React.StrictMode>
+  </React.StrictMode>
 );
+

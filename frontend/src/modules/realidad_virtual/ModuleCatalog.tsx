@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { GameCard } from '../../shared/components/GameCard';
+import { HardwareCompatibilityPanel } from './components/HardwareCompatibilityPanel';
+import './components/hardware-compatibility.css';
 import type { BaseGameItem } from './types';
 interface ModuleCatalogProps {
   endpoint: string;
@@ -53,15 +55,17 @@ export const ModuleCatalog: React.FC<ModuleCatalogProps> = ({ endpoint, category
   return (
     <div className="catalog-grid">
       {items.map((item) => (
-        <GameCard
-          key={item.id}
-          title={item.title}
-          price={item.price}
-          stock={item.stock}
-          imageUrl={item.image_url}
-          category={categoryName}
-          description={item.description}
-        />
+        <div className="vr-catalog-item" key={item.id}>
+          <GameCard
+            title={item.title}
+            price={item.price}
+            stock={item.stock}
+            imageUrl={item.image_url}
+            category={categoryName}
+            description={item.description}
+          />
+          <HardwareCompatibilityPanel gameId={item.id} gameTitle={item.title} />
+        </div>
       ))}
     </div>
   );

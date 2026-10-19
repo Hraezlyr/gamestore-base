@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'modules.multijugador',
     'modules.aventura_grafica',
     'modules.simulacion_construccion',
+    'modules.fighting',
 ]
 
 MIDDLEWARE = [

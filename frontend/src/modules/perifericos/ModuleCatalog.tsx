@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { GameCard } from '../../shared/components/GameCard';
+import PerifericoPlanCard from './components/PerifericoPlanCard';
 import type { BaseGameItem } from './types';
 interface ModuleCatalogProps {
   endpoint: string;
@@ -13,20 +13,20 @@ export const ModuleCatalog: React.FC<ModuleCatalogProps> = ({ endpoint, category
 
   useEffect(() => {
     fetch(endpoint)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`HTTP ${res.status}: No se pudo consultar ${endpoint}`);
-        }
-        return res.json();
-      })
-      .then((data: BaseGameItem[]) => {
-        setItems(data);
-        setLoading(false);
-      })
-      .catch((err: Error) => {
-        setError(err.message);
-        setLoading(false);
-      });
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}: No se pudo consultar ${endpoint}`);
+      }
+      return res.json();
+    })
+    .then((data: BaseGameItem[]) => {
+      setItems(data);
+      setLoading(false);
+    })
+    .catch((err: Error) => {
+      setError(err.message);
+      setLoading(false);
+    });
   }, [endpoint]);
 
   if (loading) {
@@ -36,8 +36,8 @@ export const ModuleCatalog: React.FC<ModuleCatalogProps> = ({ endpoint, category
   if (error) {
     return (
       <div className="state-message error">
-        <p>No se pudo conectar con el backend:</p>
-        <code>{error}</code>
+      <p>No se pudo conectar con el backend:</p>
+      <code>{error}</code>
       </div>
     );
   }
@@ -45,24 +45,19 @@ export const ModuleCatalog: React.FC<ModuleCatalogProps> = ({ endpoint, category
   if (items.length === 0) {
     return (
       <div className="state-message empty">
-        <p>No hay títulos registrados aún en {categoryName}.</p>
+      <p>No hay títulos registrados aún en {categoryName}.</p>
       </div>
     );
   }
 
   return (
-    <div className="catalog-grid">
-      {items.map((item) => (
-        <GameCard
-          key={item.id}
-          title={item.title}
-          price={item.price}
-          stock={item.stock}
-          imageUrl={item.image_url}
-          category={categoryName}
-          description={item.description}
-        />
-      ))}
+    <div
+    className="catalog-grid"
+    style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))' }}
+    >
+    {items.map((item) => (
+      <PerifericoPlanCard key={item.id} item={item} />
+    ))}
     </div>
   );
 };

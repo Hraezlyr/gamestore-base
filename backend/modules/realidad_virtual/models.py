@@ -12,3 +12,42 @@ class RealidadVirtual(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class HardwareCompatibility(models.Model):
+    HEADSET_CHOICES = [
+        ("Quest 2", "Quest 2"),
+        ("Quest 3", "Quest 3"),
+    ]
+    GPU_CHOICES = [
+        ("NVIDIA RTX 3060", "NVIDIA RTX 3060"),
+        ("NVIDIA RTX 4090", "NVIDIA RTX 4090"),
+    ]
+    COMPATIBILITY_CHOICES = [
+        ("alta", "Alta"),
+        ("media", "Media"),
+        ("baja", "Baja"),
+    ]
+
+    game = models.ForeignKey(
+        RealidadVirtual,
+        on_delete=models.CASCADE,
+        related_name="hardware_compatibilities",
+    )
+    visor = models.CharField(max_length=20, choices=HEADSET_CHOICES)
+    gpu = models.CharField(max_length=30, choices=GPU_CHOICES)
+    compatibility = models.CharField(
+        max_length=10,
+        choices=COMPATIBILITY_CHOICES,
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=("game", "visor", "gpu"),
+                name="unique_vr_game_hardware_combination",
+            )
+        ]
+
+    def __str__(self):
+        return f"{self.game}: {self.visor} + {self.gpu} ({self.compatibility})"
