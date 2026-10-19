@@ -37,5 +37,101 @@
       "subgenre": "Tower Defense",
       "created_at": "2026-10-07T12:00:00Z"
     }
+  },
+  {
+    "model": "estrategia.faction",
+    "pk": 1,
+    "fields": {
+      "game": 1,
+      "name": "Britanos",
+      "description": "Civilización de arqueros que presiona desde la distancia.",
+      "play_style": "ofensivo",
+      "advantages": ["Arqueros de largo alcance", "Pastores más rápidos"],
+      "unique_units": ["Arquero de arco largo"]
+    }
+  },
+  {
+    "model": "estrategia.faction",
+    "pk": 2,
+    "fields": {
+      "game": 1,
+      "name": "Bizantinos",
+      "description": "Civilización que apuesta por resistir y contraatacar.",
+      "play_style": "defensivo",
+      "advantages": ["Edificios más resistentes", "Defensas sólidas"],
+      "unique_units": ["Catafracta"]
+    }
+  },
+  {
+    "model": "estrategia.faction",
+    "pk": 3,
+    "fields": {
+      "game": 1,
+      "name": "Chinos",
+      "description": "Civilización que arranca con ventaja de economía.",
+      "play_style": "economico",
+      "advantages": ["Aldeanos extra al inicio", "Crecimiento rápido"],
+      "unique_units": ["Chu Ko Nu"]
+    }
+  },
+  {
+    "model": "estrategia.faction",
+    "pk": 4,
+    "fields": {
+      "game": 2,
+      "name": "Roma",
+      "description": "Imperio expansionista de infantería disciplinada.",
+      "play_style": "ofensivo",
+      "advantages": ["Expansión rápida", "Infraestructura de caminos"],
+      "unique_units": ["Legión"]
+    }
+  },
+  {
+    "model": "estrategia.faction",
+    "pk": 5,
+    "fields": {
+      "game": 2,
+      "name": "Egipto",
+      "description": "Civilización que prospera junto al río y las maravillas.",
+      "play_style": "economico",
+      "advantages": ["Producción cerca de ríos", "Construcción de maravillas"],
+      "unique_units": ["Carro de arqueros Maryannu"]
+    }
+  },
+  {
+    "model": "estrategia.faction",
+    "pk": 6,
+    "fields": {
+      "game": 3,
+      "name": "Plantas de ataque",
+      "description": "Plantas que eliminan zombis a distancia.",
+      "play_style": "ofensivo",
+      "advantages": ["Daño constante", "Alcance en línea recta"],
+      "unique_units": ["Lanzaguisantes", "Repetidora"]
+    }
+  },
+  {
+    "model": "estrategia.faction",
+    "pk": 7,
+    "fields": {
+      "game": 3,
+      "name": "Plantas defensivas",
+      "description": "Plantas que bloquean y detienen el avance.",
+      "play_style": "defensivo",
+      "advantages": ["Mucha resistencia", "Frenan a los zombis"],
+      "unique_units": ["Nuez", "Nuez alta"]
+    }
+  },
+  {
+    "model": "estrategia.faction",
+    "pk": 8,
+    "fields": {
+      "game": 3,
+      "name": "Plantas de producción",
+      "description": "Plantas que generan el recurso para plantar más.",
+      "play_style": "economico",
+      "advantages": ["Generan soles", "Economía estable"],
+      "unique_units": ["Girasol", "Girasol doble"]
+    }
   }
 ]
