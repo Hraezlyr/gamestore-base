@@ -1,6 +1,6 @@
 [
   {
-    "model": "modulo_asignado.moduloasignadogame",
+    "model": "horror.horrorgame",
     "pk": 1,
     "fields": {
       "title": "Silent Hill: Awakening",

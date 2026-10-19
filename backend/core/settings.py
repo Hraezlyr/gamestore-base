@@ -22,7 +22,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-dev-key-change-in-production')
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -30,6 +29,7 @@ ALLOWED_HOSTS = ['*']
 
 
 # Application definition
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,9 +40,6 @@ INSTALLED_APPS = [
     # Librerías de terceros
     'rest_framework',
     'corsheaders',
-    # Módulos del sistema y plantilla obligatorios para los tests
-    'modules.modulo_asignado.apps.ModuloAsignadoConfig',
-    'modules.horror',
     'modules.perifericos',
     'modules.realidad_virtual',
     'modules.juegos_indie',
@@ -51,7 +48,9 @@ INSTALLED_APPS = [
     'modules.multijugador',
     'modules.aventura_grafica',
     'modules.simulacion_construccion',
+    'modules.horror',
 ]
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
