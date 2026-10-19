@@ -28,6 +28,6 @@ urlpatterns = [
     path("api/v1/", include("modules.shooter.urls")),
     path('api/v1/', include('modules.multijugador.urls')),
     path('api/v1/', include('modules.aventura_grafica.urls')),
-  path('api/v1/', include('modules.simulacion_construccion.urls')),
-  path('api/v1/fighting/', include('modules.fighting.urls')),
+    path('api/v1/rpg/', include('modules.modulo_RPGs.urls')),
+
 ]
