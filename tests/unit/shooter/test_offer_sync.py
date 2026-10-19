@@ -2,9 +2,9 @@ from decimal import Decimal
 from unittest import TestCase
 from unittest.mock import create_autospec, call
 
-from shooter.dtos import GameToSyncOffers, OfferData, OfferSyncResult
-from shooter.ports import OfferProvider, OfferRepository
-from shooter.services.offer_sync import (
+from modules.shooter.domain.dtos import GameToSyncOffers, OfferData, OfferSyncResult
+from modules.shooter.domain.ports import OfferProvider, OfferRepository
+from modules.shooter.services.offer_sync import (
     sync_catalog_offers,
     sync_game_offers,
 )

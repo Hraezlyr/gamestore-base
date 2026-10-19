@@ -21,13 +21,19 @@ def health_check(request):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/v1/', include('modules.horror.urls')),
     path('api/v1/health/', health_check),
     path('api/v1/',include('modules.perifericos.urls')),
     path('api/v1/', include('modules.realidad_virtual.urls')),
     path('api/v1/juegos_indie/', include('modules.juegos_indie.urls')),
-    path("api/v1/shooter/", include("shooter.urls")),
+    path("api/v1/", include("modules.shooter.urls")),
     path('api/v1/', include('modules.multijugador.urls')),
     path('api/v1/', include('modules.aventura_grafica.urls')),
-  path('api/v1/', include('modules.simulacion_construccion.urls')),
-    path('api/v1/', include('modules.horror.urls')),
+ feature/GMS-04-estrategia
+    path('api/v1/', include('modules.estrategia.urls')),
 ]
+
+  path('api/v1/', include('modules.simulacion_construccion.urls')),
+  path('api/v1/fighting/', include('modules.fighting.urls')),
+]
+ develop

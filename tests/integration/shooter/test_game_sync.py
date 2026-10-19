@@ -1,8 +1,8 @@
 from django.test import TestCase
 
-from shooter.dtos import GameData, ScreenshotData
-from shooter.models import ShooterGame
-from shooter.services.game_sync import sync_games
+from modules.shooter.domain.dtos import GameData, ScreenshotData
+from modules.shooter.models import ShooterGame
+from modules.shooter.services.game_sync import sync_games
 
 
 class GameSyncTests(TestCase):

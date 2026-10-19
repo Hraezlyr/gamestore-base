@@ -9,5 +9,16 @@ class AventuraGraficaGame(models.Model):
     subgenre = models.CharField(max_length=50, blank=True, null=True, verbose_name="Subgénero")
     created_at = models.DateTimeField(auto_now_add=True)
 
+    total_chapters = models.PositiveIntegerField(default=10, verbose_name="Total de Capítulos")
+    current_chapter = models.PositiveIntegerField(default=0, verbose_name="Capítulo Actual")
+    progress_percentage = models.FloatField(default=0.0, verbose_name="Porcentaje de Avance")
+
     def __str__(self):
         return self.title
+
+    def update_progress(self, chapter):
+        if chapter > self.total_chapters:
+            raise ValueError("El capítulo no puede ser mayor al total disponible.")
+        self.current_chapter = chapter
+        self.progress_percentage = (chapter / self.total_chapters) * 100.0
+        self.save()
