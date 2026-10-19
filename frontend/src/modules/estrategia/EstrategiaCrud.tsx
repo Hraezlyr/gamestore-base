@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState, type FormEvent } from 'react';
+import { FactionsExplorer } from './components/FactionsExplorer';
 
 interface Game {
   id: number;
@@ -37,6 +38,7 @@ export function EstrategiaCrud({ endpoint, categoryName }: Props) {
   const [games, setGames] = useState<Game[]>([]);
   const [form, setForm] = useState<FormState>(emptyForm);
   const [editingId, setEditingId] = useState<number | null>(null);
+  const [factionsGame, setFactionsGame] = useState<Game | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -46,9 +48,20 @@ export function EstrategiaCrud({ endpoint, categoryName }: Props) {
       setLoading(true);
       const res = await fetch(endpoint);
       if (!res.ok) throw new Error(`Error ${res.status} al cargar los juegos`);
-      const data = await res.json();
+      const data: unknown = await res.json();
       // Soporta respuesta paginada ({ results: [] }) o lista simple
-      setGames(Array.isArray(data) ? data : data.results ?? []);
+      if (Array.isArray(data)) {
+        setGames(data as Game[]);
+      } else if (
+        typeof data === 'object' &&
+        data !== null &&
+        'results' in data &&
+        Array.isArray(data.results)
+      ) {
+        setGames(data.results as Game[]);
+      } else {
+        setGames([]);
+      }
       setError(null);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Error desconocido');
@@ -130,6 +143,8 @@ export function EstrategiaCrud({ endpoint, categoryName }: Props) {
       setError(err instanceof Error ? err.message : 'Error desconocido');
     }
   };
+
+  const closeFactions = useCallback(() => setFactionsGame(null), []);
 
   return (
     <section style={{ padding: '1rem', maxWidth: 960, margin: '0 auto' }}>
@@ -233,7 +248,10 @@ export function EstrategiaCrud({ endpoint, categoryName }: Props) {
               <p>
                 <strong>${game.price}</strong> · Stock: {game.stock}
               </p>
-              <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                <button type="button" onClick={() => setFactionsGame(game)}>
+                  Ver facciones
+                </button>
                 <button type="button" onClick={() => handleEdit(game)}>
                   Editar
                 </button>
@@ -244,6 +262,15 @@ export function EstrategiaCrud({ endpoint, categoryName }: Props) {
             </article>
           ))}
         </div>
+      )}
+
+      {factionsGame && (
+        <FactionsExplorer
+          endpoint={endpoint}
+          gameId={factionsGame.id}
+          gameTitle={factionsGame.title}
+          onClose={closeFactions}
+        />
       )}
     </section>
   );
