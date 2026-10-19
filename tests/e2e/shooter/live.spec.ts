@@ -16,7 +16,7 @@ test.describe("Live Django + React", () => {
     django(`from django.contrib.auth import get_user_model; get_user_model().objects.create_user(username='${username}', password='${password}', is_staff=True)`);
   });
   test.afterAll(() => {
-    django(`from django.contrib.auth import get_user_model; from shooter.models import ShooterGame; ShooterGame.objects.filter(title__in=['${title}', '${title} editado']).delete(); get_user_model().objects.filter(username='${username}').delete()`);
+    django(`from django.contrib.auth import get_user_model; from modules.shooter.models import ShooterGame; ShooterGame.objects.filter(title__in=['${title}', '${title} editado']).delete(); get_user_model().objects.filter(username='${username}').delete()`);
   });
   test("logs in and creates, edits and deletes a game using real endpoints", async ({ page }) => {
     await page.goto("/shooter/");

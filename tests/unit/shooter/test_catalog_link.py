@@ -1,13 +1,13 @@
 from unittest import TestCase
 from unittest.mock import create_autospec
 
-from shooter.dtos import GameMatchData, GameToLink, LinkStatus
-from shooter.ports import (
+from modules.shooter.domain.dtos import GameMatchData, GameToLink, LinkStatus
+from modules.shooter.domain.ports import (
     GameLinkRepository,
     GameMatchProvider,
     SteamIdProvider,
 )
-from shooter.services.catalog_link import link_catalog, link_one_game
+from modules.shooter.services.catalog_link import link_catalog, link_one_game
 
 
 class CatalogLinkTests(TestCase):

@@ -1,0 +1,20 @@
+.shooter-store-icon.vortex-store-icon {
+  width: 42px;
+  height: 42px;
+  flex-basis: 42px;
+  padding: 6px;
+  color: #f7f6f1;
+  background: #ffffff0a;
+}
+.vortex-store-icon img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+.vortex-store-monogram {
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
