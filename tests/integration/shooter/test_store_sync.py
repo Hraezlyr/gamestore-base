@@ -1,8 +1,8 @@
 from django.test import TestCase
 
-from shooter.dtos import StoreData
-from shooter.models import Store
-from shooter.services.store_sync import sync_stores
+from modules.shooter.domain.dtos import StoreData
+from modules.shooter.models import Store
+from modules.shooter.services.store_sync import sync_stores
 
 
 class StoreSyncTests(TestCase):

@@ -45,11 +45,11 @@ INSTALLED_APPS = [
     'modules.juegos_indie',
     'modules.modulo_RPGs',
     # Aplicaciones locales
-    'shooter.apps.ShooterConfig',
+    'modules.shooter.apps.ShooterConfig',
     'modules.multijugador',
     'modules.aventura_grafica',
     'modules.simulacion_construccion',
-    'modules.retro',
+    'modules.fighting',
 ]
 
 MIDDLEWARE = [

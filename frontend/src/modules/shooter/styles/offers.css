@@ -1,0 +1,81 @@
+.shooter-game-offers { margin-top: 1.5rem; }
+.shooter-page .shooter-game-offers > h2 {
+  margin-bottom: 0.75rem;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.shooter-store-offers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.shooter-page .shooter-store-trigger {
+  padding: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--surface);
+}
+.shooter-store-trigger .shooter-store-icon {
+  width: 46px;
+  height: 46px;
+  flex-basis: 46px;
+  padding: 10px;
+  border: 0;
+  background: transparent;
+}
+.shooter-page .shooter-store-trigger[data-best-price] { border-color: var(--accent); }
+.shooter-page .shooter-store-trigger[aria-expanded="true"] { border-color: var(--accent); background: #2a223d; }
+.shooter-offer-popover {
+  z-index: 100;
+  box-sizing: border-box;
+  width: min(260px, calc(100vw - 24px));
+  padding: 1rem;
+  border: 1px solid #55466e;
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 12px 40px #0008;
+  font: 14px/1.5 var(--sans);
+  text-align: left;
+}
+.shooter-offer-popover__heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.shooter-offer-popover *, .shooter-offer-popover *::before, .shooter-offer-popover *::after { box-sizing: border-box; }
+.shooter-offer-popover h3 { margin: 0; color: var(--text-h); font-size: 15px; font-weight: 650; }
+.shooter-offer-popover__close {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+}
+.shooter-offer-popover__close:hover { background: var(--surface-hover); color: var(--text-h); }
+.shooter-offer-popover .shooter-best-price { color: var(--accent); font-size: 11px; }
+.shooter-offer-popover__price { margin: 0.75rem 0 0.25rem; color: var(--text-h); font-size: 24px; font-weight: 700; }
+.shooter-offer-popover__regular { margin: 0 0 1rem; font-size: 11px; }
+.shooter-offer-popover__purchase {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  margin-top: 1rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 7px;
+  background: var(--primary);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.shooter-offer-popover__purchase:hover { background: #8967f1; }
+.shooter-offer-popover :is(button, a):focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }

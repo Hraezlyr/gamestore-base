@@ -1,7 +1,7 @@
 from unittest import TestCase
 from urllib.parse import parse_qs, urlsplit
 
-from shooter.links import cheapshark_deal_url
+from modules.shooter.api.links import cheapshark_deal_url
 
 
 class OfferLinkTests(TestCase):

@@ -3,8 +3,8 @@ from decimal import Decimal
 from django.test import TestCase
 from django.utils import timezone
 
-from shooter.models import GameOffer, ShooterGame, Store
-from shooter.selectors import public_catalog
+from modules.shooter.models import GameOffer, ShooterGame, Store
+from modules.shooter.selectors import public_catalog
 
 
 class PublicCatalogTests(TestCase):
