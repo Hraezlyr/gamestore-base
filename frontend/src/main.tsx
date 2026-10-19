@@ -11,7 +11,7 @@ import './modules/aventura_grafica';
 import './modules/multijugador';
 import './modules/perifericos';
 import './modules/simulacion_construccion';
-
+import './modules/giftcards';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <App />
