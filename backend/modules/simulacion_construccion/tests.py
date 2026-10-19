@@ -1,24 +1,37 @@
-from django.test import TestCase
-from django.urls import reverse
-from rest_framework import status
 from rest_framework.test import APITestCase
-from .models import ModuloAsignadoGame
+from rest_framework import status
+from django.urls import reverse
+from .models import SimulationGame, SimulationDLC
 
-class ModuloAsignadoModelTest(TestCase):
+class SimulationDLCTests(APITestCase):
     def setUp(self):
-        self.game = ModuloAsignadoGame.objects.create(
-            title="Prueba Unitaria", price=29.99, stock=5
+        self.game = SimulationGame.objects.create(
+            title="Simulador de Ciudades",
+            price=29.99,
+            stock=10
         )
+        self.dlc = SimulationDLC.objects.create(
+            game=self.game,
+            name="Expansión Tráfico Urbano",
+            size_gb=5.50,
+            is_installed=False
+        )
+        self.url = f"/api/v1/simulacion_construccion/{self.game.id}/toggle-dlc/"
 
-    def test_datos_correctos(self):
-        self.assertEqual(self.game.title, "Prueba Unitaria")
-        self.assertEqual(self.game.stock, 5)
-
-class ModuloAsignadoAPITest(APITestCase):
-    def setUp(self):
-        ModuloAsignadoGame.objects.create(title="Juego API", price=19.99, stock=3)
-        self.list_url = reverse('simulacion_construccion-list')
-
-    def test_get_catalogo_status_200(self):
-        response = self.client.get(self.list_url)
+    def test_toggle_dlc_exitoso(self):
+        """Prueba de Camino Feliz: Alterna el estado del DLC de False a True correctamente"""
+        payload = {"dlc_id": self.dlc.id}
+        response = self.client.post(self.url, payload, format='json')
+        
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.dlc.refresh_from_db()
+        self.assertTrue(self.dlc.is_installed)
+        self.assertEqual(float(response.data['total_installed_size_gb']), 5.50)
+
+    def test_toggle_dlc_id_invalido(self):
+        """Prueba de Error de Validación: Envía un DLC ID que no existe y retorna 404"""
+        payload = {"dlc_id": 9999}
+        response = self.client.post(self.url, payload, format='json')
+        
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertIn("error", response.data)
