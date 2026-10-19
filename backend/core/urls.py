@@ -21,6 +21,7 @@ def health_check(request):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/v1/', include('modules.horror.urls')),
     path('api/v1/health/', health_check),
     path('api/v1/',include('modules.perifericos.urls')),
     path('api/v1/', include('modules.realidad_virtual.urls')),
