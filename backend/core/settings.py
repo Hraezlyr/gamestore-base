@@ -40,12 +40,16 @@ INSTALLED_APPS = [
     # Librerías de terceros
     'rest_framework',
     'corsheaders',
+    'modules.perifericos',
     'modules.realidad_virtual',
     'modules.juegos_indie',
     'modules.modulo_RPGs',
     # Aplicaciones locales
     'shooter.apps.ShooterConfig',
+    'modules.multijugador',
     'modules.aventura_grafica',
+    'modules.simulacion_construccion',
+    'modules.retro',
 ]
 
 MIDDLEWARE = [
