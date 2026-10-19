@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { GameCard } from '../../shared/components/GameCard';
+import { BuildCalculator } from './components/BuildCalculator';
 import type { BaseGameItem } from './types';
+
 interface ModuleCatalogProps {
   endpoint: string;
   categoryName: string;
@@ -10,6 +12,7 @@ export const ModuleCatalog: React.FC<ModuleCatalogProps> = ({ endpoint, category
   const [items, setItems] = useState<BaseGameItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedGame, setSelectedGame] = useState<BaseGameItem | null>(null);
 
   useEffect(() => {
     fetch(endpoint)
@@ -51,18 +54,32 @@ export const ModuleCatalog: React.FC<ModuleCatalogProps> = ({ endpoint, category
   }
 
   return (
-    <div className="catalog-grid">
-      {items.map((item) => (
-        <GameCard
-          key={item.id}
-          title={item.title}
-          price={item.price}
-          stock={item.stock}
-          imageUrl={item.image_url}
-          category={categoryName}
-          description={item.description}
+    <>
+      <div className="catalog-grid">
+        {items.map((item) => (
+          <div key={item.id} className="rpg-card-wrapper">
+            <GameCard
+              title={item.title}
+              price={item.price}
+              stock={item.stock}
+              imageUrl={item.image_url ?? undefined}
+              category={categoryName}
+              description={item.description ?? undefined}
+            />
+            <button type="button" className="rpg-build-btn" onClick={() => setSelectedGame(item)}>
+              ⚔️ Calculadora de build
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {selectedGame && (
+        <BuildCalculator
+          game={selectedGame}
+          endpoint={endpoint}
+          onClose={() => setSelectedGame(null)}
         />
-      ))}
-    </div>
+      )}
+    </>
   );
 };
