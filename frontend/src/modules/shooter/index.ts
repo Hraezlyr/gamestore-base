@@ -1,5 +1,5 @@
 import { registerModule } from "../../core/modulesRegistry";
-import { ShooterPage } from "../../features/shooter/pages/ShooterPage";
+import { ShooterPage } from "./pages/ShooterPage";
 
 registerModule({
   id: "shooter",

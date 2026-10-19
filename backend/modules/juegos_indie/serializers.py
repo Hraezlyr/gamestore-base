@@ -8,7 +8,11 @@ class JuegoIndieSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = JuegoIndie
-        fields = ['id', 'nombre', 'descripcion', 'precio', 'title', 'price', 'stock']
+        fields = ['id', 'nombre', 'descripcion', 'precio', 'boosts', 'title', 'price', 'stock']
 
     def get_stock(self, obj):
         return 10  
+
+
+class SupportDevSerializer(serializers.Serializer):
+    comment = serializers.CharField(required=False, allow_blank=True, max_length=500)

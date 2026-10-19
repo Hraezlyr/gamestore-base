@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from shooter.dtos import GameMatchData, LinkStatus
-from shooter.services.catalog_link import select_unique_match
+from modules.shooter.domain.dtos import GameMatchData, LinkStatus
+from modules.shooter.services.catalog_link import select_unique_match
 
 
 class MatchSelectionTests(TestCase):
