@@ -20,11 +20,11 @@ import './modules/fighting';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <App />
- feature/GMS-04-estrategia
+
   </React.StrictMode>,
 )
 
   </React.StrictMode>
 );
 
- develop
+
