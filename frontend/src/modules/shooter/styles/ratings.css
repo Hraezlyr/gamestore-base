@@ -1,0 +1,168 @@
+.shooter-ratings {
+  margin: 1rem 0;
+  padding: 1rem 0;
+  border-block: 1px solid var(--border);
+}
+
+.shooter-ratings > p:first-child {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #f6ce71;
+}
+
+.shooter-page .shooter-rating-dialog {
+  margin: auto;
+  width: min(480px, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.shooter-rating-dialog::backdrop {
+  background: rgb(0 0 0 / 75%);
+}
+
+.shooter-rating-dialog__heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.shooter-rating-dialog textarea,
+.shooter-rating-dialog input:not([type="radio"]) {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  resize: vertical;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-h);
+  background: var(--bg);
+  font: inherit;
+}
+
+.shooter-rating-dialog input:not([type="radio"]) {
+  margin-bottom: 1rem;
+}
+
+.shooter-rating-dialog__hint {
+  font-size: 0.8rem;
+  text-align: right;
+}
+
+.shooter-rating-stars {
+  border: 0;
+  padding: 0;
+  margin: 1.25rem 0;
+}
+
+.shooter-rating-stars > div {
+  display: flex;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+.shooter-rating-stars label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  color: #f6ce71;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.shooter-rating-stars input {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+
+.shooter-rating-stars label:has(input:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.shooter-rating-stars:disabled {
+  opacity: 0.6;
+}
+
+.shooter-page .shooter-rating-dialog .shooter-actions {
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.shooter-page .shooter-rating-dialog form button {
+  padding: 0.75rem 1.25rem;
+}
+
+.shooter-page .shooter-rating-dialog .shooter-account-switch {
+  width: 100%;
+  margin-top: 1rem;
+  white-space: normal;
+}
+
+.shooter-vortex .shooter-game-detail {
+  padding-top: 1.5rem;
+}
+
+.shooter-page .shooter-detail-back {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1.5rem;
+  gap: 0.75rem;
+}
+
+.shooter-reviews {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.shooter-reviews__list {
+  display: grid;
+  gap: 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.shooter-reviews article {
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  overflow-wrap: anywhere;
+}
+
+.shooter-reviews article header,
+.shooter-reviews article header span {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+
+.shooter-reviews article header span {
+  color: #f6ce71;
+}
+
+.shooter-reviews time {
+  color: var(--text);
+  font-size: 0.85rem;
+}
+
+.shooter-reviews article p {
+  margin-bottom: 0;
+  white-space: pre-wrap;
+}

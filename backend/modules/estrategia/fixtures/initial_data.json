@@ -1,0 +1,41 @@
+[
+  {
+    "model": "estrategia.estrategiagame",
+    "pk": 1,
+    "fields": {
+      "title": "Age of Empires II: Definitive Edition",
+      "description": "Estrategia en tiempo real ambientada en la Edad Media.",
+      "price": "19.99",
+      "stock": 15,
+      "image_url": "https://placehold.co/300x180?text=Age+of+Empires+II",
+      "subgenre": "RTS",
+      "created_at": "2026-10-07T12:00:00Z"
+    }
+  },
+  {
+    "model": "estrategia.estrategiagame",
+    "pk": 2,
+    "fields": {
+      "title": "Civilization VI",
+      "description": "Construye un imperio por turnos desde la Edad de Piedra.",
+      "price": "29.99",
+      "stock": 8,
+      "image_url": "https://placehold.co/300x180?text=Civilization+VI",
+      "subgenre": "4X",
+      "created_at": "2026-10-07T12:00:00Z"
+    }
+  },
+  {
+    "model": "estrategia.estrategiagame",
+    "pk": 3,
+    "fields": {
+      "title": "Plants vs. Zombies",
+      "description": "Defiende tu jardín colocando plantas estratégicamente.",
+      "price": "9.99",
+      "stock": 20,
+      "image_url": "https://placehold.co/300x180?text=Tower+Defense",
+      "subgenre": "Tower Defense",
+      "created_at": "2026-10-07T12:00:00Z"
+    }
+  }
+]

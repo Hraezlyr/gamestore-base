@@ -5,10 +5,10 @@ from django.core.management import call_command
 from django.core.management.base import CommandError
 from django.test import SimpleTestCase, override_settings
 
-from shooter.dtos import GamePage, GameSyncResult
+from modules.shooter.domain.dtos import GamePage, GameSyncResult
 
 
-COMMAND_MODULE = "shooter.management.commands.sync_shooter_games"
+COMMAND_MODULE = "modules.shooter.management.commands.sync_shooter_games"
 
 
 @override_settings(RAWG_API_KEY="test-key")

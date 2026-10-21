@@ -4,8 +4,8 @@ from unittest import TestCase
 from unittest.mock import patch
 from urllib.error import HTTPError
 
-from shooter.dtos import GameData, ScreenshotData
-from shooter.integrations.rawg import RawgClient, RawgError
+from modules.shooter.domain.dtos import GameData, ScreenshotData
+from modules.shooter.integrations.rawg import RawgClient, RawgError
 
 
 class RawgClientTests(TestCase):
@@ -34,7 +34,7 @@ class RawgClientTests(TestCase):
             with self.subTest(items=items), self.assertRaises(RawgError):
                 RawgClient._parse_screenshots(items)
 
-    @patch("shooter.integrations.rawg.urlopen")
+    @patch("modules.shooter.integrations.rawg.urlopen")
     def test_converts_games_and_reports_next_page(self, mock_urlopen):
         for next_url in (None, "https://api.rawg.io/api/games?page=2"):
             with self.subTest(next_url=next_url):
@@ -65,7 +65,7 @@ class RawgClientTests(TestCase):
                 ))
                 self.assertEqual(page.has_next, next_url is not None)
 
-    @patch("shooter.integrations.rawg.urlopen")
+    @patch("modules.shooter.integrations.rawg.urlopen")
     def test_rejects_invalid_responses(self, mock_urlopen):
         invalid_payloads = [
             [],
@@ -86,7 +86,7 @@ class RawgClientTests(TestCase):
                 with self.assertRaises(RawgError):
                     RawgClient(api_key="test-key").fetch_shooter_games()
 
-    @patch("shooter.integrations.rawg.urlopen")
+    @patch("modules.shooter.integrations.rawg.urlopen")
     def test_http_error_does_not_expose_key(self, mock_urlopen):
         mock_urlopen.side_effect = HTTPError(
             url="https://api.rawg.io/api/games?key=test-secret",
@@ -107,7 +107,7 @@ class RawgClientTests(TestCase):
         with self.assertRaises(RawgError):
             RawgClient(api_key="")
 
-    @patch("shooter.integrations.rawg.RawgClient._get_json")
+    @patch("modules.shooter.integrations.rawg.RawgClient._get_json")
     def test_identifies_only_steam_app_links(self, mock_get_json):
         cases = [
             ("http://store.steampowered.com/app/620/", "620"),
@@ -132,7 +132,7 @@ class RawgClientTests(TestCase):
 
                 self.assertEqual(result, expected)
 
-    @patch("shooter.integrations.rawg.RawgClient._get_json")
+    @patch("modules.shooter.integrations.rawg.RawgClient._get_json")
     def test_checks_all_pages_and_deduplicates_steam_ids(
         self, mock_get_json
     ):
@@ -156,7 +156,7 @@ class RawgClientTests(TestCase):
         self.assertEqual(result, "620")
         self.assertEqual(mock_get_json.call_count, 2)
 
-    @patch("shooter.integrations.rawg.RawgClient._get_json")
+    @patch("modules.shooter.integrations.rawg.RawgClient._get_json")
     def test_does_not_choose_between_different_steam_ids(
         self, mock_get_json
     ):

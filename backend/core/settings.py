@@ -44,11 +44,16 @@ INSTALLED_APPS = [
     'modules.realidad_virtual',
     'modules.juegos_indie',
     # Aplicaciones locales
-    'shooter.apps.ShooterConfig',
+    'modules.shooter.apps.ShooterConfig',
     'modules.multijugador',
     'modules.aventura_grafica',
+ feature/GMS-04-estrategia
+    'modules.estrategia',
+
     'modules.simulacion_construccion',
     'modules.giftcards',
+    'modules.fighting',
+  develop
 ]
 
 MIDDLEWARE = [

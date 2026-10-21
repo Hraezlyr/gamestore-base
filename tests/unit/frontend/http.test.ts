@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { requestJson } from "@shooter/api/http";
+import { requestJson } from "../../../frontend/src/modules/shooter/api/http";
 
 afterEach(() => vi.unstubAllGlobals());
 

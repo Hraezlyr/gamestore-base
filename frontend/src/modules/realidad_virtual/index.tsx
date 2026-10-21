@@ -7,7 +7,7 @@ registerModule({
   component: () => (
     <ModuleCatalog
     endpoint="/api/v1/realidad_virtual/"
-    categoryName="Nombre Visible Módulo"
+    categoryName="Realidad Virtual"
     />
     ),
 });

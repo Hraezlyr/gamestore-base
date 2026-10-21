@@ -2,9 +2,9 @@ from decimal import Decimal
 
 from django.test import TestCase
 
-from shooter.dtos import GameToSyncOffers, OfferData, OfferSyncResult
-from shooter.models import GameOffer, ShooterGame, Store
-from shooter.repositories.offers import DjangoOfferRepository
+from modules.shooter.domain.dtos import GameToSyncOffers, OfferData, OfferSyncResult
+from modules.shooter.models import GameOffer, ShooterGame, Store
+from modules.shooter.repositories.offers import DjangoOfferRepository
 
 
 class OfferRepositoryTests(TestCase):

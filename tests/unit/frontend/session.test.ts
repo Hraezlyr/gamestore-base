@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
-import { SessionManager } from "@shooter/services/session";
-import { HttpError } from "@shooter/api/errors";
+import { SessionManager } from "../../../frontend/src/modules/shooter/services/session";
+import { HttpError } from "../../../frontend/src/modules/shooter/api/errors";
 
 function setup() {
   const api = {
