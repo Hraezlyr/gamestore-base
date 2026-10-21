@@ -35,4 +35,3 @@ urlpatterns = [
     path('api/v1/', include('modules.giftcards.urls')),
   path('api/v1/fighting/', include('modules.fighting.urls')),
 ]
- develop
