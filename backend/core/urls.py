@@ -29,8 +29,6 @@ urlpatterns = [
     path('api/v1/', include('modules.multijugador.urls')),
     path('api/v1/', include('modules.aventura_grafica.urls')),
     path('api/v1/', include('modules.estrategia.urls')),
-]
-
   path('api/v1/', include('modules.simulacion_construccion.urls')),
     path('api/v1/', include('modules.giftcards.urls')),
   path('api/v1/fighting/', include('modules.fighting.urls')),
